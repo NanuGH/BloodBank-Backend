@@ -1,11 +1,11 @@
 package cv.hernani.bloodbankprojectspring.models;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -15,10 +15,10 @@ public class CommonAtributsModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name="insertion_date", nullable = false, updatable = false)
-    private DateTimeFormat insertionData;
+    private LocalDateTime insertionDate;
 
     @Column(name="update_date", nullable = false, updatable = false)
-    private DateTimeFormat updateDate;
+    private LocalDateTime updateDate;
 
     //id funcionario???????????????
     @Column(name="who_inserted", nullable = false, updatable = false)
