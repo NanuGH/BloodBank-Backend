@@ -1,16 +1,15 @@
 package cv.hernani.bloodbankprojectspring.dtos;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
 /*get and set */
 @Data
-public class PersonDto { 
-    /* para validar os campos q o cliente envia */
+public class PersonDto { // para validar os campos q o cliente envia     
     @NotBlank
     @Size(max = 10)
     private String dmTypePerson;
@@ -29,7 +28,7 @@ public class PersonDto {
 
     @NotBlank
     @Size(max = 10)
-    private DateTimeFormat birthday;
+    private LocalDate birthday;
 
     @NotBlank
     @Size(max = 10)

@@ -1,23 +1,13 @@
 package cv.hernani.bloodbankprojectspring.models;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_blood_collection")
-public class BloodCollectionModel implements Serializable {
+public class BloodCollectionModel extends CommonAtributsModel{
 
-    private static final long serialVersionUID = 1L;
-
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id_collection", nullable = false, unique = false, length = 10)
-    private String idCollection;
 
     @Column(name="id_donor", nullable = false, unique = false, length = 10)
     private String idDonor;
