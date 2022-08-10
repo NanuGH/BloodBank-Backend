@@ -4,9 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "tb_blood_donor")
-public class BloodDonorModel extends PersonModel {
+public class BloodDonorModel extends CommonPersonAtributsModel {
 
     private static final long serialVersionUID = 1L;
 

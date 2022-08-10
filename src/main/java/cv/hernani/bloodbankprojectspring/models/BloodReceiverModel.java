@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name= "tb_blood_receiver")
-public class BloodReceiverModel extends PersonModel{
+public class BloodReceiverModel extends CommonPersonAtributsModel{
 
     private static final long serialVersionUID = 1L;
 
