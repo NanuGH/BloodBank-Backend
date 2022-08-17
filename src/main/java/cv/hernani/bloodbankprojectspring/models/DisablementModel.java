@@ -2,6 +2,8 @@ package cv.hernani.bloodbankprojectspring.models;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -10,14 +12,20 @@ public class DisablementModel extends CommonAtributsModel {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name="id_stock",nullable = false, unique = true, length = 10)
-    private UUID idStock;
+    @Column(name="id_disabled",nullable = false, unique = true, length = 10)
+    private UUID idDisabled;
 
-    @Column(name="id_employee",nullable = false, unique = true, length = 10)
-    private UUID idEmployee;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_stock", nullable = false, unique = true)
+    private StockModel idStock;
 
-    @Column(name="dm_disablement_type",nullable = false, unique = true, length = 10)
-    private UUID dmDisabType;   
+    @ManyToOne
+    @JoinColumn(name = "fk_id_employee", nullable = false, unique = true)
+    private EmployeeModel idEmployee;
+
+    @ManyToOne
+    @JoinColumn(name="fk_id_domain",nullable = false, unique = true)
+    private DomainModel idDomain;   
 
 
 }

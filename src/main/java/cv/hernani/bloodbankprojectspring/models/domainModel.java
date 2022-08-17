@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_domain")
-public class domainModel implements Serializable {
+public class DomainModel implements Serializable {
     
     private static final long serialVersionUID = 1L;
 

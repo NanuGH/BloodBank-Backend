@@ -2,20 +2,34 @@ package cv.hernani.bloodbankprojectspring.models;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 /*import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;*/
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "tb_transfusion")
 public class TransfusionModel extends CommonAtributsModel {
 
     @Column(name="id_receiver",nullable = false, unique = true, length = 10)
-    private UUID idReceiver;
+    private UUID idTransfusion;
 
-    @Column(name="id_employee",nullable = false, unique = true, length = 10)
-    private UUID idEmployee;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_collection", nullable = false, unique = true)
+    private BloodCollectionModel idCollection;
+    
+    @ManyToOne
+    @JoinColumn(name="fk_id_employee",nullable = false, unique = true)
+    private EmployeeModel idEmployee;
+
+    @ManyToOne
+    @JoinColumn(name="fk_id_receiver",nullable = false, unique = true)
+    private BloodReceiverModel idReceiver;
 
     @Column(name="suspended", nullable = false)
     private boolean suspended;

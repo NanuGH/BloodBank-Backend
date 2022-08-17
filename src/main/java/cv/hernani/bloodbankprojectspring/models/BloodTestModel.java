@@ -2,18 +2,32 @@ package cv.hernani.bloodbankprojectspring.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name="tb_blood_test")
 public class BloodTestModel extends CommonAtributsModel {
 
 
     @Column(name = "id_blood_test", nullable = false, unique = true, length = 10)
-    private String idEmployee;
+    private String idBloodTest;
 
-    @Column(name = "id_sample", nullable = false, unique = true, length = 10)
-    private String idSample;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_employee", nullable = false, unique = true)
+    private EmployeeModel idEmployee;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_id_sample", nullable = false, unique = true)
+    private EmployeeModel idSample;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_id_domain", nullable = false, unique = true)
+    private DomainModel idDomain;
 
     @Column(name = "blood_presure", nullable = false, length = 20)
     private String bloodPresure;

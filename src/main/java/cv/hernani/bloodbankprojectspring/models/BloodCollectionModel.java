@@ -6,9 +6,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name="tb_blood_collection")
-public class BloodCollectionModel extends CommonPersonAtributsModel{
+public class BloodCollectionModel extends CommonAtributsModel{
 
     @Column(name="id_collection", nullable = false, unique = false, length = 10)
     private String id_collection;
