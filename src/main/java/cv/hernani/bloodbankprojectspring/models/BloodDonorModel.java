@@ -1,7 +1,12 @@
 package cv.hernani.bloodbankprojectspring.models;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -13,9 +18,9 @@ public class BloodDonorModel extends CommonPersonAtributsModel {
 
     private static final long serialVersionUID = 1L;
 
-   /*@Id  @GeneratedValue(strategy = GenerationType.AUTO)
+    /*@Id  @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id_donor",nullable = false, unique = true, length = 10)
-    private UUID idDoner;*/
+    private UUID idDonor;*/
 
     @Column(name="dm_blood_group", nullable = false)
     private String dmBloodGroup;

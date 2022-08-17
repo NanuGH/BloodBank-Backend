@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_common_atributs")
+@Table(name = "tb_transfer_monitoring")
 public class TransferMonitoringModel extends CommonAtributsModel {
     
     private static final long serialVersionUID = 1L;
