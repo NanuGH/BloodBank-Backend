@@ -16,8 +16,8 @@ public class SampleModel extends CommonAtributsModel {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "id_sample", nullable = false, unique = true, length = 10)
-    private UUID idSample;
+    /*@Column(name = "id_sample", nullable = false, unique = true, length = 10)
+    private UUID idSample;*/
 
     @ManyToOne
     @JoinColumn(name="fk_id_employee", nullable = false, unique = false)
@@ -28,5 +28,5 @@ public class SampleModel extends CommonAtributsModel {
     private BloodCollectionModel idCollection;
 
     @Column(name = "dm_sample", nullable = false)
-    private UUID dmSample;//foreignkey
+    private String dmCodeSample;//foreignkey
 }

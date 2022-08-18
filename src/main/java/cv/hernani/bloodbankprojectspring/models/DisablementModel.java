@@ -23,9 +23,8 @@ public class DisablementModel extends CommonAtributsModel {
     @JoinColumn(name = "fk_id_employee", nullable = false, unique = true)
     private EmployeeModel idEmployee;
 
-    @ManyToOne
-    @JoinColumn(name="fk_id_domain",nullable = false, unique = true)
-    private DomainModel idDomain;   
+    @Column(name="dm_code_disabled",nullable = false, unique = true)
+    private String dmCodeDisabled;   
 
 
 }

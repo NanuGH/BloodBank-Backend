@@ -21,13 +21,13 @@ public class DomainModel implements Serializable {
     private UUID idDomain;
 
     @Column(name="domain_name", nullable = false)
-    private String domainName;
+    private String dmName;
 
     @Column(name="domain_code", nullable = false)
-    private String domainCode;
+    private String dmCode;
 
     @Column(name="domain_order", nullable = false)
-    private String domainOrder;
+    private String dmOrder;
 
     @Column(name="self_id", nullable = false)
     private String selfId;

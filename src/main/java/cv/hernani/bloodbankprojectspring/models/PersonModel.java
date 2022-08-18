@@ -1,6 +1,5 @@
 package cv.hernani.bloodbankprojectspring.models;
 
-import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,6 +12,5 @@ public class PersonModel extends CommonPersonAtributsModel{
 
     @Column(name="dm_type_person", nullable = false, length = 10)
     private String dmTypePerson;
-
     
 }

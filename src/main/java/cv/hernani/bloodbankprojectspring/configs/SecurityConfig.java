@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 
         authenticationManagerBuilder.inMemoryAuthentication()
-                .withUser("ady").password(passwordEncoder().encode("ady"))
+                .withUser("nanu").password(passwordEncoder().encode("nanu"))
                 .authorities("USER");
     }
 

@@ -5,19 +5,22 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
 @Table(name = "tb_rejection")
 public class RejectionModel extends CommonAtributsModel{
 
-    @Column(name="id_person",nullable = false, unique = true, length = 10)
-    private UUID idPerson;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_person", nullable = false, unique = true)
+    private CommonAtributsModel idPerson;
 
-    @Column(name="dm_rejection",nullable = false, unique = true, length = 10)
-    private UUID dmReject;
+    @Column(name="dm_code_rejection",nullable = false, unique = true)
+    private String dmCodeRejection;
 
-    @Column(name="dm_donation_type",nullable = false, unique = true, length = 10)
-    private UUID dmDonaType;
+    @Column(name="dm_code_donation",nullable = false, unique = true, length = 10)
+    private String dmCodeDonation;
 
 }

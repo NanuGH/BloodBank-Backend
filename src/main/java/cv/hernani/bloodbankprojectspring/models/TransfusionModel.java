@@ -16,8 +16,8 @@ import lombok.Data;
 @Table(name = "tb_transfusion")
 public class TransfusionModel extends CommonAtributsModel {
 
-    @Column(name="id_receiver",nullable = false, unique = true, length = 10)
-    private UUID idTransfusion;
+    /*@Column(name="id_receiver",nullable = false, unique = true, length = 10)
+    private UUID idTransfusion;*/
 
     @ManyToOne
     @JoinColumn(name = "fk_id_collection", nullable = false, unique = true)

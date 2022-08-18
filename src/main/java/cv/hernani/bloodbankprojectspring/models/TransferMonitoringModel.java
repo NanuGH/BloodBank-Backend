@@ -14,10 +14,8 @@ import lombok.Data;
 @Table(name = "tb_transfer_monitoring")
 public class TransferMonitoringModel extends CommonAtributsModel {
     
-    private static final long serialVersionUID = 1L;
-
-    @Column(name="id_transfer_monitoring",nullable = false, unique = true, length = 10)
-    private UUID idTransMon;
+    /*@Column(name="id_transfer_monitoring",nullable = false, unique = true, length = 10)
+    private UUID idTransMon;*/
 
     @ManyToOne
     @JoinColumn(name="fk_id_employee",nullable = false, unique = true)

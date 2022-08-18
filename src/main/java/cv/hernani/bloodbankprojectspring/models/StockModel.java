@@ -11,8 +11,8 @@ import javax.persistence.Table;
 @Table(name = "tb_stock")
 public class StockModel extends CommonAtributsModel {
 
-    @Column(name="id_colheita", nullable = false)
-    private String idColheita;
+    /*@Column(name="id_colheita", nullable = false)
+    private String idColheita;*/
 
     @ManyToOne
     @JoinColumn(name="fk_id_collection", nullable = false, unique = false)
@@ -22,6 +22,6 @@ public class StockModel extends CommonAtributsModel {
     private Date expirationDate;
 
     @Column(name="dm_stock_type", nullable = false)
-    private Date dmStockType;
+    private String dmCodeStockType;
         
 }
