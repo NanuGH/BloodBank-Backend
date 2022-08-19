@@ -59,7 +59,6 @@ public class CommonPersonAtributsModel implements Serializable {
     @Column(name="update_date", nullable = false, updatable = false)
     private LocalDateTime updateDate;
 
-    //id funcionario???????????????
     @Column(name="who_inserted", nullable = false, updatable = false)
     private String whoInserted; 
 

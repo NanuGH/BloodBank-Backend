@@ -20,6 +20,9 @@ public class DomainModel implements Serializable {
     @Column(name="id_domain",nullable = false, unique = true, length = 10)
     private UUID idDomain;
 
+    @Column(name="domain", nullable = false)
+    private String domain;
+
     @Column(name="domain_name", nullable = false)
     private String dmName;
 

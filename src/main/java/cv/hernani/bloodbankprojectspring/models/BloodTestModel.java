@@ -19,10 +19,10 @@ public class BloodTestModel extends CommonAtributsModel {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_sample", nullable = false, unique = true)
-    private EmployeeModel idSample;
+    private SampleModel idSample;
 
     @Column(name = "dm_code_test", nullable = false, unique = true)
-    private String dmBloodTest;
+    private String dmCodeTest;
 
     @Column(name = "blood_presure", nullable = false, length = 20)
     private String bloodPresure;

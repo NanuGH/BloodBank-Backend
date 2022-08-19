@@ -1,12 +1,12 @@
 package cv.hernani.bloodbankprojectspring.models;
 
 import javax.persistence.Table;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 
 
 @Entity
@@ -15,7 +15,7 @@ public class RejectionModel extends CommonAtributsModel{
 
     @ManyToOne
     @JoinColumn(name = "fk_id_person", nullable = false, unique = true)
-    private CommonAtributsModel idPerson;
+    private PersonModel id;
 
     @Column(name="dm_code_rejection",nullable = false, unique = true)
     private String dmCodeRejection;
