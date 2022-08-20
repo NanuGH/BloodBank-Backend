@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import cv.hernani.bloodbankprojectspring.dtos.PersonDto;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
-import cv.hernani.bloodbankprojectspring.service.PersonService;
+import cv.hernani.bloodbankprojectspring.service.PersonService;         
 
 /*recebe as solicitacoes CRUD  e aciona o 
 service q aciona o repository*/
