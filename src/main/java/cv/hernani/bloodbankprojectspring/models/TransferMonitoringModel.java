@@ -1,21 +1,15 @@
 package cv.hernani.bloodbankprojectspring.models;
 
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "tb_transfer_monitoring")
 public class TransferMonitoringModel extends CommonAtributsModel {
-    
-    /*@Column(name="id_transfer_monitoring",nullable = false, unique = true, length = 10)
-    private UUID idTransMon;*/
 
     @ManyToOne
     @JoinColumn(name="fk_id_employee",nullable = false, unique = true)

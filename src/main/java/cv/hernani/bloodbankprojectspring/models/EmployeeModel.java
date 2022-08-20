@@ -22,8 +22,8 @@ public class EmployeeModel extends CommonPersonAtributsModel{
     @Column(name="function", nullable = false)
     private String function;
 
-    @Column(name="dm_type_person", nullable = false)
-    private String dmTypePerson;
+    @Column(name="dm_person_function", nullable = false)
+    private String dmfunction;
 
     
 }

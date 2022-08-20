@@ -1,19 +1,18 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cv.hernani.bloodbankprojectspring.dtos.PersonDto;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.service.PersonService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /*recebe as solicitacoes CRUD  e aciona o 
 service q aciona o repository*/
@@ -30,10 +29,15 @@ public class PersonController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> savePerson(@RequestBody @Valid PersonDto personDto){
+    public ResponseEntity<Object> createPerson(@RequestBody @Valid PersonDto personDto){
+        System.out.println("BORORO " + personDto.getBirthday());
         var personModel = new PersonModel();
-        BeanUtils.copyProperties(personDto, personModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(personService.savePerson(personModel));
+        BeanUtils.copyProperties(personDto, personModel);//converter DTO em Model para salvar no BD
+    
+        personModel.setInsertionDate(LocalDateTime.now(ZoneId.of("UTC")));
+        personModel.setUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+    
+        return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personModel));
     }
    
 }

@@ -1,23 +1,17 @@
 package cv.hernani.bloodbankprojectspring.models;
 
-import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
-
-@Data
 @Entity
 @Table(name="tb_sample")
 public class SampleModel extends CommonAtributsModel {
 
     private static final long serialVersionUID = 1L;
-
-    /*@Column(name = "id_sample", nullable = false, unique = true, length = 10)
-    private UUID idSample;*/
 
     @ManyToOne
     @JoinColumn(name="fk_id_employee", nullable = false, unique = false)

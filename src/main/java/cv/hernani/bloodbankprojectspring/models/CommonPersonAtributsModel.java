@@ -23,46 +23,46 @@ public class CommonPersonAtributsModel implements Serializable {
     @Column(name="id",nullable = false, unique = true, length = 10)
     private UUID id;
 
-    @Column(name="name_person", nullable = false, length = 10)
+    @Column(name="name_person", nullable = true, length = 10)
     private String namePerson;
 
-    @Column(name="surname_person", nullable = false, length = 10)
+    @Column(name="surname_person", nullable = true, length = 10)
     private String surnamePerson;
 
-    @Column(name="dm_doc_ident", nullable = false, length = 15)
+    @Column(name="dm_doc_ident", nullable = true, length = 15)
     private String dmDocIdent;
 
-    @Column(name="birthday", nullable = false)
-    private LocalDate birthday;
+    @Column(name="birthday", nullable = true)
+    private String birthday;
 
     @Column(name="picture_person", nullable = true)
     private String picturePerson;
 
-    @Column(name="dm_sex_person", nullable = false, length = 1)
+    @Column(name="dm_sex", nullable = true, length = 1)
     private String dmSex;
 
-    @Column(name="dm_home_address", nullable = false, length = 10)
+    @Column(name="dm_home_address", nullable = true, length = 20)
     private String dmHomeAdd;
 
-    @Column(name="job_address", nullable = true, length = 10)
+    @Column(name="job_address", nullable = true, length = 20)
     private String jobAddress;
 
-    @Column(name="profession", nullable = true, length = 10)
+    @Column(name="profession", nullable = true, length = 15)
     private String profession;
 
-    @Column(name="grade", nullable = true, length = 10)
+    @Column(name="grade", nullable = true, length = 15)
     private String grade;//escolaridade
 
-    @Column(name="insertion_date", nullable = false, updatable = false)
+    @Column(name="insertion_date", nullable = true)
     private LocalDateTime insertionDate;
 
-    @Column(name="update_date", nullable = false, updatable = false)
+    @Column(name="update_date", nullable = true)
     private LocalDateTime updateDate;
 
-    @Column(name="who_inserted", nullable = false, updatable = false)
+    @Column(name="who_inserted", nullable = true,length = 15)
     private String whoInserted; 
 
-    @Column(name="who_updated", nullable = false, updatable = false)
-    private String WhoUpdated;
+    @Column(name="who_updated", nullable = true,length = 15)
+    private String whoUpdated;
     
 }

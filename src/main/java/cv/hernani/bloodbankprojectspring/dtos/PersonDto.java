@@ -7,47 +7,49 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 
-/*get and set */
 @Data
-public class PersonDto { // para validar os campos q o cliente envia     
-    @NotBlank
-    @Size(max = 10)
-    private String dmTypePerson;
+public class PersonDto { // para validar os campos q o cliente envia    
 
-    @NotBlank
+    //@NotBlank
     @Size(max = 10)
     private String namePerson;
 
-    @NotBlank
+   //@NotBlank
     @Size(max = 10)
     private String surnamePerson;
 
-    @NotBlank
-    @Size(max = 10)
+    //@NotBlank
+    @Size(max = 15)
     private String dmDocIdent;
 
-    @NotBlank
-    @Size(max = 10)
-    private LocalDate birthday;
+    //@NotBlank
+    private String birthday;
 
-    @NotBlank
-    @Size(max = 10)
+    //@NotBlank
     private String picturePerson;
 
-    @NotBlank
-    @Size(max = 10)
+   // @NotBlank
+    @Size(max = 1)
     private String dmSex;
 
-    @NotBlank
-    @Size(max = 10)
+   // @NotBlank
+    @Size(max = 20)
     private String dmHomeAdd;
 
-    @Size(max = 10)
+    @Size(max = 20)
     private String jobAddress;
 
-    @Size(max = 10)
+    @Size(max = 15)
     private String profession;
 
-    @Size(max = 10)
-    private String grade;//escolaridade
+    @Size(max = 15)
+    private String grade;
+
+    @Size(max = 15)
+    private String whoInserted;
+
+    @Size(max = 15)
+    private String whoUpdated;
+
+
 }

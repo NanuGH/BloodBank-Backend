@@ -19,17 +19,19 @@ public class PersonService {
      * @Autowired
      * PersonRepositories personRepository;
      */
-
     /*criar um construtor e passar a dependencia necessaria como parametro
      (outra forma) */
+    
     final PersonRepository personRepository;
+
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
-    @Transactional // utilizar princip. qdo existe delete ou insert em cascata 
-                   //pq caso algo de erro ele garante um "roll-back" para q tudo volte ao normal
-    public PersonModel savePerson (PersonModel personModel){
+    /*/ utilizar princip. qdo existe delete ou insert em cascata 
+    //pq caso algo de erro ele garante um "roll-back" para q tudo volte ao normal*/
+    @Transactional 
+    public PersonModel createPerson (PersonModel personModel){
         return personRepository.save(personModel);
     }
 
