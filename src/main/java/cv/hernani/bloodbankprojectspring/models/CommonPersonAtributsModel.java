@@ -23,17 +23,17 @@ public class CommonPersonAtributsModel implements Serializable {
     @Column(name="id",nullable = false, unique = true, length = 10)
     private UUID id;
 
-    @Column(name="name_person", nullable = true, length = 10)
+    @Column(name="name_person", nullable = false, length = 10)
     private String namePerson;
 
-    @Column(name="surname_person", nullable = true, length = 10)
+    @Column(name="surname_person", nullable = false, length = 10)
     private String surnamePerson;
 
-    @Column(name="dm_doc_ident", nullable = true, length = 15)
+    @Column(name="dm_doc_ident", nullable = false, length = 15)
     private String dmDocIdent;
 
-    @Column(name="birthday", nullable = true)
-    private String birthday;
+    @Column(name="birthday", nullable = false)
+    private LocalDate birthday;
 
     @Column(name="picture_person", nullable = true)
     private String picturePerson;

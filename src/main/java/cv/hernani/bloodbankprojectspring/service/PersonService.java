@@ -1,10 +1,12 @@
 package cv.hernani.bloodbankprojectspring.service;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+import javax.transaction.Transactional;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
 
@@ -34,5 +36,25 @@ public class PersonService {
     public PersonModel createPerson (PersonModel personModel){
         return personRepository.save(personModel);
     }
+
+    public boolean existPerson(String namePerson, String surnamePerson, String dmDocIdent) {
+        return personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(namePerson, surnamePerson, dmDocIdent);
+    }
+
+    public List<PersonModel> findAll() {
+        return personRepository.findAll();
+    }
+
+	public Optional<PersonModel> findPersonById(UUID id) {
+		return personRepository.findById(id);
+	}
+
+    @Transactional 
+	public void deletePerson(PersonModel personModel) {
+		personRepository.delete(personModel);
+	}
+
+
+
 
 }
