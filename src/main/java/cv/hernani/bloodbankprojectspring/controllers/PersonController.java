@@ -5,14 +5,11 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import cv.hernani.bloodbankprojectspring.dtos.PersonDto;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.service.PersonService;         
@@ -47,7 +44,8 @@ public class PersonController {
     
         return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personModel));
     }
-   
+
+    
     @GetMapping
     public ResponseEntity<List<PersonModel>> getAllPerson(){
         return ResponseEntity.status(HttpStatus.OK).body(personService.findAll());
@@ -85,7 +83,8 @@ public class PersonController {
         var personModel = new PersonModel();
         BeanUtils.copyProperties(personDto, personModel);
         personModel.setId(personModelOptional.get().getId());
-        personModel.setInsertionDate(personModelOptional.get().getInsertionDate());
+        personModel.setInsertionDate(personModelOptional.get().getInsertionDate());     
+        personModel.setUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
         return ResponseEntity.status(HttpStatus.OK).body(personService.createPerson(personModel));
 

@@ -1,6 +1,7 @@
 package cv.hernani.bloodbankprojectspring.dtos;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -9,6 +10,18 @@ import lombok.Data;
 
 @Data
 public class EmployeeDto {
+
+    @Size(max = 2)
+    private String dmBloodCode;
+
+    @Size(max = 15)
+    private String identifNumber;
+
+    @Size(max = 15)
+    private String pw;
+
+    @Size(max = 15)
+    private String dmfunction;
     
     @NotBlank
     @Size(max = 10)
@@ -49,18 +62,6 @@ public class EmployeeDto {
     private String whoInserted;
 
     @Size(max = 15)
-    private String whoUpdated;
-
-    @Size(max = 15)
-    private String dmBloodCode;
-
-    @Size(max = 15)
-    private String identNumber;
-
-    @Size(max = 15)
-    private String pw;
-
-    @Size(max = 15)
-    private String dmfunction;
+    private String whoUpdated;   
 
 }

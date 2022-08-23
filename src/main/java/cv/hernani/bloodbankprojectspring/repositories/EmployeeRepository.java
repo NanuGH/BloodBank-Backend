@@ -8,6 +8,7 @@ import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 
 public interface EmployeeRepository extends JpaRepository<EmployeeModel, UUID> {
 
-    boolean existsByNameEmployeeAndSurnameEmployeeAndIdentNumber(String namePerson, String surnamePerson, String identNumber);
-    
+    boolean existsByNamePersonAndSurnamePersonAndIdentifNumber(String namePerson, String surnamePerson, String  identifNumber);
+ 
+ 
 }
