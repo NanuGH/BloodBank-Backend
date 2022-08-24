@@ -2,7 +2,6 @@ package cv.hernani.bloodbankprojectspring.models;
 
 import java.io.Serializable;
 import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,19 +19,19 @@ public class DomainModel implements Serializable {
     @Column(name="id_domain",nullable = false, unique = true, length = 10)
     private UUID idDomain;
 
-    @Column(name="domain", nullable = false)
+    @Column(name="domain", nullable = false, length = 15)
     private String domain;
 
-    @Column(name="domain_name", nullable = false)
+    @Column(name="domain_name", nullable = false, length = 15)
     private String dmName;
 
-    @Column(name="domain_code", nullable = false)
+    @Column(name="domain_code", nullable = false, length = 5)
     private String dmCode;
 
-    @Column(name="domain_order", nullable = false)
+    @Column(name="domain_order", nullable = false, length = 2)
     private String dmOrder;
 
-    @Column(name="self_id", nullable = false)
+    @Column(name="self_id", nullable = false, length = 2)
     private String selfId;
 
 }

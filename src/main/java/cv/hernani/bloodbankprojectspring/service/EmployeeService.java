@@ -1,18 +1,11 @@
 package cv.hernani.bloodbankprojectspring.service;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
-
-import cv.hernani.bloodbankprojectspring.dtos.EmployeeDto;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 

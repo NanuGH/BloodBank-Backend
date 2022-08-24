@@ -1,7 +1,6 @@
 package cv.hernani.bloodbankprojectspring.dtos;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
