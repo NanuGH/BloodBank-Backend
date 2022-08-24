@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import cv.hernani.bloodbankprojectspring.dtos.DomainDto;
 import cv.hernani.bloodbankprojectspring.models.DomainModel;
+import cv.hernani.bloodbankprojectspring.repositories.DomainRepository;
 import cv.hernani.bloodbankprojectspring.service.DomainService;
 
 @Service
 public class DomainServiceImpl implements DomainService {
+
     private final DomainService domainService;
+    private final DomainRepository domainRepository;
 
     @Override
     public ResponseEntity<Object> createDomain(DomainDto domainDto) {
