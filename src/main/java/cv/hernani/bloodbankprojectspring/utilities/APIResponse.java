@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+@Data
 @Setter @AllArgsConstructor @NoArgsConstructor @Builder
 public class APIResponse {
 

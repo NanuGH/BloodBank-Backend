@@ -9,10 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
-@Table(name = "tb_domain")
+@Table(name = "domain")
 public class DomainModel implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Id  @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,5 +36,7 @@ public class DomainModel implements Serializable {
 
     @Column(name="self_id", nullable = false, length = 2)
     private String selfId;
+
+
 
 }
