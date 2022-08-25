@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.Data;
 
 @Data
@@ -53,10 +56,12 @@ public class CommonPersonAtributsModel implements Serializable {
     @Column(name="grade", nullable = true, length = 15)
     private String grade;//escolaridade
 
-    @Column(name="insertion_date", nullable = true)
+    @Column(name="insertion_date", nullable = true) 
+    @CreationTimestamp //sem necessidade de fazer set na serviço
     private LocalDateTime insertionDate;
 
     @Column(name="update_date", nullable = true)
+    @UpdateTimestamp
     private LocalDateTime updateDate;
 
     @Column(name="who_inserted", nullable = true,length = 15)

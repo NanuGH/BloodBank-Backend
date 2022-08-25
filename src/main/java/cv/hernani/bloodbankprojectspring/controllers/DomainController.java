@@ -39,21 +39,30 @@ public class DomainController {
 
 
     @GetMapping()
-    public ResponseEntity<Object> getDomain() {
-        APIResponse response = domainService.getDomain();
+    public ResponseEntity<Object> getAllDomain() {
+        APIResponse response = domainService.getAllDomain();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteDomain(@PathVariable("id") UUID id) {
-        domainService.deleteDomain(id);
-        return new ResponseEntity<>("Domain deleted successsfully", HttpStatus.OK);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{id}")
+    public ResponseEntity<Object> getDomainById(@PathVariable("id") UUID id){
+        APIResponse response = domainService.getDomainById(id);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/del/{id}")
+
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deletDomain(@PathVariable("id") UUID id){
-        domainService.deletDomain(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+       APIResponse response = domainService.deleteDomain(id);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @PutMapping(value="/{id}")
+    public ResponseEntity<Object> updateDomain(@PathVariable(value = "id") UUID id, 
+                                               @RequestBody @Valid DomainDto domainDto){
+
+        APIResponse response = domainService.updateDomain(id, domainDto);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
     
 }

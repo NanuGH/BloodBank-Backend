@@ -25,7 +25,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping
+   /*@PostMapping
     public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeDto employeeDto){
         if (employeeService.existEmployee(employeeDto.getNamePerson(), employeeDto.getSurnamePerson(), employeeDto.getIdentifNumber())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Employee already exists on DB!");
@@ -36,6 +36,12 @@ public class EmployeeController {
         employeeModel.setInsertionDate(LocalDateTime.now(ZoneId.of("UTC")));
         employeeModel.setUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.createEmployee(employeeModel));
+    }*/
+
+    @PostMapping
+    public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeDto employeeDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.createEmployee(employeeDto));
+
     }
 
     /*  CASTIGO DE ADILSON CORREIA FUNCIONAL @PostMapping
@@ -88,7 +94,7 @@ public class EmployeeController {
         employeeModel.setInsertionDate(employeeModelOptional.get().getInsertionDate());     
         employeeModel.setUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
-        return ResponseEntity.status(HttpStatus.OK).body(employeeService.createEmployee(employeeModel));
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.createEmployee(employeeDto));
     }
     
 
