@@ -24,7 +24,7 @@ import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 public class EmployeeServiceImpl implements EmployeeService{
     
     final EmployeeRepository employeeRepository;
-    //private PersonModel personModel;
+    private PersonModel personModel;
     private EmployeeModel employeeModel;
     private final PersonRepository personRepository;
 
@@ -59,7 +59,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         }     
     }*/
 
-    @Transactional
     public APIResponse createEmployee(EmployeeDto employeeDto){     
         try {
             var pModel = new PersonModel();

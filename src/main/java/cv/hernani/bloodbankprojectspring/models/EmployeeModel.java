@@ -1,15 +1,13 @@
 package cv.hernani.bloodbankprojectspring.models;
 import java.time.LocalDateTime;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -24,10 +22,10 @@ public class EmployeeModel extends CommonAtributsModel{
     @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
     
-    @JoinColumn(name="insertion_date", nullable = false, unique = false)
+    @Column(name="insertion_date", nullable = false, unique = false)
     private LocalDateTime insertionDate;
 
-    @JoinColumn(name="update_date", nullable = false, unique = false)
+    @Column(name="update_date", nullable = false, unique = false)
     private LocalDateTime updateDate;   
 
     /*@Column(name="dm_blood_code", nullable = true, length = 2)
