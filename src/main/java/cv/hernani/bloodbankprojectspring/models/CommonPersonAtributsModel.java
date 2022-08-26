@@ -31,6 +31,9 @@ public class CommonPersonAtributsModel implements Serializable {
 
     @Column(name="surname_person", nullable = false, length = 10)
     private String surnamePerson;
+    
+    @Column(name="blood_type", nullable = false, length = 3)
+    private String dmBloodCode;
 
     @Column(name="dm_doc_ident", nullable = false, length = 15)
     private String dmDocIdent;

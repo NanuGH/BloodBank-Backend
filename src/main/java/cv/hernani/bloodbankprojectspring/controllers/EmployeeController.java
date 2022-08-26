@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeDto;
+import cv.hernani.bloodbankprojectspring.dtos.EmployeeUpdtDto;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.service.EmployeeService;
 
@@ -44,13 +45,6 @@ public class EmployeeController {
 
     }
 
-    /*  CASTIGO DE ADILSON CORREIA FUNCIONAL @PostMapping
-    public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeDto employeeDto){
-        if (employeeService.existEmployee(employeeDto.getNamePerson(), employeeDto.getSurnamePerson(), employeeDto.getIdentifNumber())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Employee already exists on DB!");
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.createEmployee(employeeDto));
-    }*/
 
     @GetMapping
     public ResponseEntity<List<EmployeeModel>>getAllEmployee(){
@@ -81,7 +75,7 @@ public class EmployeeController {
     
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateEmployee(@PathVariable(value = "id") UUID id,
-                                                @RequestBody @Valid EmployeeDto employeeDto){
+                                                @RequestBody @Valid EmployeeUpdtDto employeeUpdtDto){
 
         Optional<EmployeeModel> employeeModelOptional = employeeService.findEmployeeById(id);
         if (!employeeModelOptional.isPresent()) {
@@ -89,12 +83,12 @@ public class EmployeeController {
         }
 
         var employeeModel = new EmployeeModel();
-        BeanUtils.copyProperties(employeeDto, employeeModel);
+        //BeanUtils.copyProperties(employeeDto, employeeModel);
         employeeModel.setId(employeeModelOptional.get().getId());
-        employeeModel.setInsertionDate(employeeModelOptional.get().getInsertionDate());     
+        employeeModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());     
         employeeModel.setUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
-        return ResponseEntity.status(HttpStatus.OK).body(employeeService.createEmployee(employeeDto));
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.createEmployee(employeeUpdtDto));
     }
     
 

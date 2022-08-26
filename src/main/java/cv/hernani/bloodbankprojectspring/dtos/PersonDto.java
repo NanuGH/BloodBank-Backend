@@ -18,6 +18,9 @@ public class PersonDto { // para validar os campos q o cliente envia
     @Size(max = 10)
     private String surnamePerson;
 
+    @Size(max = 3)
+    private String dmBloodCode;
+
     //@NotBlank
     @Size(max = 15)
     private String dmDocIdent;
