@@ -1,4 +1,4 @@
-package cv.hernani.bloodbankprojectspring.service.ServiceImplement;
+package cv.hernani.bloodbankprojectspring.service.service;
 
 public class PersonServiceImpl {
 

@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
 
@@ -22,12 +24,14 @@ public class EmployeeModel extends CommonAtributsModel{
     @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
     
-    @Column(name="insertion_date", nullable = false, unique = false)
+    @Column(name="insertion_date", nullable = true) 
+    @CreationTimestamp //sem necessidade de fazer set na serviço
     private LocalDateTime insertionDate;
 
-    @Column(name="update_date", nullable = false, unique = false)
-    private LocalDateTime updateDate;   
-
+    @Column(name="update_date", nullable = true)
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
+    
     /*@Column(name="dm_blood_code", nullable = true, length = 2)
     private String dmBloodCode;*/
 

@@ -73,22 +73,11 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.OK).body("Employee Deleted!");
     }
     
+
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateEmployee(@PathVariable(value = "id") UUID id,
-                                                @RequestBody @Valid EmployeeUpdtDto employeeUpdtDto){
-
-        Optional<EmployeeModel> employeeModelOptional = employeeService.findEmployeeById(id);
-        if (!employeeModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not Found!");
-        }
-
-        var employeeModel = new EmployeeModel();
-        //BeanUtils.copyProperties(employeeDto, employeeModel);
-        employeeModel.setId(employeeModelOptional.get().getId());
-        employeeModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());     
-        employeeModel.setUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
-
-        return ResponseEntity.status(HttpStatus.OK).body(employeeService.createEmployee(employeeUpdtDto));
+                                                 @RequestBody @Valid EmployeeUpdtDto employeeUpdtDto){
+                                                    return ResponseEntity.status(HttpStatus.OK).body(employeeService.updtEmployee(id,employeeUpdtDto));                                         
     }
     
 

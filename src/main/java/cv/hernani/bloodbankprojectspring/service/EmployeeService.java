@@ -10,7 +10,8 @@ import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
 public interface EmployeeService {
-    APIResponse createEmployee(EmployeeUpdtDto employeeUpdtDto);
+    APIResponse createEmployee(EmployeeDto employeeDto);
+    APIResponse updtEmployee(UUID id, EmployeeUpdtDto employeeUpdtDto);
     /*boolean existEmployee(String namePerson, String surnamePerson, String identifNumber);*/
     List<EmployeeModel> findAll();
     Optional<EmployeeModel> findEmployeeById(UUID id);

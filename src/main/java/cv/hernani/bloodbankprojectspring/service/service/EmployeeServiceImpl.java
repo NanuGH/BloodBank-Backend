@@ -1,15 +1,16 @@
-package cv.hernani.bloodbankprojectspring.service.ServiceImplement;
+package cv.hernani.bloodbankprojectspring.service.service;
 
-import org.apache.coyote.http11.Http11AprProtocol;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import javax.transaction.Transactional;
 
+
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeDto;
+import cv.hernani.bloodbankprojectspring.dtos.EmployeeUpdtDto;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
@@ -87,6 +88,59 @@ public class EmployeeServiceImpl implements EmployeeService{
         }     
     }
 
+   /*@Override
+    public APIResponse updtEmployee(UUID id, EmployeeUpdtDto employeeUpdtDto) {
+        Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(id);
+        if (!employeeModelOptional.isPresent()) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("Conflict: Domain don't exists on DB!"))
+                    .build();
+        }
+        var employeeModel = employeeModelOptional.get(); 
+        try {
+            //BeanUtils.copyProperties(employeeModelOptional, employeeModel);
+            //employeeModel.setId(employeeModelOptional.get().getId());
+            employeeModel.setPw(employeeUpdtDto.getPw());
+            employeeModel.setDmfunction(employeeUpdtDto.getDmfunction());
+            employeeModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());
+
+            employeeRepository.save(employeeModel);
+            return APIResponse.builder().status(true)
+                    .message(MessageState.ATUALIZADO_COM_SUCESSO).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO_AO_ATUALIZAR)
+                    .details(Arrays.asList(e.getMessage())).build();
+        }
+    }*/
+    @Override
+    public APIResponse updtEmployee(UUID id, EmployeeUpdtDto employeeUpdtDto) {
+        Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(id);
+        if (!employeeModelOptional.isPresent()) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("Conflict: Employee don't exists on DB!"))
+                    .build();
+        }
+        EmployeeModel employeeModel = employeeModelOptional.get(); 
+        try {
+            BeanUtils.copyProperties(employeeUpdtDto, employeeModel);  
+            employeeModel.setPw(Helper.passEncoder().encode(employeeUpdtDto.getPw())); 
+            System.out.println(Helper.passEncoder().encode("rawPassword"));        
+            employeeRepository.save(employeeModel);
+            return APIResponse.builder().status(true)
+                    .message(MessageState.ATUALIZADO_COM_SUCESSO).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO_AO_ATUALIZAR)
+                    .details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
+
 
     /*public boolean existEmployee(String namePerson, String surnamePerson, String identifNumber){
         return employeeRepository.existsByNamePersonAndSurnamePersonAndIdentifNumber(namePerson, surnamePerson, identifNumber);
@@ -104,6 +158,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     public void deleteEmployee(EmployeeModel employeeModel){
         employeeRepository.delete(employeeModel);
     }
+
+    
 
    
 }
