@@ -13,15 +13,12 @@ import lombok.Data;
 @Table(name="tb_blood_collection")
 public class BloodCollectionModel extends CommonAtributsModel{
 
-    /*@Column(name="id_collection", nullable = false, unique = false, length = 10)
-    private String id_collection;*/
+    @ManyToOne
+    @JoinColumn(name="fk_id_donor", nullable = true, unique = false)
+    private PersonModel idDonor;
 
     @ManyToOne
-    @JoinColumn(name="fk_id_donor", nullable = false, unique = false)
-    private BloodDonorModel idDonor;
-
-    @ManyToOne
-    @JoinColumn(name="fk_id_employee", nullable = false, unique = false)
+    @JoinColumn(name="fk_id_employee", nullable = true, unique = false)
     private EmployeeModel idEmployee;
 
     @Column(name="quantidade", nullable = false)
