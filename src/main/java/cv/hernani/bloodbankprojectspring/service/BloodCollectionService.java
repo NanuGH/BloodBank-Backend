@@ -5,5 +5,10 @@ import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
 
 public interface BloodCollectionService {
-    APIResponse createBloodColection(BloodCollectionDto bloodCollectionDto);
+    public APIResponse createBloodColection(BloodCollectionDtopublic bloodCollectionDto);
+    public APIResponse updtBloodCollection(UUID id, BloodCollectionDto bloodCollectionDto);
+    /*boolean existEmployee(String namePerson, String surnamePerson, String identifNumber);*/
+    public APIResponse getAllDomain();
+    public APIResponse getBloodCollectById(UUID id);
+    public APIResponse delBloodCollection(BloodCollectionModel bloodCollectModel);
 }

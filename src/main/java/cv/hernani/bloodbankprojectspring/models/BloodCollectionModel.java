@@ -14,11 +14,11 @@ import lombok.Data;
 public class BloodCollectionModel extends CommonAtributsModel{
 
     @ManyToOne
-    @JoinColumn(name="fk_id_donor", nullable = true, unique = false)
+    @JoinColumn(name="fk_id_donor", nullable = false, unique = false)
     private PersonModel idDonor;
 
     @ManyToOne
-    @JoinColumn(name="fk_id_employee", nullable = true, unique = false)
+    @JoinColumn(name="fk_id_employee", nullable = false, unique = false)
     private EmployeeModel idEmployee;
 
     @Column(name="quantidade", nullable = false)
@@ -26,5 +26,6 @@ public class BloodCollectionModel extends CommonAtributsModel{
 
     @Column(name="external_collection", nullable = false)
     private String externCollection;
+
     
 }

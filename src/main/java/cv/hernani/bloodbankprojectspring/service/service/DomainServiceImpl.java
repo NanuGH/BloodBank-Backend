@@ -66,8 +66,7 @@ public class DomainServiceImpl implements DomainService {
             BeanUtils.copyProperties(domainDto, domainModel);
             domainModel.setIdDomain(domainModelOptional.get().getIdDomain());
             domainRepository.save(domainModel);
-            return APIResponse.builder().status(true)
-                    .message(MessageState.ATUALIZADO_COM_SUCESSO).build();
+            return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
 
         } catch (Exception e) {
             return APIResponse.builder()

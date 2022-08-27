@@ -118,20 +118,19 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public APIResponse updtEmployee(UUID id, EmployeeUpdtDto employeeUpdtDto) {
         Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(id);
-        if (!employeeModelOptional.isPresent()) {
+        
+        EmployeeModel employeeModel = employeeModelOptional.get(); 
+        try {if (!employeeModelOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("Conflict: Employee don't exists on DB!"))
                     .build();
         }
-        EmployeeModel employeeModel = employeeModelOptional.get(); 
-        try {
             BeanUtils.copyProperties(employeeUpdtDto, employeeModel);  
             employeeModel.setPw(Helper.passEncoder().encode(employeeUpdtDto.getPw())); 
-            System.out.println(Helper.passEncoder().encode("rawPassword"));        
+            //System.out.println(Helper.passEncoder().encode("rawPassword"));        
             employeeRepository.save(employeeModel);
-            return APIResponse.builder().status(true)
-                    .message(MessageState.ATUALIZADO_COM_SUCESSO).build();
+            return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
 
         } catch (Exception e) {
             return APIResponse.builder()

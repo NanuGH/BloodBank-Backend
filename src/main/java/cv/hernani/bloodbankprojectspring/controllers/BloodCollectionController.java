@@ -13,7 +13,7 @@ import cv.hernani.bloodbankprojectspring.dtos.BloodCollectionDto;
 import cv.hernani.bloodbankprojectspring.service.BloodCollectionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(path = "/bloodcollection")
 public class BloodCollectionController {
@@ -30,4 +30,33 @@ public class BloodCollectionController {
         APIResponse response = bloodCollectServ.createBloodColection(bloodCollectDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<Object>getAllBloodCollect(){
+        APIResponse response = bloodCollectServ.getAllBloodCollect();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getBloodCollectById(@PathVariable(value = "id") UUID id) {
+        APIResponse response = bloodCollectServ.getBloodCollectById(id);
+        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") UUID id){
+        APIResponse response = bloodCollectServ.delBloodCollection(id);
+        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+    }
+    
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateEmployee(@PathVariable(value = "id") UUID id,@RequestBody @Valid EmployeeUpdtDto employeeUpdtDto){        
+        APIResponse response = bloodCollectServ.updtBloodCollection(id);
+        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+    }
+                                              
+    }
+
+
 }
