@@ -11,9 +11,6 @@ import javax.persistence.Table;
 @Table(name = "tb_stock")
 public class StockModel extends CommonAtributsModel {
 
-    /*@Column(name="id_colheita", nullable = false)
-    private String idColheita;*/
-
     @ManyToOne
     @JoinColumn(name="fk_id_collection", nullable = false, unique = false)
     private BloodCollectionModel idcollection;
