@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
-
 import cv.hernani.bloodbankprojectspring.dtos.BloodCollectionDto;
 import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
@@ -57,7 +56,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
         try {
             BeanUtils.copyProperties(bloodCollectionDto, bloodCollectionModel);
             bloodCollectionModel.setId(bloodCollectOptional.get().getId());
-            bloodColectRepo.save(bloodCollectOptional);
+            bloodColectRepo.save(bloodCollectionModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).details(Arrays.asList(e.getMessage())).build();

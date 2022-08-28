@@ -42,8 +42,6 @@ public class StockController {
         APIResponse response = stockService.updateStock(id);
         return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
     }
-                                              
-    }
 
 
 }
