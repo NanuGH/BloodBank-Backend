@@ -59,7 +59,13 @@ public class EmployeeServiceImpl implements EmployeeService{
         }     
     }*/
 
-    public APIResponse createEmployee(EmployeeDto employeeDto){     
+    public APIResponse createEmployee(EmployeeDto employeeDto){   
+        if (employeeRepository.existsByDmFunctionAndIdentifNumber(employeeDto.getDmfunction(), employeeDto.getIdentNumber())) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("Conflict: Employee already exists on DB!"))
+                    .build();
+        }  
         try {
             var pModel = new PersonModel();
             BeanUtils.copyProperties(employeeDto.getPersonDto(), pModel);
