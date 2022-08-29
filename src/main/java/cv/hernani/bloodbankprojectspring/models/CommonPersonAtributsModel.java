@@ -22,7 +22,8 @@ public class CommonPersonAtributsModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id  @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id  
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id",nullable = false, unique = true, length = 10)
     private UUID id;
 

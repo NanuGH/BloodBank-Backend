@@ -1,6 +1,22 @@
 package cv.hernani.bloodbankprojectspring.service.service;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
+
 import cv.hernani.bloodbankprojectspring.dtos.StockDto;
+import cv.hernani.bloodbankprojectspring.models.StockModel;
+import cv.hernani.bloodbankprojectspring.repositories.StockRepository;
+import cv.hernani.bloodbankprojectspring.service.StockService;
+import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
+import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 
 @Service
 public class StockServiceImpl implements StockService {
@@ -12,11 +28,11 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public APIResponse createStock(StockDto stockDto) {
+    public APIResponse createStock(@RequestBody @Valid StockDto stockDto) {
         try {
             var stockModel= new StockModel();
-            BeanUtils.copyProperties(bloodCollectionDto,bloodCollectModel);
-            bloodCollectRepository.save(bloodCollectModel);
+            BeanUtils.copyProperties(stockDto,stockModel);
+            stockRepository.save(stockModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
@@ -24,10 +40,10 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    APIResponse updateStock(UUID id,StockDto stockDto){
-        Optional<StockModel> StockModelOptional = stockRepository.finndById(id);
+    public APIResponse updateStock( UUID id, @RequestBody @Valid StockDto stockDto){
+        Optional<StockModel> StockModelOptional = stockRepository.findById(id);
         if (!StockModelOptional.isPresent()) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("Conflict: Blood Collection don't exists on DB!")).build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("Conflict: Donation don't exists on DB!")).build();
         }
         var stockModel = new StockModel();
 
@@ -54,7 +70,7 @@ public class StockServiceImpl implements StockService {
     @Override
     public APIResponse getStockById(UUID id){
         if (!stockRepository.existsById(id)) {
-            return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Collection dont exists on Stock!")).build();
+            return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Donation dont exists on Stock!")).build();
         }
         Optional<StockModel> stockModel = stockRepository.findById(id);
         try {
@@ -68,7 +84,7 @@ public class StockServiceImpl implements StockService {
 
     public APIResponse deleteStockById(UUID id){
         if (!stockRepository.existsById(id)) {
-            return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Collection dont exists on Stock!")).build();
+            return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Donation dont exists on Stock!")).build();
         }
         try {
             stockRepository.deleteById(id);

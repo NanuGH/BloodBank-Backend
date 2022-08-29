@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import javax.transaction.Transactional;
-
+import javax.validation.Valid;
 
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeDto;
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeUpdtDto;
@@ -19,14 +19,13 @@ import cv.hernani.bloodbankprojectspring.service.EmployeeService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.Helper;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
     
     final EmployeeRepository employeeRepository;
-    private PersonModel personModel;
-    private EmployeeModel employeeModel;
     private final PersonRepository personRepository;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, PersonRepository personRepository){
@@ -115,16 +114,19 @@ public class EmployeeServiceImpl implements EmployeeService{
                     .details(Arrays.asList(e.getMessage())).build();
         }
     }*/
+    
     @Override
-    public APIResponse updtEmployee(UUID id, EmployeeUpdtDto employeeUpdtDto) {
+    public APIResponse updtEmployee(UUID id, @RequestBody @Valid EmployeeUpdtDto employeeUpdtDto) {
         Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(id);
         
         EmployeeModel employeeModel = employeeModelOptional.get(); 
-        try {if (!employeeModelOptional.isPresent()) {
+        try {
+            if (!employeeModelOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("Conflict: Employee don't exists on DB!"))
                     .build();
+            
         }
             BeanUtils.copyProperties(employeeUpdtDto, employeeModel);  
             employeeModel.setPw(Helper.passEncoder().encode(employeeUpdtDto.getPw())); 
@@ -133,8 +135,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
 
         } catch (Exception e) {
-            return APIResponse.builder()
-                    .status(false).message(MessageState.ERRO_AO_ATUALIZAR)
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR)
                     .details(Arrays.asList(e.getMessage())).build();
         }
     }

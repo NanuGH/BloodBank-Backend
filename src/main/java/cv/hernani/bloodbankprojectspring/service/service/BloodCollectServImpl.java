@@ -1,21 +1,23 @@
 package cv.hernani.bloodbankprojectspring.service.service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import cv.hernani.bloodbankprojectspring.dtos.BloodCollectionDto;
 import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
-import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
-import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
 import cv.hernani.bloodbankprojectspring.service.BloodCollectionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @Service
 public class BloodCollectServImpl implements BloodCollectionService {
@@ -24,18 +26,16 @@ public class BloodCollectServImpl implements BloodCollectionService {
     final PersonRepository personRepository;
     final EmployeeRepository employeeRepository;  
 
-    public BloodCollectServImpl(BloodCollectionRepository bloodColectRepo, PersonRepository personRepository, EmployeeRepository employeeRepository) {
-        this.bloodCollectRepository = bloodColectRepo;
+    public BloodCollectServImpl(BloodCollectionRepository bloodCollectRepository, PersonRepository personRepository, EmployeeRepository employeeRepository) {
+        this.bloodCollectRepository = bloodCollectRepository;
         this.personRepository = personRepository;
         this.employeeRepository = employeeRepository;
     }
       
 
     @Override
-    public APIResponse createBloodColection(BloodCollectionDto bloodCollectionDto) {
+    public APIResponse createBloodCollection(@RequestBody @Valid BloodCollectionDto bloodCollectionDto) {
         try {
-            /*var personModel = new PersonModel();
-            var employeeModel = new EmployeeModel();*/
             var bloodCollectModel= new BloodCollectionModel();
             BeanUtils.copyProperties(bloodCollectionDto,bloodCollectModel);
             bloodCollectRepository.save(bloodCollectModel);
@@ -46,8 +46,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
     }
 
     @Override
-    APIResponse updtEmployee(UUID id, BloodCollectionDto bloodCollectionDto){
-        Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.finndById(id);
+    public APIResponse updtBloodCollection(UUID id, @RequestBody @Valid BloodCollectionDto bloodCollectionDto){
+        Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.findById(id);
         if (!bloodCollectOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("Conflict: Blood Collection don't exists on DB!")).build();
         }
@@ -56,7 +56,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
         try {
             BeanUtils.copyProperties(bloodCollectionDto, bloodCollectionModel);
             bloodCollectionModel.setId(bloodCollectOptional.get().getId());
-            bloodColectRepo.save(bloodCollectionModel);
+            bloodCollectRepository.save(bloodCollectionModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).details(Arrays.asList(e.getMessage())).build();
@@ -66,7 +66,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
 
     @Override
     public APIResponse getAllBloodCollection() {
-        List<BloodCollectionModel> getAllBloodCollect = bloodColectRepo.findAll();
+        List<BloodCollectionModel> getAllBloodCollect = bloodCollectRepository.findAll();
         try {
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getAllBloodCollect)).build();
         } catch (Exception e) {
@@ -76,10 +76,10 @@ public class BloodCollectServImpl implements BloodCollectionService {
 
     @Override
     public APIResponse getBloodCollectById(UUID id){
-        if (!bloodColectRepo.existsById(id)) {
+        if (!bloodCollectRepository.existsById(id)) {
             return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Domain dont exists on DB!")).build();
         }
-        Optional<BloodCollectionModel> bloodCollectionModel = bloodColectRepo.findById(id);
+        Optional<BloodCollectionModel> bloodCollectionModel = bloodCollectRepository.findById(id);
         try {
 
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(bloodCollectionModel)).build();
@@ -90,17 +90,19 @@ public class BloodCollectServImpl implements BloodCollectionService {
     }
 
     @Override
-    public APIResponse delBloodCollection(BloodCollectionModel bloodCollectModel){
-        if (!bloodColectRepo.existsById(id)) {
+    public APIResponse delBloodCollection(UUID id){
+        if (!bloodCollectRepository.existsById(id)) {
             return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Domain dont exists on DB!")).build();
         }
         try {
-            bloodColectRepo.deleteById(id);
+            bloodCollectRepository.deleteById(id);
             return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
         }
     }
 
+
+    
     
 }

@@ -1,18 +1,15 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import javax.validation.Valid;
-import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import cv.hernani.bloodbankprojectspring.dtos.PersonDto;
-import cv.hernani.bloodbankprojectspring.models.PersonModel;
-import cv.hernani.bloodbankprojectspring.service.PersonService;         
+import cv.hernani.bloodbankprojectspring.service.PersonService;
+import cv.hernani.bloodbankprojectspring.utilities.APIResponse;         
 
 /*recebe as solicitacoes CRUD  e aciona o 
 service q aciona o repository*/
@@ -21,8 +18,54 @@ service q aciona o repository*/
 @CrossOrigin(origins="*", maxAge=3600)//permite q seja acessado d qq fonte
 @RequestMapping("/person")//definir URI a nivel de classe
 public class PersonController {
+
+    @Autowired
+    private final PersonService personService;
+
+    public PersonController(PersonService personService) {
+        this.personService = personService;
+    }
+
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> createDomain(@Valid @RequestBody PersonDto personDto) {
+        APIResponse response = personService.createPerson(personDto);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping()
+    public ResponseEntity<Object> getAllDomain() {
+        APIResponse response = personService.getAllPerson();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{id}")
+    public ResponseEntity<Object> getDomainById(@PathVariable("id") UUID id){
+        APIResponse response = personService.getPersonById(id);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Object> deletDomain(@PathVariable("id") UUID id){
+       APIResponse response = personService.deletePerson(id);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @PutMapping(value="/{id}")
+    public ResponseEntity<Object> updateDomain(@PathVariable(value = "id") UUID id, 
+                                               @RequestBody @Valid PersonDto personDto){
+
+        APIResponse response = personService.updatePerson(id, personDto);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
     
-    //ponto de injecao do service no controller
+
+
+
+
+    
+   /* //ponto de injecao do service no controller
     final PersonService personService;
     public PersonController(PersonService personService){
         this.personService = personService;
@@ -89,5 +132,5 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body(personService.createPerson(personModel));
 
     }
-
+*/
 }

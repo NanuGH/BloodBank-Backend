@@ -1,8 +1,23 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
+import java.util.UUID;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
+import org.springframework.web.bind.annotation.*;
+
+import cv.hernani.bloodbankprojectspring.dtos.StockDto;
+import cv.hernani.bloodbankprojectspring.service.StockService;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(path = "/bloodcollection")
+@RequestMapping(path = "/stock")
 public class StockController {
 
     @Autowired
@@ -26,21 +41,21 @@ public class StockController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getStocktById(@PathVariable(value = "id") UUID id) {
-        APIResponse response = stockService.getStocktById(id);
-        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+        APIResponse response = stockService.getStockById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteStock(@PathVariable(value = "id") UUID id){
         APIResponse response = stockService.deleteStockById(id);
-        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateStock(@PathVariable(value = "id") UUID id,@RequestBody @Valid StockDto stockDto){        
-        APIResponse response = stockService.updateStock(id);
-        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+        APIResponse response = stockService.updateStock(id,stockDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

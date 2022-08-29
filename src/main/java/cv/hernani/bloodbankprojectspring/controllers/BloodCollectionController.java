@@ -1,17 +1,17 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
+import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 
 import cv.hernani.bloodbankprojectspring.dtos.BloodCollectionDto;
 import cv.hernani.bloodbankprojectspring.service.BloodCollectionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -27,36 +27,33 @@ public class BloodCollectionController {
     
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> createBloodCollect(@Valid @RequestBody BloodCollectionDto bloodCollectDto) {
-        APIResponse response = bloodCollectServ.createBloodColection(bloodCollectDto);
+        APIResponse response = bloodCollectServ.createBloodCollection(bloodCollectDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<Object>getAllBloodCollect(){
-        APIResponse response = bloodCollectServ.getAllBloodCollect();
+        APIResponse response = bloodCollectServ.getAllBloodCollection();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getBloodCollectById(@PathVariable(value = "id") UUID id) {
         APIResponse response = bloodCollectServ.getBloodCollectById(id);
-        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<Object> deleteBloodCollect(@PathVariable(value = "id") UUID id){
         APIResponse response = bloodCollectServ.delBloodCollection(id);
-        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateEmployee(@PathVariable(value = "id") UUID id,@RequestBody @Valid EmployeeUpdtDto employeeUpdtDto){        
-        APIResponse response = bloodCollectServ.updtBloodCollection(id);
-        return new ResponseEntity.status(HttpStatus.OK).body(response, HttpStatus.OK);
+    public ResponseEntity<Object> updateBloodColeect(@PathVariable(value = "id") UUID id,@RequestBody @Valid BloodCollectionDto bloodCollectionDto){        
+        APIResponse response = bloodCollectServ.updtBloodCollection(id,bloodCollectionDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
                                               
-    }
-
-
 }
