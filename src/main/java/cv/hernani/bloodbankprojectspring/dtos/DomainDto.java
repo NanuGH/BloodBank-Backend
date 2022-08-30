@@ -1,7 +1,5 @@
 package cv.hernani.bloodbankprojectspring.dtos;
 
-import javax.validation.constraints.Size;
-
 import lombok.Data;
 
 @Data

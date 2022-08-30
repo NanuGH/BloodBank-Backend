@@ -13,6 +13,7 @@ import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import org.springframework.web.bind.annotation.*;
 
 import cv.hernani.bloodbankprojectspring.dtos.StockDto;
+import cv.hernani.bloodbankprojectspring.dtos.StockUpdtDto;
 import cv.hernani.bloodbankprojectspring.service.StockService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -53,8 +54,8 @@ public class StockController {
     
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateStock(@PathVariable(value = "id") UUID id,@RequestBody @Valid StockDto stockDto){        
-        APIResponse response = stockService.updateStock(id,stockDto);
+    public ResponseEntity<Object> updateStock(@PathVariable(value = "id") UUID id, @RequestBody @Valid StockUpdtDto stockUpdtDto){        
+        APIResponse response = stockService.updateStock(id,stockUpdtDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

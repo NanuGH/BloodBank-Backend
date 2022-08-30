@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import cv.hernani.bloodbankprojectspring.dtos.StockDto;
+import cv.hernani.bloodbankprojectspring.dtos.StockUpdtDto;
 import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 import cv.hernani.bloodbankprojectspring.models.StockModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
@@ -37,17 +38,22 @@ public class StockServiceImpl implements StockService {
         if (!bloodCollectOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Id não existe na BD!"))
+                    .details(Arrays.asList("ERRO: Colheita não existe!"))
                     .build();
-        }  
+        }
         
         var stockModel = new StockModel();
         try {
-           
+            Optional<StockModel> stockOptional = stockRepository.findById(id);
+            if (!stockOptional.isPresent()) {
+                return APIResponse.builder().status(false)
+                        .message(MessageState.ERRO_DE_INSERCAO)
+                        .details(Arrays.asList("ERRO: Coleta já existe no Stock!"))
+                        .build();
+            }           
             BeanUtils.copyProperties(stockDto,stockModel);
-            stockModel.se
+            stockModel.setIdcollection(bloodCollectOptional.get());
             stockRepository.save(stockModel);
-            System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHH"+ stockModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
@@ -55,16 +61,18 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public APIResponse updateStock( UUID id, @RequestBody @Valid StockDto stockDto){
+    public APIResponse updateStock( UUID id, @RequestBody @Valid StockUpdtDto stockUpdtDto){
         Optional<StockModel> StockModelOptional = stockRepository.findById(id);
         if (!StockModelOptional.isPresent()) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("Conflict: Donation don't exists on DB!")).build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Coleta não existe no Stock!")).build();
         }
         var stockModel = new StockModel();
 
         try {
-            BeanUtils.copyProperties(stockDto, stockModel);
+            BeanUtils.copyProperties(stockUpdtDto, stockModel);
             stockModel.setId(StockModelOptional.get().getId());
+            stockModel.setIdcollection(StockModelOptional.get().getIdcollection());
+            stockModel.setWhoInserted(StockModelOptional.get().getWhoInserted());
             stockRepository.save(stockModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
         } catch (Exception e) {
