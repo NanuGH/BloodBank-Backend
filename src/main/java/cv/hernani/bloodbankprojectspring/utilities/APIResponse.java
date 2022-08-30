@@ -1,7 +1,6 @@
 package cv.hernani.bloodbankprojectspring.utilities;
 
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 

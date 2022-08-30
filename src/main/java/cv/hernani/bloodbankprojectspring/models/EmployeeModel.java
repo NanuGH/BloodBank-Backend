@@ -42,7 +42,7 @@ public class EmployeeModel extends CommonAtributsModel{
     private String pw;
 
     @Column(name="dm_function", nullable = true, length=15)
-    private String dmfunction;
+    private String dmFunction;
 
     
 }

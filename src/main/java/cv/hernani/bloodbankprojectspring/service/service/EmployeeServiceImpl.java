@@ -60,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }*/
 
     public APIResponse createEmployee(EmployeeDto employeeDto){   
-        if (employeeRepository.existsByDmFunctionAndIdentifNumber(employeeDto.getDmfunction(), employeeDto.getIdentNumber())) {
+        if (employeeRepository.existsByDmFunctionAndIdentifNumber(employeeDto.getDmFunction(), employeeDto.getIdentNumber())) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("Conflict: Employee already exists on DB!"))
@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService{
              String identfNumber = Helper.identfNumberGenerator();
              employeeModel.setIdentifNumber(identfNumber);
              employeeModel.setPw(employeeDto.getPw()); 
-             employeeModel.setDmfunction(employeeDto.getDmfunction());  
+             employeeModel.setDmFunction(employeeDto.getDmFunction());  
              employeeModel.setIdPerson(pModel);
              employeeModel.setInsertionDate(pModel.getInsertionDate());
              employeeModel.setUpdateDate(pModel.getUpdateDate());
@@ -146,23 +146,58 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
     }
 
-
-
-    /*public boolean existEmployee(String namePerson, String surnamePerson, String identifNumber){
-        return employeeRepository.existsByNamePersonAndSurnamePersonAndIdentifNumber(namePerson, surnamePerson, identifNumber);
-    }*/
-
-    public List<EmployeeModel> findAll(){
-        return employeeRepository.findAll();
+    @Override
+    public APIResponse findAllEmployee() {
+      List<EmployeeModel> findAllEmployee = employeeRepository.findAll();
+      try {
+        return APIResponse.builder().status(true).message(MessageState.SUCESSO)
+                                    .details(Arrays.asList(findAllEmployee)).build(); 
+      } catch (Exception e) {
+        return APIResponse.builder().status(false).message(MessageState.ERRO)
+                                    .details(Arrays.asList(e.getMessage())).build();
+      }
+        
     }
 
-    public Optional<EmployeeModel> findEmployeeById(UUID id){
-        return employeeRepository.findById(id);
+    @Override
+    public APIResponse findEmployeeById(UUID id){
+        if (!employeeRepository.existsById(id)) {
+            return APIResponse.builder().status(false)
+                    .details(Arrays.asList("Conflict: Employee dont exists on DB!"))
+                    .build();
+        }
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(id);
+        try {
+
+            return APIResponse.builder().status(true)
+                    .message(MessageState.SUCESSO)
+                    .details(Arrays.asList(employeeModel)).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO)
+                    .details(Arrays.asList(e.getMessage())).build();
+        }
     }
 
     @Transactional
-    public void deleteEmployee(EmployeeModel employeeModel){
-        employeeRepository.delete(employeeModel);
+    @Override
+    public APIResponse deleteEmployee(UUID id){
+        if (!employeeRepository.existsById(id)) {
+            return APIResponse.builder().status(false)
+                    .details(Arrays.asList("Conflict: Employee dont exists on DB!"))
+                    .build();
+        }
+        try {
+            employeeRepository.deleteById(id);
+            return APIResponse.builder().status(true)
+                    .message(MessageState.REMOVIDO_COM_SUCESSO).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO)
+                    .details(Arrays.asList(e.getMessage())).build();
+        }
     }
 
     
