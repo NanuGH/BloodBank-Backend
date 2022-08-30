@@ -25,9 +25,9 @@ public class BloodCollectionController {
         this.bloodCollectServ = bloodCollectServ;
     }
     
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> createBloodCollect(@Valid @RequestBody BloodCollectionDto bloodCollectDto) {
-        APIResponse response = bloodCollectServ.createBloodCollection(bloodCollectDto);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idFunc}/{idPessoa}")
+    public ResponseEntity<Object> createBloodCollect(@Valid @RequestBody BloodCollectionDto bloodCollectDto, @PathVariable("idFunc") UUID idFunc, @PathVariable("idPessoa") UUID idPessoa) {
+        APIResponse response = bloodCollectServ.createBloodCollection(bloodCollectDto,idFunc,idPessoa);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -37,14 +37,14 @@ public class BloodCollectionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getBloodCollectById(@PathVariable(value = "id") UUID id) {
+    @GetMapping(value ="/{id}")
+    public ResponseEntity<Object> getBloodCollectById(@PathVariable("id") UUID id) {
         APIResponse response = bloodCollectServ.getBloodCollectById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteBloodCollect(@PathVariable(value = "id") UUID id){
+    @DeleteMapping(value ="/{id}")
+    public ResponseEntity<Object> deleteBloodCollect(@PathVariable("id") UUID id){
         APIResponse response = bloodCollectServ.delBloodCollection(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

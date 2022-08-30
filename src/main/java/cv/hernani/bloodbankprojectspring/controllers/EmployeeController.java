@@ -54,16 +54,15 @@ public class EmployeeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     } 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") UUID id){
-        APIResponse response = employeeService.findEmployeeById(id);
-        return new ResponseEntity<>(response,HttpStatus.OK);
-        
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Object> deleteEmployee(@PathVariable("id") UUID id){
+        APIResponse response = employeeService.deleteEmployee(id);
+        return new ResponseEntity<>(response,HttpStatus.OK);        
     }
     
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateEmployee(@PathVariable(value = "id") UUID id,
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Object> updateEmployee(@PathVariable("id") UUID id,
                                                  @RequestBody @Valid EmployeeUpdtDto employeeUpdtDto){
         APIResponse response = employeeService.updtEmployee(id, employeeUpdtDto);
         return new ResponseEntity<>(response,HttpStatus.OK);                                         

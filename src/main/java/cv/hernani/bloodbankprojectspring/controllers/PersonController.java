@@ -53,7 +53,7 @@ public class PersonController {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Object> updateDomain(@PathVariable(value = "id") UUID id, 
+    public ResponseEntity<Object> updateDomain(@PathVariable("id") UUID id, 
                                                @RequestBody @Valid PersonDto personDto){
 
         APIResponse response = personService.updatePerson(id, personDto);

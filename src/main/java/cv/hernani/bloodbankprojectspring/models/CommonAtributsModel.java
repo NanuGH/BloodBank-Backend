@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.Data;
 
 @Data
@@ -23,15 +26,17 @@ public class CommonAtributsModel implements Serializable {
     private UUID id;
 
     @Column(name="insertion_date", nullable = false, updatable = false)
+    @CreationTimestamp
     private LocalDateTime insertionDate;
 
-    @Column(name="update_date", nullable = false, updatable = false)
+    @UpdateTimestamp
+    @Column(name="update_date", nullable = false, updatable = true)
     private LocalDateTime updateDate;
 
     @Column(name="who_inserted", nullable = false, updatable = false)
     private String whoInserted; 
 
-    @Column(name="who_updated", nullable = false, updatable = false)
+    @Column(name="who_updated", nullable = false, updatable = true)
     private String WhoUpdated;
     
 }

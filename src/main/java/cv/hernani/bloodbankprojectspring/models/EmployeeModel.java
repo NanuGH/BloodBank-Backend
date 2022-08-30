@@ -38,7 +38,7 @@ public class EmployeeModel extends CommonAtributsModel{
     @Column(name="identifNumber", nullable = true, length=15 )
     private String identifNumber;
 
-    @Column(name="password", nullable = true, length=15)
+    @Column(name="password", nullable = true, length=100)
     private String pw;
 
     @Column(name="dm_function", nullable = true, length=15)

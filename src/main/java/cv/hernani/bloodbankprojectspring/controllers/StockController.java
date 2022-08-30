@@ -27,9 +27,9 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> createStock(@Valid @RequestBody StockDto stockDto) {
-        APIResponse response = stockService.createStock(stockDto);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value="/{id}")
+    public ResponseEntity<Object> createStock(@Valid @RequestBody StockDto stockDto, @PathVariable("id") UUID id ) {
+        APIResponse response = stockService.createStock(stockDto,id);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

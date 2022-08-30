@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import cv.hernani.bloodbankprojectspring.dtos.StockDto;
+import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 import cv.hernani.bloodbankprojectspring.models.StockModel;
+import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.StockRepository;
 import cv.hernani.bloodbankprojectspring.service.StockService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
@@ -22,17 +24,30 @@ import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 public class StockServiceImpl implements StockService {
 
     final StockRepository stockRepository;
+    final BloodCollectionRepository bloodCollectRepository;
 
-    public StockServiceImpl(StockRepository stockRepository) {
+    public StockServiceImpl(StockRepository stockRepository, BloodCollectionRepository bloodCollectRepository) {
         this.stockRepository = stockRepository;
+        this.bloodCollectRepository = bloodCollectRepository;
     }
 
     @Override
-    public APIResponse createStock(@RequestBody @Valid StockDto stockDto) {
+    public APIResponse createStock(@RequestBody @Valid StockDto stockDto, UUID id) {
+        Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.findById(id);
+        if (!bloodCollectOptional.isPresent()) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Id não existe na BD!"))
+                    .build();
+        }  
+        
+        var stockModel = new StockModel();
         try {
-            var stockModel= new StockModel();
+           
             BeanUtils.copyProperties(stockDto,stockModel);
+            stockModel.se
             stockRepository.save(stockModel);
+            System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHH"+ stockModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
@@ -93,6 +108,7 @@ public class StockServiceImpl implements StockService {
             return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
         }
     }
+
 
 
 }

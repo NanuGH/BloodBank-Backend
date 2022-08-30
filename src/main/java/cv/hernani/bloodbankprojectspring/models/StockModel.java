@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class StockModel extends CommonAtributsModel {
 
     @ManyToOne
-    @JoinColumn(name="fk_id_collection", nullable = false, unique = false)
+    @JoinColumn(name="fk_id_collection", nullable = false)
     private BloodCollectionModel idcollection;
 
     @Column(name="expiration_date", nullable = false)

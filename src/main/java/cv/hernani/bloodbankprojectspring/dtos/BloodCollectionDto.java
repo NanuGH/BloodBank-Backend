@@ -3,9 +3,12 @@ package cv.hernani.bloodbankprojectspring.dtos;
 import lombok.Data;
 
 @Data
-public class BloodCollectionDto {
+public class BloodCollectionDto{
     
-    private String qttde;
+    private String qtdde;
 
     private String externCollection;
+
+    private String whoUpdated;
+
 }

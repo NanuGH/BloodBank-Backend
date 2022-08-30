@@ -59,13 +59,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         }     
     }*/
 
-    public APIResponse createEmployee(EmployeeDto employeeDto){   
-        if (employeeRepository.existsByDmFunctionAndIdentifNumber(employeeDto.getDmFunction(), employeeDto.getIdentNumber())) {
-            return APIResponse.builder().status(false)
-                    .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("Conflict: Employee already exists on DB!"))
-                    .build();
-        }  
+    @Override
+    public APIResponse createEmployee(EmployeeDto employeeDto){    
         try {
             var pModel = new PersonModel();
             BeanUtils.copyProperties(employeeDto.getPersonDto(), pModel);
@@ -124,27 +119,37 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public APIResponse updtEmployee(UUID id, @RequestBody @Valid EmployeeUpdtDto employeeUpdtDto) {
         Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(id);
-        
         EmployeeModel employeeModel = employeeModelOptional.get(); 
-        try {
-            if (!employeeModelOptional.isPresent()) {
+        if (!employeeModelOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("Conflict: Employee don't exists on DB!"))
                     .build();
-            
         }
-            BeanUtils.copyProperties(employeeUpdtDto, employeeModel);  
+       Optional<PersonModel> personOptional = personRepository.findById(employeeModel.getIdPerson().getId());
+        PersonModel personModel = personOptional.get(); 
+        if (!personOptional.isPresent()) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("Conflict: Person don't exists on DB!"))
+                    .build();
+        }
+        try {            
+            //BeanUtils.copyProperties(employeeUpdtDto, employeeModel);  
             employeeModel.setPw(Helper.passEncoder().encode(employeeUpdtDto.getPw())); 
-            //System.out.println(Helper.passEncoder().encode("rawPassword"));        
+            employeeModel.setDmFunction(employeeUpdtDto.getDmfunction());
+            employeeModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());
             employeeRepository.save(employeeModel);
+            
+            personModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());         
+            personRepository.save(personModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
 
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR)
                     .details(Arrays.asList(e.getMessage())).build();
         }
-    }
+    }   
 
     @Override
     public APIResponse findAllEmployee() {
@@ -195,12 +200,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         } catch (Exception e) {
             return APIResponse.builder()
-                    .status(false).message(MessageState.ERRO)
-                    .details(Arrays.asList(e.getMessage())).build();
+                    .status(false).message(MessageState.ERRO).build();
         }
     }
-
-    
+ 
 
    
 }
