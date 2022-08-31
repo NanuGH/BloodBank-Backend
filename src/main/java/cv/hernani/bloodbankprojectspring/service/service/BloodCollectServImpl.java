@@ -19,7 +19,7 @@ import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
 import cv.hernani.bloodbankprojectspring.service.BloodCollectionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class BloodCollectServImpl implements BloodCollectionService {
@@ -28,7 +28,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
     final PersonRepository personRepository;
     final EmployeeRepository employeeRepository;  
 
-    public BloodCollectServImpl(BloodCollectionRepository bloodCollectRepository, PersonRepository personRepository, EmployeeRepository employeeRepository) {
+    public BloodCollectServImpl(BloodCollectionRepository bloodCollectRepository, PersonRepository personRepository, 
+                                                                            EmployeeRepository employeeRepository) {
         this.bloodCollectRepository = bloodCollectRepository;
         this.personRepository = personRepository;
         this.employeeRepository = employeeRepository;
@@ -56,7 +57,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
 
         try {
             BeanUtils.copyProperties(bloodCollectionDto,bloodCollectModel);
-            bloodCollectModel.setIdDonor(personModelOptional.get());
+            bloodCollectModel.setIdPerson(personModelOptional.get());
             bloodCollectModel.setIdEmployee(employeeModelOptional.get());
             bloodCollectModel.setWhoInserted(employeeModelOptional.get().getIdentifNumber());
             bloodCollectModel.setWhoUpdated(employeeModelOptional.get().getIdentifNumber());
@@ -79,7 +80,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
         try {
             BeanUtils.copyProperties(bloodCollectionDto, bloodCollectionModel);
             bloodCollectionModel.setId(bloodCollectOptional.get().getId());
-            bloodCollectionModel.setIdDonor(bloodCollectOptional.get().getIdDonor());
+            bloodCollectionModel.setIdPerson(bloodCollectOptional.get().getIdPerson());
             bloodCollectionModel.setIdEmployee(bloodCollectOptional.get().getIdEmployee());
             bloodCollectionModel.setWhoUpdated(bloodCollectOptional.get().getWhoUpdated());
             bloodCollectRepository.save(bloodCollectionModel);
@@ -128,7 +129,4 @@ public class BloodCollectServImpl implements BloodCollectionService {
         }
     }
 
-
-    
-    
 }

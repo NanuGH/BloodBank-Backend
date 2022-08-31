@@ -1,18 +1,38 @@
 package cv.hernani.bloodbankprojectspring.models;
 
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name= "tb_blood_receiver")
 public class BloodReceiverModel extends CommonPersonAtributsModel{
 
-    @Column(name = "fk_dm_typePerson")
-    private String dmTypePerson;
+    @ManyToOne
+    @JoinColumn(name="fk_id_person", nullable = false)
+    private PersonModel idPerson;
 
-    
+    @ManyToOne
+    @JoinColumn(name="fk_id_employee", nullable = false)
+    private EmployeeModel idEmployee;
+
+    @ManyToOne
+    @JoinColumn(name="fk_id_bloodCollection", nullable = false)
+    private BloodCollectionModel idBloodCollect;
+
+    @Column(name="abo_rh", nullable = true)
+    private String  abo_rh;
+
+    @Column(name=" mother_abo_rh", nullable = true)
+    private String mother_abo_rh;
 
     
     

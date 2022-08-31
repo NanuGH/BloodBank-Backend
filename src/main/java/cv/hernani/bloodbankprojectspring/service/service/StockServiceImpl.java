@@ -33,18 +33,15 @@ public class StockServiceImpl implements StockService {
     public APIResponse createStock(@RequestBody @Valid StockDto stockDto, UUID id) {
         Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.findById(id);
         if (!bloodCollectOptional.isPresent()) {
-            return APIResponse.builder().status(false)
-                    .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Colheita não existe!"))
-                    .build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Colheita não existe!")).build();
         }
 
         boolean stockOptional = stockRepository.existsByIdcollection(bloodCollectOptional.get());
             if (stockOptional==true) {
                 return APIResponse.builder().status(false)
                         .message(MessageState.ERRO_DE_INSERCAO)
-                        .details(Arrays.asList("ERRO: Colheita já existe no Stock!")) 
-                        .build();
+                        .details(Arrays.asList("ERRO: Colheita já existe no Stock!")).build();
             }           
         
         var stockModel = new StockModel();
@@ -103,6 +100,7 @@ public class StockServiceImpl implements StockService {
 
     }
 
+    @Override
     public APIResponse deleteStockById(UUID id){
         if (!stockRepository.existsById(id)) {
             return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Donation dont exists on Stock!")).build();
