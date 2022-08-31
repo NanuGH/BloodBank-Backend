@@ -29,4 +29,6 @@ public class BloodCollectionModel extends CommonAtributsModel{
     private String externCollection;
 
     
+
+    
 }

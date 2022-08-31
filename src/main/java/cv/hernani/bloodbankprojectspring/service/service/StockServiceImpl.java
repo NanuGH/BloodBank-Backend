@@ -4,13 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
-
 import cv.hernani.bloodbankprojectspring.dtos.StockDto;
 import cv.hernani.bloodbankprojectspring.dtos.StockUpdtDto;
 import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
@@ -41,16 +38,17 @@ public class StockServiceImpl implements StockService {
                     .details(Arrays.asList("ERRO: Colheita não existe!"))
                     .build();
         }
+
+        boolean stockOptional = stockRepository.existsByIdcollection(bloodCollectOptional.get());
+            if (stockOptional==true) {
+                return APIResponse.builder().status(false)
+                        .message(MessageState.ERRO_DE_INSERCAO)
+                        .details(Arrays.asList("ERRO: Colheita já existe no Stock!")) 
+                        .build();
+            }           
         
         var stockModel = new StockModel();
         try {
-            Optional<StockModel> stockOptional = stockRepository.findById(id);
-            if (!stockOptional.isPresent()) {
-                return APIResponse.builder().status(false)
-                        .message(MessageState.ERRO_DE_INSERCAO)
-                        .details(Arrays.asList("ERRO: Coleta já existe no Stock!"))
-                        .build();
-            }           
             BeanUtils.copyProperties(stockDto,stockModel);
             stockModel.setIdcollection(bloodCollectOptional.get());
             stockRepository.save(stockModel);
