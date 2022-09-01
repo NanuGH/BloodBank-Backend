@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeDto;
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeUpdtDto;
-import cv.hernani.bloodbankprojectspring.service.EmployeeService;
+import cv.hernani.bloodbankprojectspring.service.service.EmployeeService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
 

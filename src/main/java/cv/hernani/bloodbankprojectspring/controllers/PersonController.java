@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import cv.hernani.bloodbankprojectspring.dtos.PersonDto;
-import cv.hernani.bloodbankprojectspring.service.PersonService;
+import cv.hernani.bloodbankprojectspring.service.service.PersonService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;         
 
 /*recebe as solicitacoes CRUD  e aciona o 

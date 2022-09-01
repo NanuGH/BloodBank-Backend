@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cv.hernani.bloodbankprojectspring.dtos.DomainDto;
-import cv.hernani.bloodbankprojectspring.service.DomainService;
+import cv.hernani.bloodbankprojectspring.service.service.DomainService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import org.springframework.web.bind.annotation.*;
 

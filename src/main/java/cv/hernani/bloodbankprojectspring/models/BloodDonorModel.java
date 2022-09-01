@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -21,8 +22,8 @@ public class BloodDonorModel{
     @Column(name="id_donor",nullable = false, unique = true, length = 10)
     private UUID idDonor;
 
-    @Column(name="dm_blood_group", nullable = false)
-    private String dmBloodGroup;
+    @JoinColumn(name="fk_id_donor", nullable = false, unique = false)
+    private PersonModel idPerson;
 
     @Column(name="dm_type_donor", nullable = false)
     private String dmTypeDonor;
@@ -46,7 +47,7 @@ public class BloodDonorModel{
     private boolean celFalcif;
 
     @Column(name="dm_phenotype", nullable = true)
-    private String Phenotype;//escolaridade
+    private String Phenotype;
 
     @Column(name="dm_hemolisina", nullable = false)
     private String dmHemolisina;

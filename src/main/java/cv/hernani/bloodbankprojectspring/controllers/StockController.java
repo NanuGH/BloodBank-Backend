@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import cv.hernani.bloodbankprojectspring.dtos.StockDto;
 import cv.hernani.bloodbankprojectspring.dtos.StockUpdtDto;
-import cv.hernani.bloodbankprojectspring.service.StockService;
+import cv.hernani.bloodbankprojectspring.service.service.StockService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

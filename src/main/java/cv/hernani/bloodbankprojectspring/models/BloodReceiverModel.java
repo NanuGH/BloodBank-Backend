@@ -1,8 +1,5 @@
 package cv.hernani.bloodbankprojectspring.models;
 
-
-import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,7 +11,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name= "tb_blood_receiver")
-public class BloodReceiverModel extends CommonPersonAtributsModel{
+public class BloodReceiverModel extends CommonAtributsModel{
 
     @ManyToOne
     @JoinColumn(name="fk_id_person", nullable = false)

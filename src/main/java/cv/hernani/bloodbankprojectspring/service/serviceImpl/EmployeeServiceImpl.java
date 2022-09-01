@@ -1,4 +1,4 @@
-package cv.hernani.bloodbankprojectspring.service.service;
+package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
-import cv.hernani.bloodbankprojectspring.service.EmployeeService;
+import cv.hernani.bloodbankprojectspring.service.service.EmployeeService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.Helper;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;

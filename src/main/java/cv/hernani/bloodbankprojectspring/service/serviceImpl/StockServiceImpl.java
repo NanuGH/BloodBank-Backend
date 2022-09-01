@@ -1,4 +1,4 @@
-package cv.hernani.bloodbankprojectspring.service.service;
+package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 import cv.hernani.bloodbankprojectspring.models.StockModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.StockRepository;
-import cv.hernani.bloodbankprojectspring.service.StockService;
+import cv.hernani.bloodbankprojectspring.service.service.StockService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 

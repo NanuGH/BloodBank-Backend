@@ -1,9 +1,10 @@
-package cv.hernani.bloodbankprojectspring.service;
+package cv.hernani.bloodbankprojectspring.service.service;
 
 import java.util.UUID;
 
 import cv.hernani.bloodbankprojectspring.dtos.BloodReceiverDto;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
+
 
 public interface BloodReceiverService {
     public APIResponse createBloodReceiver(BloodReceiverDto bloodCollectionDto, 

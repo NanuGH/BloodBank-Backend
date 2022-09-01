@@ -1,4 +1,4 @@
-package cv.hernani.bloodbankprojectspring.service;
+package cv.hernani.bloodbankprojectspring.service.service;
 
 import java.util.UUID;
 

@@ -1,18 +1,15 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
 import java.util.UUID;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
-
 import cv.hernani.bloodbankprojectspring.dtos.BloodReceiverDto;
-import cv.hernani.bloodbankprojectspring.service.BloodReceiverService;
+import cv.hernani.bloodbankprojectspring.service.service.BloodReceiverService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -20,11 +17,11 @@ import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 @RequestMapping(path = "/bloodreceiver")
 public class BloodReceiverContoller {
 
-    @Autowired
     private final BloodReceiverService bloodRecService;
 
-    public BloodReceiverContoller(BloodReceiverService bloodReceiverServ) {
-        this.bloodReceiverServ = bloodReceiverServ;
+
+    public BloodReceiverContoller(BloodReceiverService bloodRecService) {
+        this.bloodRecService = bloodRecService;
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idFunc}/{idPessoa}/{idColheita}")

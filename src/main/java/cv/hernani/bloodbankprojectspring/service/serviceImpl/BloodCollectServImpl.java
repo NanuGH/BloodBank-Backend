@@ -1,12 +1,10 @@
-package cv.hernani.bloodbankprojectspring.service.service;
+package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import cv.hernani.bloodbankprojectspring.dtos.BloodCollectionDto;
@@ -16,7 +14,7 @@ import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
-import cv.hernani.bloodbankprojectspring.service.BloodCollectionService;
+import cv.hernani.bloodbankprojectspring.service.service.BloodCollectionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,4 +1,4 @@
-package cv.hernani.bloodbankprojectspring.service.service;
+package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import cv.hernani.bloodbankprojectspring.dtos.DomainDto;
 import cv.hernani.bloodbankprojectspring.models.DomainModel;
 import cv.hernani.bloodbankprojectspring.repositories.DomainRepository;
-import cv.hernani.bloodbankprojectspring.service.DomainService;
+import cv.hernani.bloodbankprojectspring.service.service.DomainService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 
