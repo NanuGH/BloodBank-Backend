@@ -9,7 +9,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import cv.hernani.bloodbankprojectspring.dtos.StockDto;
-import cv.hernani.bloodbankprojectspring.dtos.StockUpdtDto;
 import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 import cv.hernani.bloodbankprojectspring.models.StockModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
@@ -48,6 +47,7 @@ public class StockServiceImpl implements StockService {
         try {
             BeanUtils.copyProperties(stockDto,stockModel);
             stockModel.setIdcollection(bloodCollectOptional.get());
+            stockModel.setDmStatus("ativo");
             stockRepository.save(stockModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {

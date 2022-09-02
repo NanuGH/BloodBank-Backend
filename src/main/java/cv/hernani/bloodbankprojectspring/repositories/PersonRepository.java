@@ -11,6 +11,6 @@ import cv.hernani.bloodbankprojectspring.models.PersonModel;
 @Repository
 public interface PersonRepository extends JpaRepository<PersonModel, UUID>{
        
-    boolean existsByNamePersonAndSurnamePersonAndDmDocIdent(String namePerson, String surnamePerson, String dmDocIdent );
+    boolean existsByNamePersonAndSurnamePersonAndDmDocIdent(String namePerson, String surnamePerson, String dmDocIdent);
 
 }

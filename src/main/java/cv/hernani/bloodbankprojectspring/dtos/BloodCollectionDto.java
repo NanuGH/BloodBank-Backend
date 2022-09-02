@@ -11,4 +11,6 @@ public class BloodCollectionDto{
 
     private String whoUpdated;
 
+    private String whoInserted;
+
 }

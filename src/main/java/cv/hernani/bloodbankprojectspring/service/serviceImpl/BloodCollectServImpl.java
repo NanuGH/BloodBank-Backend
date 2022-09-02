@@ -46,10 +46,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
         
         Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(idEmployee);
         if (!employeeModelOptional.isPresent()) {
-            return APIResponse.builder().status(false)
-                    .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Este funcionário não existe na BD"))
-                    .build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Este funcionário não existe na BD")) .build();
         }
         var bloodCollectModel = new BloodCollectionModel();
 
@@ -57,10 +55,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
             BeanUtils.copyProperties(bloodCollectionDto,bloodCollectModel);
             bloodCollectModel.setIdPerson(personModelOptional.get());
             bloodCollectModel.setIdEmployee(employeeModelOptional.get());
-            bloodCollectModel.setWhoInserted(employeeModelOptional.get().getIdentifNumber());
-            bloodCollectModel.setWhoUpdated(employeeModelOptional.get().getIdentifNumber());
-            bloodCollectRepository.save(bloodCollectModel);
-            
+            bloodCollectRepository.save(bloodCollectModel);            
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();

@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeDto;
+import cv.hernani.bloodbankprojectspring.dtos.PersonDto;
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeUpdtDto;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
@@ -60,7 +61,15 @@ public class EmployeeServiceImpl implements EmployeeService{
     }*/
 
     @Override
-    public APIResponse createEmployee(EmployeeDto employeeDto){    
+    public APIResponse createEmployee(EmployeeDto employeeDto){
+        if(personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(employeeDto.getPersonDto().getDmDocIdent(),
+                                                                            employeeDto.getPersonDto().getNamePerson(),
+                                                                            employeeDto.getPersonDto().getSurnamePerson())){
+
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("Conflict: Pessoa ja existe na BD!")).build();
+        }
+              
         try {
             var pModel = new PersonModel();
             BeanUtils.copyProperties(employeeDto.getPersonDto(), pModel);
