@@ -84,8 +84,8 @@ public class StockServiceImpl implements StockService {
         }
         var stockModel = StockModelOptional.get();
         try {
-            stockModel.setDmStatus(stockDto.getDmStatus());
             stockModel.setDmCodeDisabled(stockDto.getDmDisabledCode());
+            stockModel.setDmStatus("inativo");
             stockModel.setWhoUpdated(stockDto.getWhoUpdated());
             stockRepository.save(stockModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
