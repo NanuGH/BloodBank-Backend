@@ -22,8 +22,5 @@ public class BloodCollectionModel extends CommonAtributsModel{
 
     @Column(name="external_collection", nullable = false)
     private String externCollection;
-
-    
-
     
 }

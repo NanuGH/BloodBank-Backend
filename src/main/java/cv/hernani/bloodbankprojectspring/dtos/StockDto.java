@@ -13,5 +13,11 @@ public class StockDto {
 
     private String whoInserted;
 
-    private String WhoUpdated;
+    private String whoUpdated;
+
+    private String dmDisabledCode;
+
+    private String dmStatus;
+
+    
 }

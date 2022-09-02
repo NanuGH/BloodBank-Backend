@@ -38,5 +38,11 @@ public class CommonAtributsModel implements Serializable {
 
     @Column(name="who_updated", nullable = false, updatable = true)
     private String WhoUpdated;
+
+    @Column(name="dm_status", nullable = true)
+    private String dmStatus="ativo";
+
+    @Column(name="dm_code_disabled", nullable = true)
+    private String dmCodeDisabled="-------";
     
 }

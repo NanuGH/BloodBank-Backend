@@ -22,6 +22,6 @@ public class StockModel extends CommonAtributsModel {
     private Date expirationDate;
 
     @Column(name="dm_stock_type", nullable = false)
-    private String dmCodeStockType;
+    private String dmCodeStockType;   
         
 }

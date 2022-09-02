@@ -1,6 +1,7 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import cv.hernani.bloodbankprojectspring.dtos.PersonRejectedDto;
+import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.models.PersonRejectedModel;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRejectedRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
@@ -29,8 +31,8 @@ public class PersonRejectedServImpl implements PersonRejectedService {
 
     @Override
     public APIResponse createPersonRejected(PersonRejectedDto personRejectedDto, UUID idPerson) {
-        Optional<PersonRejectedModel> personRejectModelOptional = personRejectedRepository.findById(idPerson);
-        if (!personRejectModelOptional.isPresent()) {
+        Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
+        if (!personModelOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Essa pessoa não existe na BD!"))
@@ -41,7 +43,7 @@ public class PersonRejectedServImpl implements PersonRejectedService {
 
         try {
             BeanUtils.copyProperties(personRejectedDto,personRejectedModel);
-            personRejectedModel.setIdPerson(personRejectModelOptional.get().getIdPerson());
+            personRejectedModel.setIdPerson(personModelOptional.get());
             personRejectedModel.setWhoInserted(personRejectedDto.getWhoInserted());
             personRejectedModel.setWhoUpdated(personRejectedDto.getWhoUpdated());
             personRejectedRepository.save(personRejectedModel);
@@ -54,26 +56,59 @@ public class PersonRejectedServImpl implements PersonRejectedService {
 
     @Override
     public APIResponse updtPersonRejected(UUID id, PersonRejectedDto personRejectedDto) {
-        // TODO Auto-generated method stub
-        return null;
+        Optional<PersonRejectedModel> personRejectedOptional = personRejectedRepository.findById(id);
+        if (!personRejectedOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Esta rejeição nao existe na BD!")).build();
+        }
+        var personRejectedModel = personRejectedOptional.get();   
+
+        try {
+            BeanUtils.copyProperties(personRejectedDto, personRejectedModel);
+            personRejectedModel.setRejectionCode(personRejectedDto.getRejectionCode());
+            personRejectedModel.setWhoUpdated(personRejectedDto.getWhoUpdated());
+            personRejectedRepository.save(personRejectedModel);
+            return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).details(Arrays.asList(e.getMessage())).build();
+        }  
     }
 
     @Override
     public APIResponse getAllPersonRejected() {
-        // TODO Auto-generated method stub
-        return null;
+        List<PersonRejectedModel> getAllPersonRejected = personRejectedRepository.findAll();
+        try {
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getAllPersonRejected)).build();
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
+        }
     }
 
     @Override
     public APIResponse getPersonRejectedById(UUID id) {
-        // TODO Auto-generated method stub
-        return null;
+        if (!personRejectedRepository.existsById(id)) {
+            return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta pessoa não existe na BD!")).build();
+        }
+        Optional<PersonRejectedModel> personRejectedModel = personRejectedRepository.findById(id);
+        try {
+
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personRejectedModel)).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
+        }
     }
 
     @Override
     public APIResponse delPersonRejected(UUID id) {
-        // TODO Auto-generated method stub
-        return null;
+        if (!personRejectedRepository.existsById(id)) {
+            return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta pessoa não existe na BD!!")).build();
+        }
+        try {
+            personRejectedRepository.deleteById(id);
+            return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
+        }
     }
     
 }

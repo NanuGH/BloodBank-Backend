@@ -8,7 +8,7 @@ import lombok.Data;
 public class PersonRejectedModel extends CommonAtributsModel {
 
     @ManyToOne
-    @JoinColumn(name="fk_id_donor", nullable = false, unique = false)
+    @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
 
     @Column(name="dm_rejectionCode", nullable = false)

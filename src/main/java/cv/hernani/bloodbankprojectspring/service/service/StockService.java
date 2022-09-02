@@ -12,6 +12,7 @@ public interface StockService {
     public APIResponse getAllStock();
     public APIResponse getStockById(UUID id);
     public APIResponse deleteStockById(UUID id);
-    public APIResponse updateStock(UUID id,StockUpdtDto stockUpdtDto);
+    public APIResponse updateStock(UUID id,StockDto stockUpdtDto);
+    public APIResponse disableStock(UUID id,StockDto stockUpdtDto);
     
 }

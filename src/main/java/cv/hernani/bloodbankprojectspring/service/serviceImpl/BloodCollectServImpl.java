@@ -88,7 +88,6 @@ public class BloodCollectServImpl implements BloodCollectionService {
         }    
     }
 
-
     @Override
     public APIResponse getAllBloodCollection() {
         List<BloodCollectionModel> getAllBloodCollect = bloodCollectRepository.findAll();
@@ -102,7 +101,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
     @Override
     public APIResponse getBloodCollectById(UUID id){
         if (!bloodCollectRepository.existsById(id)) {
-            return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Domain dont exists on DB!")).build();
+            return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta pessoa não existe na BD!")).build();
         }
         Optional<BloodCollectionModel> bloodCollectionModel = bloodCollectRepository.findById(id);
         try {

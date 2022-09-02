@@ -54,8 +54,14 @@ public class StockController {
     
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateStock(@PathVariable(value = "id") UUID id, @RequestBody @Valid StockUpdtDto stockUpdtDto){        
-        APIResponse response = stockService.updateStock(id,stockUpdtDto);
+    public ResponseEntity<Object> updateStock(@PathVariable(value = "id") UUID id, @RequestBody @Valid StockDto stockDto){        
+        APIResponse response = stockService.updateStock(id,stockDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/disablestock/{id}")
+    public ResponseEntity<Object> disableStock(@PathVariable(value = "id") UUID id, @RequestBody @Valid StockDto stockDto){        
+        APIResponse response = stockService.disableStock(id,stockDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

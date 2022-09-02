@@ -56,24 +56,46 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public APIResponse updateStock( UUID id, @RequestBody @Valid StockUpdtDto stockUpdtDto){
+    public APIResponse updateStock( UUID id, @RequestBody @Valid StockDto stockDto){
         Optional<StockModel> StockModelOptional = stockRepository.findById(id);
         if (!StockModelOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Coleta não existe no Stock!")).build();
         }
-        var stockModel = new StockModel();
+        var stockModel = StockModelOptional.get();
 
         try {
-            BeanUtils.copyProperties(stockUpdtDto, stockModel);
-            stockModel.setId(StockModelOptional.get().getId());
-            stockModel.setIdcollection(StockModelOptional.get().getIdcollection());
-            stockModel.setWhoInserted(StockModelOptional.get().getWhoInserted());
+            BeanUtils.copyProperties(StockModelOptional, stockModel);
+                stockModel.setExpirationDate(stockDto.getExpirationDate());
+                stockModel.setDmCodeStockType(stockDto.getDmCodeStockType());
+                stockModel.setWhoUpdated(stockDto.getWhoUpdated());
+                stockRepository.save(stockModel);
+                return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
+            
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).details(Arrays.asList(e.getMessage())).build();
+        }    
+    }
+
+    @Override
+    public APIResponse disableStock(UUID id, StockDto stockDto) {
+        Optional<StockModel> StockModelOptional = stockRepository.findById(id);
+        if (!StockModelOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Coleta não existe no Stock!")).build();
+        }
+        var stockModel = StockModelOptional.get();
+        try {
+            stockModel.setDmStatus(stockDto.getDmStatus());
+            stockModel.setDmCodeDisabled(stockDto.getDmDisabledCode());
+            stockModel.setWhoUpdated(stockDto.getWhoUpdated());
             stockRepository.save(stockModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).details(Arrays.asList(e.getMessage())).build();
         }    
-    }
+        
+    }  
+
+
 
     @Override
     public APIResponse getAllStock() {
@@ -113,6 +135,6 @@ public class StockServiceImpl implements StockService {
         }
     }
 
-
+    
 
 }

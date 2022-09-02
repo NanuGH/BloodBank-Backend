@@ -28,26 +28,26 @@ public class PersonRejectedController {
     }
     
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idPessoa}")
-    public ResponseEntity<Object> createBloodCollect(@Valid @RequestBody PersonRejectedDto personRejectedDto,
+    public ResponseEntity<Object> createPersonRejected(@Valid @RequestBody PersonRejectedDto personRejectedDto,
                                                     @PathVariable("idPessoa") UUID idPessoa) {
         APIResponse response = personRejectedService.createPersonRejected(personRejectedDto,idPessoa);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<Object>getAllBloodCollect(){
+    public ResponseEntity<Object>getAllPersonRejected(){
         APIResponse response = personRejectedService.getAllPersonRejected();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(value ="/{id}")
-    public ResponseEntity<Object> getBloodCollectById(@PathVariable("id") UUID id) {
+    public ResponseEntity<Object> getPersonRejectedById(@PathVariable("id") UUID id) {
         APIResponse response = personRejectedService.getPersonRejectedById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping(value ="/{id}")
-    public ResponseEntity<Object> deleteBloodCollect(@PathVariable("id") UUID id){
+    public ResponseEntity<Object> deletePersonRejected(@PathVariable("id") UUID id){
         APIResponse response = personRejectedService.delPersonRejected(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
