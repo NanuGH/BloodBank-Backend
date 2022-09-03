@@ -6,4 +6,5 @@ public class PersonRejectedDto {
     private String rejectionCode;
     private String whoInserted;
     private String whoUpdated;
+    private String status;
 }

@@ -40,9 +40,9 @@ public class CommonAtributsModel implements Serializable {
     private String WhoUpdated;
 
     @Column(name="dm_status", nullable = true)
-    private String dmStatus="ativo";
+    private String status= "true";
 
     @Column(name="dm_code_disabled", nullable = true)
-    private String dmCodeDisabled="-------";
+    private String dmCodeDisabled;
     
 }

@@ -31,6 +31,8 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     @Override
     public APIResponse createPerson(@RequestBody @Valid PersonDto personDto) {
+      /*if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(),personDto.getDmDocIdent())
+          ||(personRepository.existsByDmDocIdent(personDto.getDmDocIdent()))){*///don't allow duplicated ID's, I will used it after I tested other stuffs
       if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(),personDto.getDmDocIdent())){
         return APIResponse.builder().status(false)
                 .message(MessageState.ERRO_DE_INSERCAO)
@@ -40,6 +42,7 @@ public class PersonServiceImpl implements PersonService {
       
         var personModel = new PersonModel();
         BeanUtils.copyProperties(personDto, personModel);
+        personModel.setStatus("true");
         try {
             personRepository.saveAndFlush(personModel);
             return APIResponse.builder().status(true)
@@ -55,18 +58,19 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     @Override
     public APIResponse updatePerson(UUID id, @RequestBody @Valid PersonDto personDto) {
-        Optional<PersonModel> domainModelOptional = personRepository.findById(id);
-        if (!domainModelOptional.isPresent()) {
+        Optional<PersonModel> personModelOptional = personRepository.findById(id);
+        if (!personModelOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("Conflict: Domain don't exists on DB!"))
                     .build();
         }
-        var personModel = new PersonModel();       
+        var personModel = personModelOptional.get();       
 
         try {
             BeanUtils.copyProperties(personDto, personModel);
-            personModel.setId(domainModelOptional.get().getId());
+            personModel.setId(personModelOptional.get().getId());
+            personModel.setStatus(personModelOptional.get().getStatus());
             personRepository.save(personModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
 

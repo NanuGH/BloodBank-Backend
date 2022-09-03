@@ -54,5 +54,7 @@ public class PersonDto { // para validar os campos q o cliente envia
     @Size(max = 15)
     private String whoUpdated;
 
+    private String status="true";
+
 
 }

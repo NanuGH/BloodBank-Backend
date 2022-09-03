@@ -40,14 +40,20 @@ public class PersonRejectedServImpl implements PersonRejectedService {
         }
         
         var personRejectedModel = new PersonRejectedModel();
-
+        var personModel = personModelOptional.get();
         try {
             BeanUtils.copyProperties(personRejectedDto,personRejectedModel);
             personRejectedModel.setIdPerson(personModelOptional.get());
             personRejectedModel.setWhoInserted(personRejectedDto.getWhoInserted());
             personRejectedModel.setWhoUpdated(personRejectedDto.getWhoUpdated());
-            personRejectedRepository.save(personRejectedModel);
-            
+            personRejectedModel.setDmCodeDisabled(personRejectedDto.getRejectionCode());
+            personRejectedModel.setStatus("true");
+            personRejectedRepository.save(personRejectedModel); 
+            /******** */    
+            personModel.setStatus("ttttttt");
+            personModel.setWhoUpdated(personRejectedDto.getWhoUpdated());
+            personRepository.save(personModel);
+
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
@@ -64,7 +70,7 @@ public class PersonRejectedServImpl implements PersonRejectedService {
 
         try {
             BeanUtils.copyProperties(personRejectedDto, personRejectedModel);
-            personRejectedModel.setRejectionCode(personRejectedDto.getRejectionCode());
+            personRejectedModel.setDmCodeDisabled(personRejectedDto.getRejectionCode());
             personRejectedModel.setWhoUpdated(personRejectedDto.getWhoUpdated());
             personRejectedRepository.save(personRejectedModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();

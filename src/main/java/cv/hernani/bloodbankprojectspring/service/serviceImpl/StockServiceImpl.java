@@ -47,7 +47,7 @@ public class StockServiceImpl implements StockService {
         try {
             BeanUtils.copyProperties(stockDto,stockModel);
             stockModel.setIdcollection(bloodCollectOptional.get());
-            stockModel.setDmStatus("ativo");
+            stockModel.setStatus("ativo");
             stockRepository.save(stockModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
@@ -85,7 +85,7 @@ public class StockServiceImpl implements StockService {
         var stockModel = StockModelOptional.get();
         try {
             stockModel.setDmCodeDisabled(stockDto.getDmDisabledCode());
-            stockModel.setDmStatus("inativo");
+            stockModel.setStatus("inativo");
             stockModel.setWhoUpdated(stockDto.getWhoUpdated());
             stockRepository.save(stockModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();

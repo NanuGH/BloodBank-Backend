@@ -11,7 +11,7 @@ public class PersonRejectedModel extends CommonAtributsModel {
     @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
 
-    @Column(name="dm_rejectionCode", nullable = false)
+    @Column(name="dm_rejectionCode", nullable = true)
     private String rejectionCode;
     
 }

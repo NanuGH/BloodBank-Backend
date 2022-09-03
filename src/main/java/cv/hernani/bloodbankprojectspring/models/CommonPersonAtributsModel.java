@@ -73,5 +73,8 @@ public class CommonPersonAtributsModel implements Serializable {
 
     @Column(name="who_updated", nullable = true,length = 15)
     private String whoUpdated;
+
+    @Column(name="status", nullable = true)
+    private String status = "true";
     
 }
