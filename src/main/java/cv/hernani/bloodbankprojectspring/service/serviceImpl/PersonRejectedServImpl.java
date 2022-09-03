@@ -49,8 +49,8 @@ public class PersonRejectedServImpl implements PersonRejectedService {
             personRejectedModel.setDmCodeDisabled(personRejectedDto.getRejectionCode());
             personRejectedModel.setStatus("true");
             personRejectedRepository.save(personRejectedModel); 
-            /******** */    
-            personModel.setStatus("ttttttt");
+            /********Change Person Status *******/    
+            personModel.setStatus("false");
             personModel.setWhoUpdated(personRejectedDto.getWhoUpdated());
             personRepository.save(personModel);
 

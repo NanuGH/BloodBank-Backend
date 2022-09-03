@@ -49,17 +49,28 @@ public class BloodCollectServImpl implements BloodCollectionService {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Este funcionário não existe na BD")) .build();
         }
-        var bloodCollectModel = new BloodCollectionModel();
 
-        try {
-            BeanUtils.copyProperties(bloodCollectionDto,bloodCollectModel);
-            bloodCollectModel.setIdPerson(personModelOptional.get());
-            bloodCollectModel.setIdEmployee(employeeModelOptional.get());
-            bloodCollectRepository.save(bloodCollectModel);            
-            return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
-        } catch (Exception e) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
+        var bloodCollectModel = new BloodCollectionModel();
+        var personStatus = personModelOptional.get().getStatus();
+
+        if (personStatus.equals("false")) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Esta pessoa não esta apta para doar!"))
+                    .build();
+                        
+        } else {
+             try {
+                BeanUtils.copyProperties(bloodCollectionDto,bloodCollectModel);
+                bloodCollectModel.setIdPerson(personModelOptional.get());
+                bloodCollectModel.setIdEmployee(employeeModelOptional.get());
+                bloodCollectRepository.save(bloodCollectModel);            
+                return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
+            } catch (Exception e) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
+            }
         }
+        
     }
 
     @Override
