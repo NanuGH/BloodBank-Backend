@@ -37,6 +37,4 @@ public class DomainModel implements Serializable {
     @Column(name="self_id", nullable = false, length = 38)
     private String selfId;
 
-   
-
 }

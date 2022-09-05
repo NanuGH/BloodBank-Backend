@@ -5,6 +5,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "tb_transfusion")
 public class TransfusionModel extends CommonAtributsModel {
@@ -21,8 +24,8 @@ public class TransfusionModel extends CommonAtributsModel {
     private EmployeeModel idEmployee;
 
     @ManyToOne
-    @JoinColumn(name="fk_id_receiver",nullable = false, unique = true)
-    private BloodReceiverModel idReceiver;
+    @JoinColumn(name="fk_id_person",nullable = false, unique = true)
+    private PersonModel idPerson;
 
     @Column(name="suspended", nullable = false)
     private boolean suspended;

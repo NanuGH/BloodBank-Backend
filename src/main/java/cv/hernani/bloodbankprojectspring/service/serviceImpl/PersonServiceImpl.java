@@ -36,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
       if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(),personDto.getDmDocIdent())){
         return APIResponse.builder().status(false)
                 .message(MessageState.ERRO_DE_INSERCAO)
-                .details(Arrays.asList("Conflict: Person already exists on DB!"))
+                .details(Arrays.asList("ERRO: Esta pessoa já existe na BD!"))
                 .build();
       }
       
@@ -62,7 +62,7 @@ public class PersonServiceImpl implements PersonService {
         if (!personModelOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("Conflict: Domain don't exists on DB!"))
+                    .details(Arrays.asList("ERRO: Esta pessoa não existe na BD!"))
                     .build();
         }
         var personModel = personModelOptional.get();       
@@ -97,22 +97,15 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public APIResponse getPersonById(UUID id) {
-        if (!personRepository.existsById(id)) {
-            return APIResponse.builder().status(false)
-                    .details(Arrays.asList("Conflict: Domain dont exists on DB!"))
-                    .build();
+        if (!personRepository.existsById(id)) { 
+           return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Esta pessoa não existe na BD!")).build();
         }
         Optional<PersonModel> personModel = personRepository.findById(id);
         try {
-
-            return APIResponse.builder().status(true)
-                    .message(MessageState.SUCESSO)
-                    .details(Arrays.asList(personModel)).build();
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personModel)).build();
 
         } catch (Exception e) {
-            return APIResponse.builder()
-                    .status(false).message(MessageState.ERRO)
-                    .details(Arrays.asList(e.getMessage())).build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
     }
 

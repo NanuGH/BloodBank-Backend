@@ -111,7 +111,6 @@ public class BloodCollectServImpl implements BloodCollectionService {
         }
         Optional<BloodCollectionModel> bloodCollectionModel = bloodCollectRepository.findById(id);
         try {
-
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(bloodCollectionModel)).build();
 
         } catch (Exception e) {

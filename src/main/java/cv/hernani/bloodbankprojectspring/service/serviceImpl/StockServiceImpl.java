@@ -95,8 +95,6 @@ public class StockServiceImpl implements StockService {
         
     }  
 
-
-
     @Override
     public APIResponse getAllStock() {
         List<StockModel> getAllStock = stockRepository.findAll();
@@ -119,7 +117,6 @@ public class StockServiceImpl implements StockService {
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
-
     }
 
     @Override
