@@ -57,14 +57,14 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public APIResponse updateStock( UUID id, @RequestBody @Valid StockDto stockDto){
-        Optional<StockModel> StockModelOptional = stockRepository.findById(id);
-        if (!StockModelOptional.isPresent()) {
+        Optional<StockModel> stockModelOptional = stockRepository.findById(id);
+        if (!stockModelOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Coleta não existe no Stock!")).build();
         }
-        var stockModel = StockModelOptional.get();
+        var stockModel = stockModelOptional.get();
 
         try {
-            BeanUtils.copyProperties(StockModelOptional, stockModel);
+            BeanUtils.copyProperties(stockModelOptional, stockModel);
                 stockModel.setExpirationDate(stockDto.getExpirationDate());
                 stockModel.setDmCodeStockType(stockDto.getDmCodeStockType());
                 stockModel.setWhoUpdated(stockDto.getWhoUpdated());

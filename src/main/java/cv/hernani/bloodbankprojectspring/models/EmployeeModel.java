@@ -18,8 +18,6 @@ import lombok.Data;
 @Table(name = "tb_employee")
 public class EmployeeModel extends CommonAtributsModel{
 
-    private static final long serialVersionUID = 1L;
-
     @ManyToOne
     @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
