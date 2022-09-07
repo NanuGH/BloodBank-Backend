@@ -1,7 +1,5 @@
 package cv.hernani.bloodbankprojectspring.models;
 import java.time.LocalDateTime;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -29,9 +27,6 @@ public class EmployeeModel extends CommonAtributsModel{
     @Column(name="update_date", nullable = true)
     @UpdateTimestamp
     private LocalDateTime updateDate;
-    
-    /*@Column(name="dm_blood_code", nullable = true, length = 2)
-    private String dmBloodCode;*/
 
     @Column(name="identifNumber", nullable = true, length=15 )
     private String identifNumber;
@@ -41,6 +36,9 @@ public class EmployeeModel extends CommonAtributsModel{
 
     @Column(name="dm_function", nullable = true, length=15)
     private String dmFunction;
+
+    @Column(name="role", nullable = true, length=15)
+    private RolesModel  idRoles;
 
     
 }

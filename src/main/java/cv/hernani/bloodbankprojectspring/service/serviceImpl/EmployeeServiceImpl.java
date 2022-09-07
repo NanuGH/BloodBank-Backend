@@ -2,15 +2,15 @@ package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeDto;
-import cv.hernani.bloodbankprojectspring.dtos.PersonDto;
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeUpdtDto;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
@@ -20,7 +20,7 @@ import cv.hernani.bloodbankprojectspring.service.service.EmployeeService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.Helper;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 
 
 @Service
@@ -67,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService{
                                                                             employeeDto.getPersonDto().getSurnamePerson())){
 
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("Conflict: Pessoa ja existe na BD!")).build();
+                    .details(Arrays.asList("ERRO: Pessoa ja existe na BD!")).build();
         }
               
         try {

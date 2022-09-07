@@ -3,10 +3,11 @@ package cv.hernani.bloodbankprojectspring.dtos;
 import lombok.Data;
 
 @Data
-public class RolesDto {
+public class MenuDto{
+    
     private String name;
     private String code;
-    private String[] menu;
     private String whoUpdated;
-    private String WhoInserted;
+    private String whoInserted;
+
 }

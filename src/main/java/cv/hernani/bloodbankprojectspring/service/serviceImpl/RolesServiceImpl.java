@@ -11,7 +11,7 @@ import cv.hernani.bloodbankprojectspring.dtos.RolesDto;
 import cv.hernani.bloodbankprojectspring.models.RolesModel;
 import cv.hernani.bloodbankprojectspring.repositories.RolesRepository;
 import cv.hernani.bloodbankprojectspring.service.service.RolesService;
-import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
+import cv.hernani.bloodbankprojectspring.utilities.APIResponse;  
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 
 @Service
@@ -89,7 +89,6 @@ public class RolesServiceImpl implements RolesService {
             BeanUtils.copyProperties(rolesModelOptional, rolesModel);
                 rolesModel.setName(rolesDto.getName());
                 rolesModel.setCode(rolesDto.getCode());
-                rolesModel.setMenu(rolesDto.getMenu());
                 rolesModel.setWhoUpdated(rolesDto.getWhoUpdated());
                 rolesModel.setWhoInserted(rolesModelOptional.get().getWhoInserted());                
 
