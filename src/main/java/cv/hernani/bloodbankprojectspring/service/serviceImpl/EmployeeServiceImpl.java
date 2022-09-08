@@ -71,9 +71,9 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
               
         try {
-            var pModel = new PersonModel();
-            BeanUtils.copyProperties(employeeDto.getPersonDto(), pModel);
-            personRepository.save(pModel);
+            var personModel = new PersonModel();
+            BeanUtils.copyProperties(employeeDto.getPersonDto(), personModel);
+            personRepository.save(personModel);
             try {//caso erro salvar na tab Employee
              var employeeModel = new EmployeeModel();
              employeeModel.setWhoInserted(employeeDto.getPersonDto().getWhoInserted());
@@ -82,9 +82,11 @@ public class EmployeeServiceImpl implements EmployeeService{
              employeeModel.setIdentifNumber(identfNumber);
              employeeModel.setPw(employeeDto.getPw()); 
              employeeModel.setDmFunction(employeeDto.getDmFunction());  
-             employeeModel.setIdPerson(pModel);
-             employeeModel.setInsertionDate(pModel.getInsertionDate());
-             employeeModel.setUpdateDate(pModel.getUpdateDate());
+             employeeModel.setIdPerson(personModel);
+             employeeModel.setInsertionDate(personModel.getInsertionDate());
+             employeeModel.setUpdateDate(personModel.getUpdateDate());
+             employeeModel.setIdRoles(employeeDto.getIdRoles());
+             employeeModel.setEmail(employeeDto.getEmail());
 
              employeeRepository.save(employeeModel);
 

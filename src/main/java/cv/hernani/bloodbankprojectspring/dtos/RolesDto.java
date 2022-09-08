@@ -6,7 +6,6 @@ import lombok.Data;
 public class RolesDto {
     private String name;
     private String code;
-    private String[] menu;
     private String whoUpdated;
     private String WhoInserted;
 }

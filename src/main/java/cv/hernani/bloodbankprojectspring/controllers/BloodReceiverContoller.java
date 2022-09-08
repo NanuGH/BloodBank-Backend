@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 import cv.hernani.bloodbankprojectspring.dtos.BloodReceiverDto;
 import cv.hernani.bloodbankprojectspring.service.service.BloodReceiverService;

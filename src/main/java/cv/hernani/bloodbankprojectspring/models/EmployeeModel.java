@@ -1,13 +1,10 @@
 package cv.hernani.bloodbankprojectspring.models;
-import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
 
@@ -20,13 +17,13 @@ public class EmployeeModel extends CommonAtributsModel{
     @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
     
-    @Column(name="insertion_date", nullable = true) 
+    /*@Column(name="insertion_date", nullable = true) 
     @CreationTimestamp //sem necessidade de fazer set na serviço
     private LocalDateTime insertionDate;
 
     @Column(name="update_date", nullable = true)
     @UpdateTimestamp
-    private LocalDateTime updateDate;
+    private LocalDateTime updateDate;*/
 
     @Column(name="identifNumber", nullable = true, length=15 )
     private String identifNumber;
@@ -37,8 +34,13 @@ public class EmployeeModel extends CommonAtributsModel{
     @Column(name="dm_function", nullable = true, length=15)
     private String dmFunction;
 
-    @Column(name="role", nullable = true, length=15)
-    private RolesModel  idRoles;
+    @Column(name="id_role", nullable = true)
+    private String  idRoles;
+
+    @Column(name="email", nullable = true)
+    private String  email;
+
+
 
     
 }

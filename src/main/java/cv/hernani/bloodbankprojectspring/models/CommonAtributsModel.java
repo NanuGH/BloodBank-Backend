@@ -29,10 +29,6 @@ public class CommonAtributsModel implements Serializable {
     @CreationTimestamp
     private LocalDateTime insertionDate;
 
-    @UpdateTimestamp
-    @Column(name="update_date", nullable = false, updatable = true)
-    private LocalDateTime updateDate;
-
     @Column(name="who_inserted", nullable = false, updatable = false)
     private String whoInserted; 
 
@@ -44,5 +40,9 @@ public class CommonAtributsModel implements Serializable {
 
     @Column(name="dm_code_disabled", nullable = true)
     private String dmCodeDisabled;
+
+    @UpdateTimestamp
+    @Column(name="update_date", nullable = false, updatable = true)
+    private LocalDateTime updateDate;
     
 }

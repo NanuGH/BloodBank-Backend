@@ -39,7 +39,7 @@ public class CommonPersonAtributsModel implements Serializable {
     @Column(name="dm_doc_ident", nullable = false, length = 15)
     private String dmDocIdent;
 
-    @Column(name="birthday", nullable = false)
+    @Column(name="birthday", nullable = true)
     private LocalDate birthday;
 
     @Column(name="picture_person", nullable = true)
@@ -76,5 +76,8 @@ public class CommonPersonAtributsModel implements Serializable {
 
     @Column(name="status", nullable = true)
     private String status = "true";
+
+    @Column(name="email", nullable = true)
+    private String email;
     
 }
