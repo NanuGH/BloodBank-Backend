@@ -1,4 +1,6 @@
 package cv.hernani.bloodbankprojectspring.models;
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -34,8 +36,8 @@ public class EmployeeModel extends CommonAtributsModel{
     @Column(name="dm_function", nullable = true, length=15)
     private String dmFunction;
 
-    @Column(name="id_role", nullable = true)
-    private String  idRoles;
+    @Column(name="role_code", nullable = true)
+    private UUID  idRole;
 
     @Column(name="email", nullable = true)
     private String  email;

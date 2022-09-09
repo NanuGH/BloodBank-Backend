@@ -2,7 +2,6 @@ package cv.hernani.bloodbankprojectspring.controllers;
 
 import java.util.UUID;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,7 @@ import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 @RestController
 @RequestMapping(path = "/bloodcollection")
 public class BloodCollectionController {
-    
-    @Autowired
+ 
     private final BloodCollectionService bloodCollectServ;
 
     public BloodCollectionController(BloodCollectionService bloodCollectServ) {

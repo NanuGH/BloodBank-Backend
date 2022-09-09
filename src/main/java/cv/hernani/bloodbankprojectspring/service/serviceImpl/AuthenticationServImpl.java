@@ -1,13 +1,20 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import cv.hernani.bloodbankprojectspring.dtos.AuthenticationDto;
+import cv.hernani.bloodbankprojectspring.dtos.AuthenticationResponseDto;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
+import cv.hernani.bloodbankprojectspring.models.RolesMenuModel;
+import cv.hernani.bloodbankprojectspring.models.RolesModel;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
+import cv.hernani.bloodbankprojectspring.repositories.RolesMenuRepository;
+import cv.hernani.bloodbankprojectspring.repositories.RolesRepository;
 import cv.hernani.bloodbankprojectspring.service.service.AuthenticationService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
@@ -16,20 +23,42 @@ import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 public class AuthenticationServImpl implements AuthenticationService {
 
     final EmployeeRepository employeeRepository;
+    final RolesMenuRepository rolesMenuRepository;
+    final RolesRepository rolesRepository;
 
-    public AuthenticationServImpl(EmployeeRepository employeeRepository) {
+
+    public AuthenticationServImpl(EmployeeRepository employeeRepository, RolesMenuRepository rolesMenuRepository, RolesRepository rolesRepository) {
         this.employeeRepository = employeeRepository;
+        this.rolesMenuRepository = rolesMenuRepository;
+        this.rolesRepository = rolesRepository;
     }
 
     @Override
-    public APIResponse getAuthentication(AuthenticationDto authenticationDto) {
+    public APIResponse postAuthentication(AuthenticationDto authenticationDto) {
         if (!employeeRepository.existsByEmailAndPw(authenticationDto.getEmail(), authenticationDto.getPw())){
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: email ou pw incorreto!")).build();
         }
 
-        Optional<EmployeeModel> employeeModel = employeeRepository.findByEmailAndPw(authenticationDto.getEmail(), authenticationDto.getPw());
+        Optional<EmployeeModel> employeeModel = employeeRepository.findByEmail(authenticationDto.getEmail());
+        Optional<RolesModel> rolesOptional = rolesRepository.findById(employeeModel.get().getIdRole());
+        List<RolesMenuModel> rolesMenuModel = rolesMenuRepository.findByIdRoles(rolesOptional.get());
+
+        ArrayList<String> menu = new ArrayList<String>();
+        for(RolesMenuModel rolmenuModel:rolesMenuModel){
+            menu.add(rolmenuModel.getIdMenu().getCode());
+        }
+
         try {
-            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(employeeModel)).build();
+
+            AuthenticationResponseDto authenticationResponseDto = new   AuthenticationResponseDto();  
+            
+            authenticationResponseDto.setEmail(authenticationDto.getEmail());
+            authenticationResponseDto.setName(employeeModel.get().getIdPerson().getNamePerson());
+            authenticationResponseDto.setRoles(rolesOptional.get().getCode());
+            authenticationResponseDto.setIdEmployee(employeeModel.get().getId());
+            authenticationResponseDto.setMenu(menu);
+
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(authenticationResponseDto)).build();
 
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
