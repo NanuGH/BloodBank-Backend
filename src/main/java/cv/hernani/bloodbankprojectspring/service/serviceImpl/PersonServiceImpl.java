@@ -1,5 +1,7 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,7 @@ import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 @Service
 public class PersonServiceImpl implements PersonService {
 
-  final PersonRepository personRepository;
+    final PersonRepository personRepository;
 
     public PersonServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
@@ -31,15 +33,20 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     @Override
     public APIResponse createPerson(@RequestBody @Valid PersonDto personDto) {
-      /*if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(),personDto.getDmDocIdent())
-          ||(personRepository.existsByDmDocIdent(personDto.getDmDocIdent()))){*///don't allow duplicated ID's, I will used it after I tested other stuffs
-      if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(),personDto.getDmDocIdent())){
-        return APIResponse.builder().status(false)
-                .message(MessageState.ERRO_DE_INSERCAO)
-                .details(Arrays.asList("ERRO: Esta pessoa já existe na BD!"))
-                .build();
-      }
-      
+        /*
+         * if
+         * (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.
+         * getNamePerson(),personDto.getSurnamePerson(),personDto.getDmDocIdent())
+         * ||(personRepository.existsByDmDocIdent(personDto.getDmDocIdent()))){
+         */// don't allow duplicated ID's, I will used it after I tested other stuffs
+        if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),
+                personDto.getSurnamePerson(), personDto.getDmDocIdent())) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Esta pessoa já existe na BD!"))
+                    .build();
+        }
+
         var personModel = new PersonModel();
         BeanUtils.copyProperties(personDto, personModel);
         personModel.setStatus("true");
@@ -65,7 +72,7 @@ public class PersonServiceImpl implements PersonService {
                     .details(Arrays.asList("ERRO: Esta pessoa não existe na BD!"))
                     .build();
         }
-        var personModel = personModelOptional.get();       
+        var personModel = personModelOptional.get();
 
         try {
             BeanUtils.copyProperties(personDto, personModel);
@@ -79,6 +86,33 @@ public class PersonServiceImpl implements PersonService {
                     .status(false).message(MessageState.ERRO_AO_ATUALIZAR)
                     .details(Arrays.asList(e.getMessage())).build();
         }
+    }
+
+    @Override
+    public APIResponse getPersonByOptionals(String namePerson, String surnamePerson) {
+
+        try {
+            List<PersonModel> getPersons = new ArrayList<>();
+
+            if (namePerson != "" && surnamePerson != "") {
+                getPersons = personRepository.findByNamePersonAndSurnamePerson(namePerson, surnamePerson);
+
+            }
+            if (namePerson == null && surnamePerson != "") {
+                getPersons = personRepository.findBySurnamePerson(surnamePerson);
+
+            }
+            if (namePerson != "" && surnamePerson == null) {
+                getPersons = personRepository.findByNamePerson(namePerson);
+            }
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getPersons))
+                    .build();
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
+        }
+
     }
 
     @Override
@@ -97,15 +131,18 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public APIResponse getPersonById(UUID id) {
-        if (!personRepository.existsById(id)) { 
-           return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Esta pessoa não existe na BD!")).build();
+        if (!personRepository.existsById(id)) {
+            return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Esta pessoa não existe na BD!"))
+                    .build();
         }
         Optional<PersonModel> personModel = personRepository.findById(id);
         try {
-            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personModel)).build();
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personModel))
+                    .build();
 
         } catch (Exception e) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
         }
     }
 

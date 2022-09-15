@@ -14,10 +14,6 @@ public class BloodDonorModel extends CommonAtributsModel{
 
     private static final long serialVersionUID = 1L;
 
-    /*@Id  @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id_donor",nullable = false, unique = true, length = 10)
-    private UUID idDonor;*/
-
     @JoinColumn(name="fk_id_donor", nullable = false, unique = false)
     private PersonModel idPerson;
 

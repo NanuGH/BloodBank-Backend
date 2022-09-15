@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.inMemoryAuthentication()
                 .withUser("nanu").password(passwordEncoder().encode("nanu"))
                 .authorities("USER");
-    }
+    }  
 
     @Override
     protected void configure(HttpSecurity http) throws Exception

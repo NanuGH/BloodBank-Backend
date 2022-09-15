@@ -85,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService{
              employeeModel.setIdPerson(personModel);
              employeeModel.setInsertionDate(personModel.getInsertionDate());
              employeeModel.setUpdateDate(personModel.getUpdateDate());
-             employeeModel.setIdRoles(employeeDto.getIdRoles());
+             //employeeModel.setIdRole(employeeDto.getIdRoles());
              employeeModel.setEmail(employeeDto.getEmail());
 
              employeeRepository.save(employeeModel);

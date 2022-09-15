@@ -39,6 +39,12 @@ public class PersonController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/getPersonOpts")
+    public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String namePerson,@RequestParam(required=false) String surnamePerson) {
+        APIResponse response = personService.getPersonByOptionals(namePerson, surnamePerson);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{id}")
     public ResponseEntity<Object> getDomainById(@PathVariable("id") UUID id){
         APIResponse response = personService.getPersonById(id);

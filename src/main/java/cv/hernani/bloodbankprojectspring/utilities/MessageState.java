@@ -17,4 +17,8 @@ public class MessageState {
     public final static String ID_NAO_EXISTE = "Id nao existe";
     public final static String ASSOCIAR = "Associado com sucesso";
 
+    public final static String SEM_DADOS = "Dados não encontrados";
+
+
+
 }
