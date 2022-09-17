@@ -24,19 +24,19 @@ public class CommonPersonAtributsModel implements Serializable {
 
     @Id  
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id",nullable = false, unique = true, length = 10)
+    @Column(name="id",nullable = true, unique = true, length = 10)
     private UUID id;
 
-    @Column(name="name_person", nullable = false, length = 10)
+    @Column(name="name_person", nullable = true, length = 10)
     private String namePerson;
 
-    @Column(name="surname_person", nullable = false, length = 10)
+    @Column(name="surname_person", nullable = true, length = 10)
     private String surnamePerson;
     
-    @Column(name="blood_type", nullable = false, length = 3)
+    @Column(name="blood_type", nullable = true, length = 15)
     private String dmBloodCode;
 
-    @Column(name="dm_doc_ident", nullable = false, length = 15)
+    @Column(name="dm_doc_ident", nullable = true, length = 15)
     private String dmDocIdent;
 
     @Column(name="birthday", nullable = true)
@@ -45,7 +45,7 @@ public class CommonPersonAtributsModel implements Serializable {
     @Column(name="picture_person", nullable = true)
     private String picturePerson;
 
-    @Column(name="dm_sex", nullable = true, length = 1)
+    @Column(name="dm_sex", nullable = true, length = 10)
     private String dmSex;
 
     @Column(name="dm_home_address", nullable = true, length = 20)

@@ -10,19 +10,19 @@ import lombok.Data;
 @Data
 public class PersonDto { // para validar os campos q o cliente envia    
 
-    @NotBlank
+    //@NotBlank
     @Size(max = 10)
     private String namePerson;
 
-    @NotBlank
+    //@NotBlank
     @Size(max = 10)
     private String surnamePerson;
 
-    @Size(max = 3)
+    //@Size(max = 3)
     private String dmBloodCode;
 
     //@NotBlank
-    @Size(max = 15)
+    //@Size(max = 15)
     private String dmDocIdent;
 
     //@NotBlank
@@ -32,7 +32,7 @@ public class PersonDto { // para validar os campos q o cliente envia
     private String picturePerson;
 
     //@NotBlank
-    @Size(max = 1)
+   // @Size(max = 1)
     private String dmSex;
 
     //@NotBlank
@@ -55,6 +55,8 @@ public class PersonDto { // para validar os campos q o cliente envia
     private String whoUpdated;
 
     private String status="true";
+
+    private String email;
 
 
 }
