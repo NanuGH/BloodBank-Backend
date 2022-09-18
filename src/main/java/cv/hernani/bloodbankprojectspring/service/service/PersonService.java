@@ -14,7 +14,7 @@ public interface PersonService {
 
     public APIResponse getPersonById(UUID id);
 
-    public APIResponse getPersonByOptionals(String namePerson,String surnamePerson);
+    public APIResponse getPersonByOptionals(String namePerson,String surnamePerson, LocalDate birthday);
 
     public APIResponse deletePerson(UUID id);
 

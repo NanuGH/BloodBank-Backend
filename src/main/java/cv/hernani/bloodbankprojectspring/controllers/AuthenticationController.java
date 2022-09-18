@@ -1,6 +1,4 @@
 package cv.hernani.bloodbankprojectspring.controllers;
-
-import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;

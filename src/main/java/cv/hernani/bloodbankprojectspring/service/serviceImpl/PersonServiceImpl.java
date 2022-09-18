@@ -89,21 +89,24 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public APIResponse getPersonByOptionals(String namePerson, String surnamePerson) {
+    public APIResponse getPersonByOptionals(String namePerson, String surnamePerson, LocalDate birthday) {
 
         try {
             List<PersonModel> getPersons = new ArrayList<>();
 
-            if (namePerson != "" && surnamePerson != "") {
-                getPersons = personRepository.findByNamePersonAndSurnamePerson(namePerson, surnamePerson);
+            if (namePerson != "" && surnamePerson != "" && birthday != null) {
+                getPersons = personRepository.findByNamePersonAndSurnamePersonAndBirthday(namePerson, surnamePerson,birthday);
 
             }
-            if (namePerson == null && surnamePerson != "") {
+            if (namePerson==null && birthday==null && surnamePerson!="") {
                 getPersons = personRepository.findBySurnamePerson(surnamePerson);
 
             }
-            if (namePerson != "" && surnamePerson == null) {
+            if (namePerson!="" && surnamePerson==null && birthday==null) {
                 getPersons = personRepository.findByNamePerson(namePerson);
+            }
+            if (namePerson==null && surnamePerson==null && birthday!= null) {
+                getPersons = personRepository.findByBirthday(birthday);
             }
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getPersons))
                     .build();

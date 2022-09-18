@@ -1,5 +1,6 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
+import java.time.LocalDate;
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,10 @@ public class PersonController {
     }
 
     @GetMapping("/getPersonOpts")
-    public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String namePerson,@RequestParam(required=false) String surnamePerson) {
-        APIResponse response = personService.getPersonByOptionals(namePerson, surnamePerson);
+    public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String namePerson,
+                                                    @RequestParam(required=false) String surnamePerson,
+                                                    @RequestParam(required=false) LocalDate birthday) {
+        APIResponse response = personService.getPersonByOptionals(namePerson, surnamePerson, birthday);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
