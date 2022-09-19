@@ -43,7 +43,7 @@ public class PersonController {
     @GetMapping("/getPersonOpts")
     public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String namePerson,
                                                     @RequestParam(required=false) String surnamePerson,
-                                                    @RequestParam(required=false) LocalDate birthday) {
+                                                    @RequestParam(required=false) String birthday) {
         APIResponse response = personService.getPersonByOptionals(namePerson, surnamePerson, birthday);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

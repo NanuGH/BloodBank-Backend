@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -19,6 +20,7 @@ import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
 import cv.hernani.bloodbankprojectspring.service.service.PersonService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
+import cv.hernani.bloodbankprojectspring.utilities.Helper;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 
 @Service
@@ -89,13 +91,15 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public APIResponse getPersonByOptionals(String namePerson, String surnamePerson, LocalDate birthday) {
+    public APIResponse getPersonByOptionals(String namePerson, String surnamePerson, String birthday) {
+        
+       LocalDate convertedData = Helper.convertStringLocalDate(birthday);
 
         try {
             List<PersonModel> getPersons = new ArrayList<>();
 
             if (namePerson != "" && surnamePerson != "" && birthday != null) {
-                getPersons = personRepository.findByNamePersonAndSurnamePersonAndBirthday(namePerson, surnamePerson,birthday);
+                getPersons = personRepository.findByNamePersonAndSurnamePersonAndBirthday(namePerson, surnamePerson,convertedData);
 
             }
             if (namePerson==null && birthday==null && surnamePerson!="") {
@@ -106,7 +110,7 @@ public class PersonServiceImpl implements PersonService {
                 getPersons = personRepository.findByNamePerson(namePerson);
             }
             if (namePerson==null && surnamePerson==null && birthday!= null) {
-                getPersons = personRepository.findByBirthday(birthday);
+                getPersons = personRepository.findByBirthday(convertedData);
             }
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getPersons))
                     .build();
