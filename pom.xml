@@ -11,7 +11,8 @@
 	<groupId>cv.ady</groupId>
 	<artifactId>defaultprojectspring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<!-- <packaging>war</packaging> -->
+	<packaging>jar</packaging>
 	<name>defaultprojectspring</name>
 	<description>Default project for Spring Boot with Lombok, swagger, basic authentication, PostgreSQL</description>
 	<properties>

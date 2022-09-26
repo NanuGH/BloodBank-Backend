@@ -1,6 +1,5 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
-import java.time.LocalDate;
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
