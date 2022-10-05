@@ -6,12 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,7 +29,6 @@ public class PersonServiceImpl implements PersonService {
         this.personRepository = personRepository;
     }
 
-    @Transactional
     @Override
     public APIResponse createPerson(@RequestBody @Valid PersonDto personDto) {
         /*
@@ -41,8 +37,7 @@ public class PersonServiceImpl implements PersonService {
          * getNamePerson(),personDto.getSurnamePerson(),personDto.getDmDocIdent())
          * ||(personRepository.existsByDmDocIdent(personDto.getDmDocIdent()))){
          */// don't allow duplicated ID's, I will used it after I tested other stuffs
-        if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),
-                personDto.getSurnamePerson(), personDto.getDmDocIdent())) {
+        if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(), personDto.getDmDocIdent())) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Esta pessoa já existe na BD!"))
@@ -64,7 +59,6 @@ public class PersonServiceImpl implements PersonService {
 
     }
 
-    @Transactional
     @Override
     public APIResponse updatePerson(UUID id, @RequestBody @Valid PersonDto personDto) {
         Optional<PersonModel> personModelOptional = personRepository.findById(id);

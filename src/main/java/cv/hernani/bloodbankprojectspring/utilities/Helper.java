@@ -1,6 +1,5 @@
 package cv.hernani.bloodbankprojectspring.utilities;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import org.apache.commons.lang3.RandomStringUtils;

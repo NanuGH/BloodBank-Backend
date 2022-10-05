@@ -33,13 +33,14 @@ public class AuthenticationServImpl implements AuthenticationService {
         this.rolesRepository = rolesRepository;
     }
 
-    @Override
+   /*  @Override
     public APIResponse postAuthentication(AuthenticationDto authenticationDto) {
         if (!employeeRepository.existsByEmailAndPw(authenticationDto.getEmail(), authenticationDto.getPw())){
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: email ou pw incorreto!")).build();
         }
 
-        Optional<EmployeeModel> employeeModel = employeeRepository.findByEmail(authenticationDto.getEmail());
+        //Optional<EmployeeModel> employeeModel = employeeRepository.findByEmail(authenticationDto.getEmail());
+        List<EmployeeModel> employeeModel= employeeRepository.findByEmail(authenticationDto.getEmail());
         Optional<RolesModel> rolesOptional = rolesRepository.findById(employeeModel.get().getIdRole());
         List<RolesMenuModel> rolesMenuModel = rolesMenuRepository.findByIdRoles(rolesOptional.get());
 
@@ -63,6 +64,6 @@ public class AuthenticationServImpl implements AuthenticationService {
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
-    }
+    } */
     
 }

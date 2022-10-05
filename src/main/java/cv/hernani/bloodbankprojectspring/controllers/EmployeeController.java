@@ -49,10 +49,17 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getEmployeeById(@PathVariable(value = "id") UUID id) {
+    public ResponseEntity<Object> getEmployeeById(@PathVariable(value = "id") UUID id) {  
         APIResponse response = employeeService.findEmployeeById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     } 
+
+    @GetMapping("/getEmplOpts")
+    public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String identifNumber,
+                                                    @RequestParam(required=false) String email) {
+        APIResponse response = employeeService.findEmploByOptionals(identifNumber, email);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deleteEmployee(@PathVariable("id") UUID id){

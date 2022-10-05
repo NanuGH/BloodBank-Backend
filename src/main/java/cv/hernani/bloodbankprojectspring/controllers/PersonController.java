@@ -27,7 +27,7 @@ public class PersonController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> createDomain(@Valid @RequestBody PersonDto personDto) {
+    public ResponseEntity<Object> createPerson(@Valid @RequestBody PersonDto personDto) {
         APIResponse response = personService.createPerson(personDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -36,7 +36,7 @@ public class PersonController {
     @GetMapping()
     public ResponseEntity<Object> getAllDomain() {
         APIResponse response = personService.getAllPerson();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response.getDetails(), HttpStatus.OK);
     }
 
     @GetMapping("/getPersonOpts")

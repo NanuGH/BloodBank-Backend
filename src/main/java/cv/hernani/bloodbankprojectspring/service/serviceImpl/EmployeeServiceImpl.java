@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -212,6 +213,32 @@ public class EmployeeServiceImpl implements EmployeeService{
         } catch (Exception e) {
             return APIResponse.builder()
                     .status(false).message(MessageState.ERRO).build();
+        }
+    }
+
+    @Override
+    public APIResponse findEmploByOptionals(String identifNumber, String email) {
+
+        try {
+            List<EmployeeModel> getEmployee = new ArrayList<>();  
+
+            if (identifNumber != "" && email != "") {
+                getEmployee = employeeRepository.findByIdentifNumberAndEmail(identifNumber, email);
+
+            }
+            if (identifNumber==null && email=="") {
+                getEmployee = employeeRepository.findByEmail(email);
+
+            }
+            if (identifNumber!="" && email==null) {
+                getEmployee = employeeRepository.findByIdentifNumber(identifNumber);
+            }
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee))
+                    .build();
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
         }
     }
  

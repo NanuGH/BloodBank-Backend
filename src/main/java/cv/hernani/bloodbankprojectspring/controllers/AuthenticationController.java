@@ -19,10 +19,10 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
     
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+   /*  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> postAuthentication(@Valid @RequestBody AuthenticationDto authenticationDto) {
                                                         
         APIResponse response = authenticationService.postAuthentication(authenticationDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
+    } */
 }
