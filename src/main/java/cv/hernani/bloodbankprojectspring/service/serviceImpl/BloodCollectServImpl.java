@@ -1,5 +1,6 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -128,6 +129,33 @@ public class BloodCollectServImpl implements BloodCollectionService {
             return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
+
+    @Override
+    public APIResponse findBloodCollectByOptionals(/* String identifNumber, */ String insertionDate) {
+        try {
+            List<BloodCollectionModel> getBloodCollect = new ArrayList<>(); 
+            getBloodCollect = bloodCollectRepository.findByInsertionDate(insertionDate); 
+
+            /* if (identifNumber != "" && insertionDate != "") {
+                getBloodCollect = bloodCollectRepository.findByIdentifNumberAndInsertionDate(identifNumber, insertionDate);
+
+            }
+            if (identifNumber==null && insertionDate=="") {
+                getBloodCollect = bloodCollectRepository.findByEmail(insertionDate);
+
+            }
+            if (identifNumber!="" && insertionDate==null) {
+                getBloodCollect = bloodCollectRepository.findByIdentifNumber(identifNumber);
+            } */
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect))
+                    .build();
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
         }
     }
 

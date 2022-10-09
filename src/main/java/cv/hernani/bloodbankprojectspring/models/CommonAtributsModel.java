@@ -1,6 +1,7 @@
 package cv.hernani.bloodbankprojectspring.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class CommonAtributsModel implements Serializable {
 
     @Column(name="insertion_date", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDateTime insertionDate;
+    private LocalDate insertionDate;
 
     @Column(name="who_inserted", nullable = false, updatable = false)
     private String whoInserted; 

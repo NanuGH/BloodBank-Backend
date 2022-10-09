@@ -42,6 +42,13 @@ public class BloodCollectionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/getBloodCollectionpts")
+    public ResponseEntity<Object> getPersonOptional(/*@RequestParam(required=false)String identifNumber,*/
+                                                    @RequestParam(required=false) String insertionDate) {
+        APIResponse response = bloodCollectServ.findBloodCollectByOptionals(/* identifNumber */ insertionDate);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping(value ="/{id}")
     public ResponseEntity<Object> deleteBloodCollect(@PathVariable("id") UUID id){
         APIResponse response = bloodCollectServ.delBloodCollection(id);
