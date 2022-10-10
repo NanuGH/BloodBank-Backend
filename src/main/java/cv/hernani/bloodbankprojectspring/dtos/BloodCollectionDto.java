@@ -7,6 +7,8 @@ public class BloodCollectionDto{
     
     private String qtdde;
 
+    private String collectionNumber;
+
     private String externCollection;
 
     private String whoUpdated;

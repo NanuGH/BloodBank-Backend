@@ -18,14 +18,6 @@ public class EmployeeModel extends CommonAtributsModel{
     @ManyToOne
     @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
-    
-    /*@Column(name="insertion_date", nullable = true) 
-    @CreationTimestamp //sem necessidade de fazer set na serviço
-    private LocalDateTime insertionDate;
-
-    @Column(name="update_date", nullable = true)
-    @UpdateTimestamp
-    private LocalDateTime updateDate;*/
 
     @Column(name="identifNumber", nullable = true, length=15 )
     private String identifNumber;

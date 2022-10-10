@@ -67,10 +67,8 @@ public class EmployeeServiceImpl implements EmployeeService{
                                                                             employeeDto.getPersonDto().getNamePerson(),
                                                                             employeeDto.getPersonDto().getSurnamePerson())){
 
-            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Pessoa ja existe na BD!")).build();
-        }
-              
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Pessoa ja existe na BD!")).build();
+        }              
         try {
             var personModel = new PersonModel();
             BeanUtils.copyProperties(employeeDto.getPersonDto(), personModel);

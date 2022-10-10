@@ -1,5 +1,6 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,10 +40,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
     public APIResponse createBloodCollection(@RequestBody @Valid BloodCollectionDto bloodCollectionDto, UUID idEmployee, UUID idPerson) {
         Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
         if (!personModelOptional.isPresent()) {
-            return APIResponse.builder().status(false)
-                    .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Essa pessoa não existe na BD!"))
-                    .build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Essa pessoa não existe na BD!")).build();
         }
         
         Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(idEmployee);
@@ -55,10 +54,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
         var personStatus = personModelOptional.get().getStatus();
 
         if (personStatus.equals("false")) {
-            return APIResponse.builder().status(false)
-                    .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Esta pessoa não esta apta para doar!"))
-                    .build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Esta pessoa não esta apta para doar!")).build();
                         
         } else {
              try {
@@ -134,22 +131,20 @@ public class BloodCollectServImpl implements BloodCollectionService {
 
 
     @Override
-    public APIResponse findBloodCollectByOptionals(/* String identifNumber, */ String insertionDate) {
+    public APIResponse findBloodCollectByOptionals( String collectionNumber, LocalDateTime insertionDate) {
         try {
             List<BloodCollectionModel> getBloodCollect = new ArrayList<>(); 
             getBloodCollect = bloodCollectRepository.findByInsertionDate(insertionDate); 
 
-            /* if (identifNumber != "" && insertionDate != "") {
-                getBloodCollect = bloodCollectRepository.findByIdentifNumberAndInsertionDate(identifNumber, insertionDate);
-
+            if (collectionNumber != "" && insertionDate != null) {
+                getBloodCollect = bloodCollectRepository.findByCollectionNumberAndInsertionDate(collectionNumber, insertionDate);
             }
-            if (identifNumber==null && insertionDate=="") {
-                getBloodCollect = bloodCollectRepository.findByEmail(insertionDate);
-
+            if (collectionNumber==null && insertionDate== null) {
+                getBloodCollect = bloodCollectRepository.findByInsertionDate(insertionDate);
             }
-            if (identifNumber!="" && insertionDate==null) {
-                getBloodCollect = bloodCollectRepository.findByIdentifNumber(identifNumber);
-            } */
+            if (collectionNumber!="" && insertionDate==null) {
+                getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
+            }
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect))
                     .build();
 

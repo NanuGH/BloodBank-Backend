@@ -1,5 +1,6 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -18,11 +19,11 @@ import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 
 @Service
-public class BloodDonorImpl implements BloodDonorService{
+public class BloodDonorServImpl implements BloodDonorService{
 
     final BloodDonorRepository bloodDonorRepository;
     final PersonRepository personRepository;
-    public BloodDonorImpl(BloodDonorRepository bloodDonorRepository, PersonRepository personRepository) {
+    public BloodDonorServImpl(BloodDonorRepository bloodDonorRepository, PersonRepository personRepository) {
         this.bloodDonorRepository = bloodDonorRepository;
         this.personRepository = personRepository;
     }
@@ -89,14 +90,14 @@ public class BloodDonorImpl implements BloodDonorService{
         }
         Optional<BloodDonorModel> bloodDonorModel = bloodDonorRepository.findById(id);
         try {
-
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(bloodDonorModel)).build();
-
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
     }
 
+    
+    
     @Override
     public APIResponse delBloodDonor(UUID id) {
         if (!bloodDonorRepository.existsById(id)) {
@@ -109,5 +110,5 @@ public class BloodDonorImpl implements BloodDonorService{
             return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
         }
     }
-    
+
 }

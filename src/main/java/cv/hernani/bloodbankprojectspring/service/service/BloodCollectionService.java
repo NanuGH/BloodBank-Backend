@@ -1,5 +1,6 @@
 package cv.hernani.bloodbankprojectspring.service.service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import cv.hernani.bloodbankprojectspring.dtos.BloodCollectionDto;
@@ -15,7 +16,7 @@ public interface BloodCollectionService {
 
     public APIResponse getBloodCollectById(UUID id);    
 
-    public APIResponse findBloodCollectByOptionals(/* String identifNumber, */String insertionDate);
+    public APIResponse findBloodCollectByOptionals(String collectionNumber,LocalDateTime insertionDate);
 
     public APIResponse delBloodCollection(UUID id);
     

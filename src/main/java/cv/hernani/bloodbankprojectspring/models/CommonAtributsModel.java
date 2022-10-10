@@ -1,7 +1,6 @@
 package cv.hernani.bloodbankprojectspring.models;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,7 +12,6 @@ import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import lombok.Data;
 
 @Data
@@ -28,7 +26,11 @@ public class CommonAtributsModel implements Serializable {
 
     @Column(name="insertion_date", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDate insertionDate;
+    private LocalDateTime insertionDate;
+
+    @UpdateTimestamp
+    @Column(name="update_date", nullable = false, updatable = true)
+    private LocalDateTime updateDate;
 
     @Column(name="who_inserted", nullable = false, updatable = false)
     private String whoInserted; 
@@ -41,9 +43,5 @@ public class CommonAtributsModel implements Serializable {
 
     @Column(name="dm_code_disabled", nullable = true)
     private String dmCodeDisabled;
-
-    @UpdateTimestamp
-    @Column(name="update_date", nullable = false, updatable = true)
-    private LocalDateTime updateDate;
     
 }
