@@ -16,7 +16,7 @@ public interface BloodCollectionService {
 
     public APIResponse getBloodCollectById(UUID id);    
 
-    public APIResponse findBloodCollectByOptionals(String collectionNumber,LocalDateTime insertionDate);
+    public APIResponse findBloodCollectByOptionals(String collectionNumber,String insertionDate);
 
     public APIResponse delBloodCollection(UUID id);
     

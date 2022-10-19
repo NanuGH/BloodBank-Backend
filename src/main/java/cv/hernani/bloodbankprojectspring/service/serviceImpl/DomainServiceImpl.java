@@ -1,5 +1,6 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -81,12 +82,31 @@ public class DomainServiceImpl implements DomainService {
         try {
             return APIResponse.builder().status(true)
                     .message(MessageState.SUCESSO)
-                    .details(Arrays.asList(getAll)).build();
+                    .details(Arrays.asList(getAll.toArray())).build();//toArray [[]] passa a ser []
         } catch (Exception e) {
             return APIResponse.builder()
                     .status(false).message(MessageState.ERRO)
                     .details(Arrays.asList(e.getMessage())).build();
         }
+    }
+
+    @Override
+    public APIResponse findByDomain(String domain) {
+
+        List<DomainModel> getDomain = new ArrayList<>();
+        
+        try {           
+            if (domain != "" && domain != null) {
+                getDomain = domainRepository.findByDomain(domain);
+                return APIResponse.builder().status(true)
+                .message(MessageState.SUCESSO)
+                .details(Arrays.asList(getDomain.toArray())).build();
+            }           
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
+        }
+        return null;
     }
 
     @Override
@@ -127,4 +147,7 @@ public class DomainServiceImpl implements DomainService {
         }
     }
 
+   
+
+  
 }

@@ -1,6 +1,4 @@
 package cv.hernani.bloodbankprojectspring.controllers;
-
-import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -45,7 +43,9 @@ public class BloodCollectionController {
 
     @GetMapping("/getBloodCollectionpts")
     public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String collectionNumber,
-                                                    @RequestParam(required=false) LocalDateTime insertionDate) {
+                                                    @RequestParam(required=false)
+                                                    String insertionDate) {
+
         APIResponse response = bloodCollectServ.findBloodCollectByOptionals(collectionNumber, insertionDate);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

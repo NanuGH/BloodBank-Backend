@@ -60,9 +60,14 @@ public class DomainController {
     @PutMapping(value="/{id}")
     public ResponseEntity<Object> updateDomain(@PathVariable(value = "id") UUID id, 
                                                @RequestBody @Valid DomainDto domainDto){
-
         APIResponse response = domainService.updateDomain(id, domainDto);
         return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @GetMapping("/getByDomain")
+    public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String domain) {
+        APIResponse response = domainService.findByDomain(domain);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
 }

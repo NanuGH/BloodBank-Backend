@@ -1,5 +1,6 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,16 +132,21 @@ public class BloodCollectServImpl implements BloodCollectionService {
 
 
     @Override
-    public APIResponse findBloodCollectByOptionals( String collectionNumber, LocalDateTime insertionDate) {
+    public APIResponse findBloodCollectByOptionals( String collectionNumber, String insertionDate) {
+        LocalDate date = LocalDate.parse(insertionDate);
+        LocalDateTime datetime = date.atStartOfDay();
+        System.out.println(date);
+        System.out.println(datetime);
         try {
             List<BloodCollectionModel> getBloodCollect = new ArrayList<>(); 
-            getBloodCollect = bloodCollectRepository.findByInsertionDate(insertionDate); 
+            getBloodCollect = bloodCollectRepository.findByInsertionDate(datetime); 
 
             if (collectionNumber != "" && insertionDate != null) {
-                getBloodCollect = bloodCollectRepository.findByCollectionNumberAndInsertionDate(collectionNumber, insertionDate);
+                getBloodCollect = bloodCollectRepository.findByCollectionNumberAndInsertionDate(collectionNumber, datetime);
             }
             if (collectionNumber==null && insertionDate== null) {
-                getBloodCollect = bloodCollectRepository.findByInsertionDate(insertionDate);
+                getBloodCollect = bloodCollectRepository.searchInsertionDateLike(insertionDate);
+                System.out.println(getBloodCollect.get(0).getQtdde());
             }
             if (collectionNumber!="" && insertionDate==null) {
                 getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
@@ -153,5 +159,5 @@ public class BloodCollectServImpl implements BloodCollectionService {
                     .build();
         }
     }
-
+  
 }

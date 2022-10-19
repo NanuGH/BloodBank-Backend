@@ -12,5 +12,6 @@ public interface DomainService {
     public APIResponse getDomainById(UUID id);
     public APIResponse deleteDomain(UUID id);
     public APIResponse updateDomain(UUID id, DomainDto domainDto);
+    public APIResponse findByDomain(String domain);
     
 }
