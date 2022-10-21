@@ -69,5 +69,11 @@ public class DomainController {
         APIResponse response = domainService.findByDomain(domain);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/getBySelfId")
+    public ResponseEntity<Object> getPersonBySelfId(@RequestParam(required=false)UUID selfId) {
+        APIResponse response = domainService.findBySelfId(selfId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     
 }

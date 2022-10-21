@@ -28,9 +28,9 @@ public class DomainServiceImpl implements DomainService {
         this.domainRepository = domainRepository;
     }
 
-    @Transactional
-    @Override
-    public APIResponse createDomain(@RequestBody @Valid DomainDto domainDto) {
+    //@Transactional
+    //@Override
+    /*public APIResponse createDomain(@RequestBody @Valid DomainDto domainDto) {
         if (domainRepository.existsByDomainAndDmCode(domainDto.getDomain(), domainDto.getDmCode())) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
@@ -49,8 +49,107 @@ public class DomainServiceImpl implements DomainService {
                     .details(Arrays.asList(e.getMessage())).build();
         }
 
-    }
+    } */
 
+    /* @Transactional
+    @Override
+    public APIResponse createDomain(@RequestBody @Valid DomainDto domainDto) {
+        if (domainRepository.existsByDomainAndDmCode(domainDto.getDomain(), domainDto.getDmCode())) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("Conflict: Domain already exists on DB!"))
+                    .build();
+        }
+        List<DomainModel> dModelOptnal = domainRepository.findByDomain(domainDto.getDomain());
+        var domainModel = new DomainModel();
+        
+        try {
+            UUID selfid = UUID.randomUUID();
+            if(dModelOptnal.isEmpty()){
+                BeanUtils.copyProperties(domainDto, domainModel);
+                domainModel.setDmOrder(0);
+                domainModel.setSelfId(null);
+                domainRepository.saveAndFlush(domainModel);
+                return APIResponse.builder().status(true)
+                                  .message(MessageState.INSERIDO_COM_SUCESSO).build();
+            }else{
+                for (int i = 0; i <= dModelOptnal.size(); i++) {
+                    int order = 0;
+                    if (order == dModelOptnal.get(i).getDmOrder()) {
+                        selfid = dModelOptnal.get(i).getIdDomain();
+                        System.out.println("selfid="+ selfid);
+                        System.out.println("Ordem=" + dModelOptnal.get(i).getDmOrder());
+                    }
+                }
+
+                for(DomainModel x: dModelOptnal) {
+
+                }
+
+                dModelOptnal.stream()
+                .map(x=>{
+
+
+                }
+                return x;
+                )
+                .Colle
+
+                BeanUtils.copyProperties(domainDto, domainModel);
+                domainModel.setDmOrder(dModelOptnal.size());
+                domainModel.setSelfId(selfid);
+                domainRepository.saveAndFlush(domainModel);
+                return APIResponse.builder().status(true)
+                                  .message(MessageState.INSERIDO_COM_SUCESSO).build();
+            }
+            
+        } catch (Exception e) {
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList(e.getMessage())).build();
+        }
+    } */
+   
+    
+    @Transactional
+    @Override
+    public APIResponse createDomain(@RequestBody @Valid DomainDto domainDto) {
+        if (domainRepository.existsByDomainAndDmCode(domainDto.getDomain(), domainDto.getDmCode())) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("Conflict: Domain already exists on DB!"))
+                    .build();
+        }
+        Optional<DomainModel> dModelOptnal = domainRepository.findByDomainAndSelfIdIsNull(domainDto.getDomain());
+        var domainModel = new DomainModel();
+        
+        try {
+            
+            if(!dModelOptnal.isPresent()){
+                BeanUtils.copyProperties(domainDto, domainModel);
+                domainModel.setDmOrder(0);
+                domainModel.setSelfId(null);
+                domainRepository.saveAndFlush(domainModel);
+                return APIResponse.builder().status(true)
+                                  .message(MessageState.INSERIDO_COM_SUCESSO).build();
+            }else{
+                
+                BeanUtils.copyProperties(domainDto, domainModel);
+                domainModel.setDmOrder((domainRepository.countByDomainAndSelfIdIsNotNull(domainDto.getDomain())+1));
+                domainModel.setSelfId(dModelOptnal.get().getIdDomain());
+                domainRepository.saveAndFlush(domainModel);
+                return APIResponse.builder().status(true)
+                                  .message(MessageState.INSERIDO_COM_SUCESSO).build();
+            }
+            
+        } catch (Exception e) {
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+   
+   
     @Transactional
     @Override
     public APIResponse updateDomain(UUID id, @RequestBody @Valid DomainDto domainDto) {
@@ -92,9 +191,7 @@ public class DomainServiceImpl implements DomainService {
 
     @Override
     public APIResponse findByDomain(String domain) {
-
-        List<DomainModel> getDomain = new ArrayList<>();
-        
+        List<DomainModel> getDomain = new ArrayList<>();        
         try {           
             if (domain != "" && domain != null) {
                 getDomain = domainRepository.findByDomain(domain);
@@ -105,6 +202,24 @@ public class DomainServiceImpl implements DomainService {
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
                     .build();
+        }
+        return null;
+    }
+
+    @Override
+    public APIResponse findBySelfId(UUID selfId) {
+        List<DomainModel> getDomain = new ArrayList<>();        
+        try {           
+            if (selfId == null) {
+                getDomain = domainRepository.findBySelfId(selfId);
+                return APIResponse.builder().status(true)
+                                  .message(MessageState.SUCESSO)
+                                  .details(Arrays.asList(getDomain.toArray())).build();
+            }           
+        } catch (Exception e) {
+            return APIResponse.builder().status(false)
+                                        .message(MessageState.ERRO)
+                                        .details(Arrays.asList(e.getMessage())).build();
         }
         return null;
     }
@@ -147,7 +262,6 @@ public class DomainServiceImpl implements DomainService {
         }
     }
 
-   
 
   
 }

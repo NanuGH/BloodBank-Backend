@@ -14,10 +14,10 @@ public class DomainDto {
    // @Size(max = 5)
     private String dmCode;
 
-    //@Size(max = 2)
+    /* //@Size(max = 2)
     private String dmOrder;
 
     //@Size(max = 2)
-    private String selfId;
+    private String selfId; */
     
 }

@@ -25,16 +25,16 @@ public class DomainModel implements Serializable {
     @Column(name="domain", nullable = false, length = 15)
     private String domain;
 
-    @Column(name="domain_name", nullable = false, length = 15)
+    @Column(name="domain_name", nullable = false, length = 30)
     private String dmName;
 
     @Column(name="domain_code", nullable = false, length = 15)
     private String dmCode;
 
     @Column(name="domain_order", nullable = false, length = 2)
-    private String dmOrder;
+    private int dmOrder;
 
-    @Column(name="self_id", nullable = false, length = 38)
-    private String selfId;
+    @Column(name="self_id", nullable = true, length = 38)
+    private UUID selfId;
 
 }
