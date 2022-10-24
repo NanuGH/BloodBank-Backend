@@ -22,7 +22,7 @@ public class DomainModel implements Serializable {
     @Column(name="id_domain",nullable = false, unique = true, length = 38)
     private UUID idDomain;
 
-    @Column(name="domain", nullable = false, length = 15)
+    @Column(name="domain", nullable = false, length = 38)
     private String domain;
 
     @Column(name="domain_name", nullable = false, length = 30)

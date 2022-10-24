@@ -68,6 +68,13 @@ public class PersonServiceImpl implements PersonService {
                     .details(Arrays.asList("ERRO: Esta pessoa não existe na BD!"))
                     .build();
         }
+
+        if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(), personDto.getDmDocIdent())) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Esta pessoa já existe na BD!"))
+                    .build();
+        }
         var personModel = personModelOptional.get();
 
         try {
