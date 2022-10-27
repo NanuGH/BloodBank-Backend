@@ -61,12 +61,17 @@ public class PersonController {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Object> updateDomain(@PathVariable("id") UUID id, 
-                                               @RequestBody @Valid PersonDto personDto){
-
+    public ResponseEntity<Object> updatePerson(@PathVariable("id") UUID id,@RequestBody @Valid PersonDto personDto){
         APIResponse response = personService.updatePerson(id, personDto);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
+    @PutMapping(value="/changestatus/{id}")
+    public ResponseEntity<Object> changeStatus(@PathVariable("id") UUID id){
+        APIResponse response = personService.changeStatus(id);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+    
     
 
 

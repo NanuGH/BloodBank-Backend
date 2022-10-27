@@ -63,31 +63,40 @@ public class PersonServiceImpl implements PersonService {
     public APIResponse updatePerson(UUID id, @RequestBody @Valid PersonDto personDto) {
         Optional<PersonModel> personModelOptional = personRepository.findById(id);
         if (!personModelOptional.isPresent()) {
-            return APIResponse.builder().status(false)
-                    .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Esta pessoa não existe na BD!"))
-                    .build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Esta pessoa não existe na BD!")).build();
         }
-
-        if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(), personDto.getDmDocIdent())) {
-            return APIResponse.builder().status(false)
-                    .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Esta pessoa já existe na BD!"))
-                    .build();
-        }
+       /*  if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(), personDto.getDmDocIdent())) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Esta pessoa já existe na BD!")).build();
+        } */
         var personModel = personModelOptional.get();
-
         try {
             BeanUtils.copyProperties(personDto, personModel);
             personModel.setId(personModelOptional.get().getId());
             personModel.setStatus(personModelOptional.get().getStatus());
             personRepository.save(personModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
-
         } catch (Exception e) {
-            return APIResponse.builder()
-                    .status(false).message(MessageState.ERRO_AO_ATUALIZAR)
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR)
                     .details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
+    @Override
+    public APIResponse changeStatus(UUID id) {
+        Optional<PersonModel> personModelOptional = personRepository.findById(id);
+        if (!personModelOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Esta pessoa não existe na BD!")).build();
+        }
+        var personModel = personModelOptional.get();
+        try {
+            personModel.setStatus("false");
+            personRepository.save(personModel);
+            return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_REMOVER)
+            .details(Arrays.asList(e.getMessage())).build();
         }
     }
 
@@ -98,27 +107,26 @@ public class PersonServiceImpl implements PersonService {
 
         try {
             List<PersonModel> getPersons = new ArrayList<>();
-
-            if (namePerson != "" && surnamePerson != "" && birthday != null) {
+            if (namePerson != null && surnamePerson != null && birthday != null) {
                 getPersons = personRepository.findByNamePersonAndSurnamePersonAndBirthday(namePerson, surnamePerson,convertedData);
-
+                //System.out.println("todos");
             }
-            if (namePerson==null && birthday==null && surnamePerson!="") {
+            if (namePerson == null && birthday == null && surnamePerson!= null) {
                 getPersons = personRepository.findBySurnamePerson(surnamePerson);
-
+                //System.out.println("apelido");
             }
-            if (namePerson!="" && surnamePerson==null && birthday==null) {
+            if(namePerson != null && surnamePerson == null && birthday == null) {
                 getPersons = personRepository.findByNamePerson(namePerson);
+                //System.out.println("nome");
             }
-            if (namePerson==null && surnamePerson==null && birthday!= null) {
+            if (namePerson == null && surnamePerson == null && birthday != null) {   
                 getPersons = personRepository.findByBirthday(convertedData);
+                //System.out.println("aniversario");
             }
-            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getPersons))
-                    .build();
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getPersons)).build();
 
         } catch (Exception e) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
-                    .build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
 
     }
@@ -157,18 +165,15 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public APIResponse deletePerson(UUID id) {
         if (!personRepository.existsById(id)) {
-            return APIResponse.builder().status(false)
-                    .details(Arrays.asList("Conflict: Domain dont exists on DB!"))
-                    .build();
+            return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Domain dont exists on DB!")).build();
         }
         try {
             personRepository.deleteById(id);
-            return APIResponse.builder().status(true)
-                    .message(MessageState.REMOVIDO_COM_SUCESSO).build();
+            return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
         } catch (Exception e) {
-            return APIResponse.builder().status(false)
-                    .details(Arrays.asList(e.getMessage())).build();
+            return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
         }
     }
 
+   
 }

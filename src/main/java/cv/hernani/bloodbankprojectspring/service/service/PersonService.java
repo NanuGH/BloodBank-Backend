@@ -18,5 +18,7 @@ public interface PersonService {
     public APIResponse deletePerson(UUID id);
 
     public APIResponse updatePerson(UUID id, PersonDto domainDto);
+
+    public APIResponse changeStatus(UUID id);
     
 }
