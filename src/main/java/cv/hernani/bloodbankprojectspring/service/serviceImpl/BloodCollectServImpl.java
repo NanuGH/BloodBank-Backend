@@ -159,5 +159,22 @@ public class BloodCollectServImpl implements BloodCollectionService {
                     .build();
         }
     }
+
+    @Override
+    public APIResponse changeStatus(UUID id) {
+        Optional<BloodCollectionModel> bloodModelOptional = bloodCollectRepository.findById(id);
+        if (!bloodModelOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Esta colheita não existe na BD!")).build();
+        }
+        var bloodCollectModel = bloodModelOptional.get();
+        try {
+            bloodCollectModel.setStatus("false");
+            bloodCollectRepository.save(bloodCollectModel);
+            return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_REMOVER)
+            .details(Arrays.asList(e.getMessage())).build();
+        }
+    }
   
 }

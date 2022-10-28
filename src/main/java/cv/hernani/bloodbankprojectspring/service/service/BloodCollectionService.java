@@ -19,6 +19,6 @@ public interface BloodCollectionService {
     public APIResponse findBloodCollectByOptionals(String collectionNumber,String insertionDate);
 
     public APIResponse delBloodCollection(UUID id);
-    
-     /*boolean existEmployee(String namePerson, String surnamePerson, String identifNumber);*/
+
+    public APIResponse changeStatus(UUID id);
 }

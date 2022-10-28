@@ -62,5 +62,11 @@ public class BloodCollectionController {
         APIResponse response = bloodCollectServ.updtBloodCollection(id,bloodCollectionDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PutMapping(value="/changestatus/{id}")
+    public ResponseEntity<Object> changeStatus(@PathVariable("id") UUID id){
+        APIResponse response = bloodCollectServ.changeStatus(id);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
                                               
 }
