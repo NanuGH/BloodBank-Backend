@@ -241,6 +241,23 @@ public class EmployeeServiceImpl implements EmployeeService{
                     .build();
         }
     }
+
+    @Override
+    public APIResponse changeStatus(UUID id) {
+        Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(id);
+        if (!employeeModelOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Esta pessoa não existe na BD!")).build();
+        }
+        var employeeModel = employeeModelOptional.get();
+        try {
+            employeeModel.setStatus("false");
+            employeeRepository.save(employeeModel);
+            return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_REMOVER)
+            .details(Arrays.asList(e.getMessage())).build();
+        }
+    }
  
 
    

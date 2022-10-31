@@ -13,4 +13,5 @@ public interface EmployeeService {
     public APIResponse findEmployeeById(UUID id);
     public APIResponse findEmploByOptionals(String identifNumber,String email);
     public APIResponse deleteEmployee(UUID id);
+    public APIResponse changeStatus(UUID id);
 }
