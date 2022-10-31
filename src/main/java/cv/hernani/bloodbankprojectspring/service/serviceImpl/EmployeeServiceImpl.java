@@ -63,10 +63,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public APIResponse createEmployee(EmployeeDto employeeDto){
-        if(personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(employeeDto.getPersonDto().getDmDocIdent(),
-                                                                            employeeDto.getPersonDto().getNamePerson(),
-                                                                            employeeDto.getPersonDto().getSurnamePerson())){
-
+        if(personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(employeeDto.getPersonDto().getNamePerson(),
+                                                                            employeeDto.getPersonDto().getSurnamePerson(),
+                                                                            employeeDto.getPersonDto().getDmDocIdent())){                                                                                        
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Pessoa ja existe na BD!")).build();
         }              
         try {
@@ -80,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService{
              String identfNumber = Helper.identfNumberGenerator();
              employeeModel.setIdentifNumber(identfNumber);
              employeeModel.setPw(employeeDto.getPw()); 
-             employeeModel.setDmFunction(employeeDto.getDmFunction());  
+             employeeModel.setDmfunction(employeeDto.getDmfunction());  
              employeeModel.setIdPerson(personModel);
              employeeModel.setInsertionDate(personModel.getInsertionDate());
              employeeModel.setUpdateDate(personModel.getUpdateDate());
@@ -141,18 +140,21 @@ public class EmployeeServiceImpl implements EmployeeService{
         if (!personOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("Conflict: Person don't exists on DB!"))
+                    .details(Arrays.asList("Conflict: Person don't exists on DB!"))  
                     .build();
         }
         try {            
             //BeanUtils.copyProperties(employeeUpdtDto, employeeModel);  
             employeeModel.setPw(Helper.passEncoder().encode(employeeUpdtDto.getPw())); 
-            employeeModel.setDmFunction(employeeUpdtDto.getDmfunction());
+            employeeModel.setDmfunction(employeeUpdtDto.getDmfunction());
             employeeModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());
-            employeeRepository.save(employeeModel);
-            
-            personModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());         
+            employeeModel.setIdentifNumber(employeeUpdtDto.getIdentifNumber());
+            employeeModel.setEmail(employeeUpdtDto.getEmail());
+
+
             personRepository.save(personModel);
+            employeeRepository.save(employeeModel);               
+            
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
 
         } catch (Exception e) {

@@ -11,9 +11,9 @@ public class EmployeeDto {
 
     private String pw;
 
-    private String dmFunction;
+    private String dmfunction;
 
-    private String identNumber;
+    private String identifNumber;
     
     @JsonProperty("Person")
     private PersonDto personDto;

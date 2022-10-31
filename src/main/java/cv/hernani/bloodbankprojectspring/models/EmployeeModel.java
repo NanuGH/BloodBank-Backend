@@ -26,13 +26,13 @@ public class EmployeeModel extends CommonAtributsModel{
     private String pw;
 
     @Column(name="dm_function", nullable = true, length=15)
-    private String dmFunction;
+    private String dmfunction;
 
     @Column(name="role_code", nullable = true)
     private UUID  idRole;
 
     @Column(name="email", nullable = true)
-    private String  email;
+    private String  email;  
 
 
 

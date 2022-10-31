@@ -11,5 +11,9 @@ public class EmployeeUpdtDto {
 
     private String whoUpdated;
 
+    private String identifNumber;
+
+    private String email;
+
     
 }

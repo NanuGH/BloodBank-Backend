@@ -37,10 +37,12 @@ public class PersonServiceImpl implements PersonService {
          * getNamePerson(),personDto.getSurnamePerson(),personDto.getDmDocIdent())
          * ||(personRepository.existsByDmDocIdent(personDto.getDmDocIdent()))){
          */// don't allow duplicated ID's, I will used it after I tested other stuffs
-        if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),personDto.getSurnamePerson(), personDto.getDmDocIdent())) {
+        if (personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(personDto.getNamePerson(),
+                                                                             personDto.getSurnamePerson(),
+                                                                             personDto.getDmDocIdent())) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Esta pessoa já existe na BD!"))
+                    .details(Arrays.asList("ERRO: Esta Funcionário já existe na BD!"))
                     .build();
         }
 
