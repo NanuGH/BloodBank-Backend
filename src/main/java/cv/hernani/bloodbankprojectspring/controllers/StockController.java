@@ -1,9 +1,7 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
 import java.util.UUID;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import org.springframework.web.bind.annotation.*;
-
 import cv.hernani.bloodbankprojectspring.dtos.StockDto;
 import cv.hernani.bloodbankprojectspring.service.service.StockService;
 
@@ -27,9 +24,9 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value="/{id}")
-    public ResponseEntity<Object> createStock(@Valid @RequestBody StockDto stockDto, @PathVariable("id") UUID id ) {
-        APIResponse response = stockService.createStock(stockDto,id);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value="/{collectionNumber}")
+    public ResponseEntity<Object> createStock(@Valid @RequestBody StockDto stockDto, @PathVariable("collectionNumber") String collectionNumber ) {
+        APIResponse response = stockService.createStock(stockDto,collectionNumber);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -44,6 +41,7 @@ public class StockController {
         APIResponse response = stockService.getStockById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteStock(@PathVariable(value = "id") UUID id){
@@ -65,4 +63,9 @@ public class StockController {
     }
 
 
+    @GetMapping("/getStockOpts")
+    public ResponseEntity<Object> getStockOptional(@RequestParam String collectioNumber) {
+        APIResponse response = stockService.findStockByOptionals(collectioNumber);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

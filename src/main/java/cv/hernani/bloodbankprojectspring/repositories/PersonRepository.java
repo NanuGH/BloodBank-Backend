@@ -15,6 +15,7 @@ public interface PersonRepository extends JpaRepository<PersonModel, UUID>{
     boolean existsByDmDocIdent(String DocIdent);
 
     List<PersonModel> findByNamePersonAndSurnamePersonAndBirthday(String namePerson, String surnamePerson, LocalDate birthday);
+    List<PersonModel> findByNamePersonOrDmDocIdent(String value, String dmDocIdent);
     List<PersonModel> findByNamePerson(String namePerson);
     List<PersonModel> findBySurnamePerson(String surnamePerson);
     List<PersonModel> findByBirthday(LocalDate birthday);

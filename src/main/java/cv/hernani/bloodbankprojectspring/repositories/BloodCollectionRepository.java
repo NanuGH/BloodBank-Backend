@@ -1,6 +1,7 @@
 package cv.hernani.bloodbankprojectspring.repositories;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,7 @@ public interface BloodCollectionRepository extends JpaRepository<BloodCollection
     List<BloodCollectionModel> findByCollectionNumberAndInsertionDate(String collectionNumber, LocalDateTime insertionDate);
     List<BloodCollectionModel> findByCollectionNumber(String collectionNumber);
     List<BloodCollectionModel> findByInsertionDate(LocalDateTime insertionDate);
+    Optional<BloodCollectionModel> existsByCollectionNumber(String collectionNumber);
 
     @Query(value="Select * FROM tb_blood_collection where to_char(insertion_date::DATE, 'yyyy-MM-dd') LIKE %:date%",nativeQuery=true)
     List<BloodCollectionModel> searchInsertionDateLike(@Param("date")String date);

@@ -29,14 +29,14 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public APIResponse createStock(@RequestBody @Valid StockDto stockDto, UUID id) {
-        Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.findById(id);
+    public APIResponse createStock(@RequestBody @Valid StockDto stockDto, String collectionNumber) {
+        Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.existsByCollectionNumber(collectionNumber);
         if (!bloodCollectOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Colheita não existe!")).build();
         }
 
-        boolean stockOptional = stockRepository.existsByIdcollection(bloodCollectOptional.get());
+        boolean stockOptional = stockRepository.existsByCollection(bloodCollectOptional.get());
             if (stockOptional==true) {
                 return APIResponse.builder().status(false)
                         .message(MessageState.ERRO_DE_INSERCAO)
@@ -46,7 +46,7 @@ public class StockServiceImpl implements StockService {
         var stockModel = new StockModel();
         try {
             BeanUtils.copyProperties(stockDto,stockModel);
-            stockModel.setIdcollection(bloodCollectOptional.get());
+            stockModel.setCollection(bloodCollectOptional.get());
             stockModel.setStatus("ativo");
             stockRepository.save(stockModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
@@ -129,6 +129,20 @@ public class StockServiceImpl implements StockService {
             return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
+    @Override
+    public APIResponse findStockByOptionals(String collectionNumber) {
+        if (!stockRepository.existsByCollection(collectionNumber)) {
+            return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta colheita não existe no Stock!!")).build();
+        }
+        Optional<StockModel> stockModel = stockRepository.findByCollection(collectionNumber);
+        try {
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(stockModel)).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
     }
 

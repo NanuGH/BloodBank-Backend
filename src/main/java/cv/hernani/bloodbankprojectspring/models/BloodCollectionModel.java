@@ -3,7 +3,6 @@ package cv.hernani.bloodbankprojectspring.models;
 import javax.persistence.*;
 import lombok.Data;
 
-
 @Data
 @Entity
 @Table(name="tb_blood_collection")
@@ -26,6 +25,7 @@ public class BloodCollectionModel extends CommonAtributsModel{
     @Column(name="collection_number", nullable = false)
     private String collectionNumber;
 
-
-    
+    @Column(name="blood_type", nullable = true)
+    private String bloodType;
+   
 }

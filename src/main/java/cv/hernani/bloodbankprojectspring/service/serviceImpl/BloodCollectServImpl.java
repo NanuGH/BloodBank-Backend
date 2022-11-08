@@ -21,6 +21,7 @@ import cv.hernani.bloodbankprojectspring.service.service.BloodCollectionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 import org.springframework.web.bind.annotation.RequestBody;
+import static java.util.Objects.isNull;
 
 @Service
 public class BloodCollectServImpl implements BloodCollectionService {
@@ -63,6 +64,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
                 BeanUtils.copyProperties(bloodCollectionDto,bloodCollectModel);
                 bloodCollectModel.setIdPerson(personModelOptional.get());
                 bloodCollectModel.setIdEmployee(employeeModelOptional.get());
+                bloodCollectModel.setBloodType(personModelOptional.get().getDmBloodCode());
+                bloodCollectModel.setWhoInserted(employeeModelOptional.get().getIdentifNumber());
                 bloodCollectRepository.save(bloodCollectModel);            
                 return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
             } catch (Exception e) {
@@ -133,26 +136,31 @@ public class BloodCollectServImpl implements BloodCollectionService {
 
     @Override
     public APIResponse findBloodCollectByOptionals( String collectionNumber, String insertionDate) {
-        LocalDate date = LocalDate.parse(insertionDate);
-        LocalDateTime datetime = date.atStartOfDay();
-        System.out.println(date);
-        System.out.println(datetime);
         try {
+            
             List<BloodCollectionModel> getBloodCollect = new ArrayList<>(); 
-            getBloodCollect = bloodCollectRepository.findByInsertionDate(datetime); 
+            //getBloodCollect = bloodCollectRepository.findByInsertionDate(datetime); 
 
-            if (collectionNumber != "" && insertionDate != null) {
+            if (collectionNumber != null && insertionDate != null) {
+                LocalDate date = LocalDate.parse(insertionDate);
+                LocalDateTime datetime = date.atStartOfDay();
                 getBloodCollect = bloodCollectRepository.findByCollectionNumberAndInsertionDate(collectionNumber, datetime);
+                System.out.println("all");
             }
-            if (collectionNumber==null && insertionDate== null) {
+            if (collectionNumber == null && insertionDate != null) {
                 getBloodCollect = bloodCollectRepository.searchInsertionDateLike(insertionDate);
                 System.out.println(getBloodCollect.get(0).getQtdde());
+                System.out.println("date");
             }
-            if (collectionNumber!="" && insertionDate==null) {
+            if(isNull(insertionDate)){
+                  System.out.println(insertionDate + " ****************** ");
+            }
+          
+            if (collectionNumber != null && insertionDate == null) {
                 getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
+                System.out.println("number");
             }
-            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect))
-                    .build();
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
 
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))

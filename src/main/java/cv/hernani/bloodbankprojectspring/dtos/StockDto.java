@@ -6,18 +6,10 @@ import lombok.Data;
 
 @Data
 public class StockDto {
-    
     private Date expirationDate;
-
     private String dmCodeStockType;
-
     private String whoInserted;
-
     private String whoUpdated;
-
     private String dmDisabledCode;
-
     private String dmStatus;
-
-    
 }

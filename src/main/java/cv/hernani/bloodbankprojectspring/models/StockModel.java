@@ -16,7 +16,7 @@ public class StockModel extends CommonAtributsModel {
 
     @ManyToOne
     @JoinColumn(name="fk_id_collection", nullable = false)
-    private BloodCollectionModel idcollection;
+    private BloodCollectionModel collection;
 
     @Column(name="expiration_date", nullable = false)
     private Date expirationDate;

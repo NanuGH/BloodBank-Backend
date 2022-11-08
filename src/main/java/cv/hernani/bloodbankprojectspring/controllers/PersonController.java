@@ -47,6 +47,14 @@ public class PersonController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/getPersonByOne")
+    public ResponseEntity<Object> getPersonByOne(@RequestParam(required=false)String value) {
+        APIResponse response = personService.getPersonByOne(value);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{id}")
     public ResponseEntity<Object> getDomainById(@PathVariable("id") UUID id){
         APIResponse response = personService.getPersonById(id);

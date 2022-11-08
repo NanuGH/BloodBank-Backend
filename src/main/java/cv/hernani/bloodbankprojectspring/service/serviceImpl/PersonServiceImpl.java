@@ -133,6 +133,19 @@ public class PersonServiceImpl implements PersonService {
 
     }
 
+    
+    @Override
+    public APIResponse getPersonByOne(String value) {
+
+        List<PersonModel> personModelOptional = personRepository.findByNamePersonOrDmDocIdent(value, value);
+        try {
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personModelOptional)).build();
+            
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
     @Override
     public APIResponse getAllPerson() {
         List<PersonModel> getAll = personRepository.findAll();
