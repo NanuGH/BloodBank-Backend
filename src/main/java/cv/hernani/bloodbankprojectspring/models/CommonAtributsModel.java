@@ -35,7 +35,7 @@ public class CommonAtributsModel implements Serializable {
     @Column(name="who_inserted", nullable = false, updatable = false)
     private String whoInserted; 
 
-    @Column(name="who_updated", nullable = false, updatable = true)
+    @Column(name="who_updated", nullable = true, updatable = true)
     private String WhoUpdated;
 
     @Column(name="dm_status", nullable = true)

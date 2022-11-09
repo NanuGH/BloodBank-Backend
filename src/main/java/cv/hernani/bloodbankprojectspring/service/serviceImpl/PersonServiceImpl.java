@@ -139,8 +139,7 @@ public class PersonServiceImpl implements PersonService {
 
         List<PersonModel> personModelOptional = personRepository.findByNamePersonOrDmDocIdent(value, value);
         try {
-            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personModelOptional)).build();
-            
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personModelOptional.toArray())).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }

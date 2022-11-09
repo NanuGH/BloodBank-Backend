@@ -66,6 +66,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
                 bloodCollectModel.setIdEmployee(employeeModelOptional.get());
                 bloodCollectModel.setBloodType(personModelOptional.get().getDmBloodCode());
                 bloodCollectModel.setWhoInserted(employeeModelOptional.get().getIdentifNumber());
+                
                 bloodCollectRepository.save(bloodCollectModel);            
                 return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
             } catch (Exception e) {
