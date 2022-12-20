@@ -250,7 +250,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
         var employeeModel = employeeModelOptional.get();
         try {
-            employeeModel.setStatus("false");
+            employeeModel.setStatus(false);
             employeeRepository.save(employeeModel);
             return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
         } catch (Exception e) {

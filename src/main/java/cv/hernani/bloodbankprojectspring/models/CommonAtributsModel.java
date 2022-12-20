@@ -39,7 +39,7 @@ public class CommonAtributsModel implements Serializable {
     private String WhoUpdated;
 
     @Column(name="dm_status", nullable = true)
-    private String status= "true";
+    private boolean status= true;
 
     @Column(name="dm_code_disabled", nullable = true)
     private String dmCodeDisabled;

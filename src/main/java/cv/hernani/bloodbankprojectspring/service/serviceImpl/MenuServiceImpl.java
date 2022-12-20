@@ -40,7 +40,7 @@ public class MenuServiceImpl implements MenuService {
         }
     }
 
-    @Override
+   /*  @Override
     public APIResponse updtMenu(UUID id, MenuDto menuDto) {
         Optional<MenuModel> menuModelOptional = menuRepository.findById(id);
         if (!menuModelOptional.isPresent()) {
@@ -64,7 +64,7 @@ public class MenuServiceImpl implements MenuService {
                     .details(Arrays.asList(e.getMessage())).build();
         }
     }
-
+*/
     @Override
     public APIResponse getAllMenu() {
         List<MenuModel> getAllMenu = menuRepository.findAll();

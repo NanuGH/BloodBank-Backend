@@ -45,11 +45,11 @@ public class MenuController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @PutMapping(value="/{id}")
+   /*@PutMapping(value="/{id}")
     public ResponseEntity<Object> updateRoles(@PathVariable("id") UUID id,@RequestBody @Valid MenuDto menuDto){
         APIResponse response = menuService.updtMenu(id, menuDto);
         return new ResponseEntity<>(response,HttpStatus.OK);
-    }
+    }*/
 
 
 }

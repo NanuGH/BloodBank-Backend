@@ -118,4 +118,21 @@ public class BloodDonorServImpl implements BloodDonorService{
         }
     }
 
+    @Override
+    public APIResponse changeStatus(UUID id) {
+        Optional<BloodDonorModel> bloodDonorOptional = bloodDonorRepository.findById(id);
+        if (!bloodDonorOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Este doador não existe na BD!")).build();
+        }
+        var bloodDonorModel = bloodDonorOptional.get();
+        try {
+            bloodDonorModel.setStatus(false);
+            bloodDonorRepository.save(bloodDonorModel);
+            return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_REMOVER)
+            .details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
 }

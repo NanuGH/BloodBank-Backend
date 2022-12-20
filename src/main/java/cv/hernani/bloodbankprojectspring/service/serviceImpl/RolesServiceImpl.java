@@ -30,7 +30,7 @@ public class RolesServiceImpl implements RolesService {
         }          
         var rolesModel = new RolesModel();
         BeanUtils.copyProperties(rolesDto, rolesModel);
-        rolesModel.setStatus("true");
+        rolesModel.setStatus(true);
         try {
             rolesRepository.saveAndFlush(rolesModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();

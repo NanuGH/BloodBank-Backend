@@ -178,7 +178,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
         }
         var bloodCollectModel = bloodModelOptional.get();
         try {
-            bloodCollectModel.setStatus("false");
+            bloodCollectModel.setStatus(false);
             bloodCollectRepository.save(bloodCollectModel);
             return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
         } catch (Exception e) {

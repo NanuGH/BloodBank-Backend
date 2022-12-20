@@ -42,7 +42,7 @@ public class PersonServiceImpl implements PersonService {
                                                                              personDto.getDmDocIdent())) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Este Funcionário já existe na BD!"))
+                    .details(Arrays.asList("ERRO: Esta Pessoa já existe na BD!"))
                     .build();
         }
 
