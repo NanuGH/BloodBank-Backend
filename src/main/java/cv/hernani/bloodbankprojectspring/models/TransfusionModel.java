@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data
+//@Data
 @Entity
 @Table(name = "tb_transfusion")
 public class TransfusionModel extends CommonAtributsModel {
@@ -16,16 +16,16 @@ public class TransfusionModel extends CommonAtributsModel {
     private UUID idTransfusion;*/
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_collection", nullable = false, unique = true)
+    @JoinColumn(name = "fk_id_collection", nullable = false, unique = false)
     private BloodCollectionModel idCollection;
     
     @ManyToOne
-    @JoinColumn(name="fk_id_employee",nullable = false, unique = true)
+    @JoinColumn(name="fk_id_employee",nullable = false, unique = false)
     private EmployeeModel idEmployee;
 
     @ManyToOne
-    @JoinColumn(name="fk_id_person",nullable = false, unique = true)
-    private PersonModel idPerson;
+    @JoinColumn(name="fk_id_stock",nullable = false, unique = false)
+    private StockModel id;
 
     @Column(name="suspended", nullable = false)
     private boolean suspended;

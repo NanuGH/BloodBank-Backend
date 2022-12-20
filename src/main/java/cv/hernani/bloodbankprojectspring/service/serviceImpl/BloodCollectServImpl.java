@@ -53,13 +53,14 @@ public class BloodCollectServImpl implements BloodCollectionService {
         }
 
         var bloodCollectModel = new BloodCollectionModel();
-        var personStatus = personModelOptional.get().getStatus();
+        boolean personStatus = true;
 
-        if (personStatus.equals("false")) {
+        if (!personStatus) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Esta pessoa não esta apta para doar!")).build();
                         
         } else {
+
              try {
                 BeanUtils.copyProperties(bloodCollectionDto,bloodCollectModel);
                 bloodCollectModel.setIdPerson(personModelOptional.get());

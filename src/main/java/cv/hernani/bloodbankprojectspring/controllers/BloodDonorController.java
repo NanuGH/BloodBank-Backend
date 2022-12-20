@@ -34,7 +34,7 @@ public class BloodDonorController {
     }
 
     @GetMapping
-    public ResponseEntity<Object>getAllBloodCollect(){
+    public ResponseEntity<Object>getAllBloodDonner(){
         APIResponse response = bloodDonorServ.getAllBloodDonor();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

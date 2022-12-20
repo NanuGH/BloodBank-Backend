@@ -23,4 +23,7 @@ public class SampleModel extends CommonAtributsModel {
 
     @Column(name = "dm_sample", nullable = false)
     private String dmCodeSample;//foreignkey
+
+    @Column(name = "qtdde", nullable = true)
+    private String quantidade;//foreignkey
 }

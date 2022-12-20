@@ -14,12 +14,16 @@ public interface PersonRepository extends JpaRepository<PersonModel, UUID>{
     boolean existsByNamePersonAndSurnamePersonAndDmDocIdent(String namePerson, String surnamePerson, String dmDocIdent);
     boolean existsByDmDocIdent(String DocIdent);
 
-    List<PersonModel> findByNamePersonAndSurnamePersonAndBirthday(String namePerson, String surnamePerson, LocalDate birthday);
-    List<PersonModel> findByNamePersonOrDmDocIdent(String value, String dmDocIdent);
+    List<PersonModel> findByNamePersonAndSurnamePersonAndBirthdayAndStatusIsTrue(String namePerson, String surnamePerson, LocalDate birthday);
     List<PersonModel> findByNamePerson(String namePerson);
     List<PersonModel> findBySurnamePerson(String surnamePerson);
     List<PersonModel> findByBirthday(LocalDate birthday);
 
+    List<PersonModel> findByNamePersonAndSurnamePerson(String namePerson, String surnamePerson );
+    List<PersonModel> findByNamePersonAndBirthday(String namePerson, LocalDate birthday );
+    List<PersonModel> findBySurnamePersonAndBirthday(String surnamePerson, LocalDate birthday );
+
+    List<PersonModel> findByNamePersonOrDmDocIdent(String value, String dmDocIdent);
     List<PersonModel> findByStatus(String status);
 
     

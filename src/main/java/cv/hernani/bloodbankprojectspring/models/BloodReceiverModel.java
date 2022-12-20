@@ -17,9 +17,9 @@ public class BloodReceiverModel extends CommonAtributsModel{
     @JoinColumn(name="fk_id_person", nullable = false)
     private PersonModel idPerson;
 
-    @ManyToOne
+    /* @ManyToOne
     @JoinColumn(name="fk_id_employee", nullable = false)
-    private EmployeeModel idEmployee;
+    private EmployeeModel idEmployee; */
 
     @ManyToOne
     @JoinColumn(name="fk_id_bloodCollection", nullable = false)

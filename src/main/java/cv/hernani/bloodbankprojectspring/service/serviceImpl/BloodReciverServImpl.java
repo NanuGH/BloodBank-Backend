@@ -75,7 +75,7 @@ public class BloodReciverServImpl implements BloodReceiverService {
             } else {
                 BeanUtils.copyProperties(bloodRecDto, bloodRecModel);
                 bloodRecModel.setIdPerson(personModelOptional.get());
-                bloodRecModel.setIdEmployee(employeeModelOptional.get());
+                //bloodRecModel.setIdEmployee(employeeModelOptional.get());
                 bloodRecModel.setIdBloodCollect(bloodCollOptional.get());
                 bloodRecModel.setWhoInserted(bloodRecDto.getWhoInserted());
                 bloodRecModel.setWhoUpdated(bloodRecDto.getWhoUpdated());
@@ -101,7 +101,7 @@ public class BloodReciverServImpl implements BloodReceiverService {
             BeanUtils.copyProperties(bloodReceiverDto, bloodRecModel);
             bloodRecModel.setId(bloodRecOptional.get().getId());
             bloodRecModel.setIdPerson(bloodRecOptional.get().getIdPerson());
-            bloodRecModel.setIdEmployee(bloodRecOptional.get().getIdEmployee());
+            //bloodRecModel.setIdEmployee(bloodRecOptional.get().getIdEmployee());
             bloodRecModel.setIdBloodCollect(bloodRecOptional.get().getIdBloodCollect());
             bloodRecModel.setWhoUpdated(bloodRecOptional.get().getWhoUpdated());
             bloodRecRep.save(bloodRecModel);

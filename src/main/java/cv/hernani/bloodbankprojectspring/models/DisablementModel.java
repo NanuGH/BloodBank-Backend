@@ -17,7 +17,7 @@ public class DisablementModel extends CommonAtributsModel {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_stock", nullable = false, unique = true)
-    private StockModel idStock;
+    private StockModel id;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_employee", nullable = false, unique = true)

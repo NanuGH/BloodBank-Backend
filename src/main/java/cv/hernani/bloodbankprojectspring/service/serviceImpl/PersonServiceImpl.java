@@ -42,13 +42,13 @@ public class PersonServiceImpl implements PersonService {
                                                                              personDto.getDmDocIdent())) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Esta Funcionário já existe na BD!"))
+                    .details(Arrays.asList("ERRO: Este Funcionário já existe na BD!"))
                     .build();
         }
 
         var personModel = new PersonModel();
         BeanUtils.copyProperties(personDto, personModel);
-        personModel.setStatus("true");
+        personModel.setStatus(true);
         try {
             personRepository.saveAndFlush(personModel);
             return APIResponse.builder().status(true)
@@ -76,7 +76,7 @@ public class PersonServiceImpl implements PersonService {
         try {
             BeanUtils.copyProperties(personDto, personModel);
             personModel.setId(personModelOptional.get().getId());
-            personModel.setStatus(personModelOptional.get().getStatus());
+            personModel.setStatus(true);
             personRepository.save(personModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class PersonServiceImpl implements PersonService {
         }
         var personModel = personModelOptional.get();
         try {
-            personModel.setStatus("false");
+            personModel.setStatus(false);
             personRepository.save(personModel);
             return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
         } catch (Exception e) {
@@ -106,24 +106,36 @@ public class PersonServiceImpl implements PersonService {
     public APIResponse getPersonByOptionals(String namePerson, String surnamePerson, String birthday) {
         
        LocalDate convertedData = Helper.convertStringLocalDate(birthday);
-
         try {
             List<PersonModel> getPersons = new ArrayList<>();
             if (namePerson != null && surnamePerson != null && birthday != null) {
-                getPersons = personRepository.findByNamePersonAndSurnamePersonAndBirthday(namePerson, surnamePerson,convertedData);
-                //System.out.println("todos");
+                getPersons = personRepository.findByNamePersonAndSurnamePersonAndBirthdayAndStatusIsTrue(namePerson, surnamePerson,convertedData);
+                System.out.println("todos");
             }
-            if (namePerson == null && birthday == null && surnamePerson!= null) {
+            if (namePerson == null && surnamePerson!= null && birthday == null ) {
                 getPersons = personRepository.findBySurnamePerson(surnamePerson);
-                //System.out.println("apelido");
+                System.out.println("apelido");
             }
             if(namePerson != null && surnamePerson == null && birthday == null) {
                 getPersons = personRepository.findByNamePerson(namePerson);
-                //System.out.println("nome");
+                System.out.println("nome");
             }
             if (namePerson == null && surnamePerson == null && birthday != null) {   
                 getPersons = personRepository.findByBirthday(convertedData);
-                //System.out.println("aniversario");
+                System.out.println("data nasc");
+            }
+            //
+            if (namePerson != null && surnamePerson != null && birthday == null) {   
+                getPersons = personRepository.findByNamePersonAndSurnamePerson(namePerson, surnamePerson);
+                System.out.println("nome e apelido");
+            }
+            if (namePerson != null && surnamePerson == null && birthday != null) {   
+                getPersons = personRepository.findByNamePersonAndBirthday(namePerson, convertedData);
+                System.out.println("nome e data nasc");
+            }
+            if (namePerson == null && surnamePerson != null && birthday != null) {   
+                getPersons = personRepository.findBySurnamePersonAndBirthday(surnamePerson, convertedData);
+                System.out.println("apelido e data nasc");
             }
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getPersons)).build();
 
@@ -133,7 +145,6 @@ public class PersonServiceImpl implements PersonService {
 
     }
 
-    
     @Override
     public APIResponse getPersonByOne(String value) {
 

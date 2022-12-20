@@ -36,7 +36,7 @@ public class TransfusionServiceImpl implements TransfusionService{
         this.personRepository = personRepository;
         this.bloodCollectionRepository = bloodCollectionRepository;
     }
-
+/* 
     @Override
     public APIResponse createTransfusion(TransfusionDto transfusionDto,UUID idEmployee,UUID idPerson,UUID idCollection ) {
         
@@ -48,27 +48,27 @@ public class TransfusionServiceImpl implements TransfusionService{
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Este empregado não existe na BD!")).build();
         }
         
-        if (!bloodCollectionRepository.existsById(idCollection)) {
+        /* if (!bloodCollectionRepository.existsById(idCollection)) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Esta Colheita não existe na BD!")).build();  
-        }
+        } */
         
-        var transfusionModel = new TransfusionModel(); 
+       /* var transfusionModel = new TransfusionModel(); 
         Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
         Optional<EmployeeModel> employeeOptional = employeeRepository.findById(idEmployee);
         Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectionRepository.findById(idCollection);
         try {
             BeanUtils.copyProperties(transfusionDto,transfusionModel);
-            transfusionModel.setIdCollection(bloodCollectOptional.get());
-            transfusionModel.setIdPerson(personModelOptional.get());
-            transfusionModel.setIdEmployee(employeeOptional.get());
+            transfusionModel.setId(bloodCollectOptional.get());
+            //transfusionModel.setIdPerson(personModelOptional.get());
+            transfusionModel.setId(employeeOptional.get());
             transfusionRepository.save(transfusionModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
         }
 
-    }
+    }*/
 
     @Override
     public APIResponse getAllTransfusion() {

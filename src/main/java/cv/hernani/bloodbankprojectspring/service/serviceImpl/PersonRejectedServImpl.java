@@ -50,7 +50,7 @@ public class PersonRejectedServImpl implements PersonRejectedService {
             personRejectedModel.setStatus("true");
             personRejectedRepository.save(personRejectedModel); 
             /********Change Person Status *******/    
-            personModel.setStatus("false");
+            personModel.setStatus(false);
             personModel.setWhoUpdated(personRejectedDto.getWhoUpdated());
             personRepository.save(personModel);
 

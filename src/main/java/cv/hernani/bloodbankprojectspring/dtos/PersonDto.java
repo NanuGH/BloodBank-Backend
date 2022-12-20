@@ -57,6 +57,6 @@ public class PersonDto { // para validar os campos q o cliente envia
     private String status="true";
 
     private String email;
-
+    private String telefone;
 
 }

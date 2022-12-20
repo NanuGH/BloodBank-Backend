@@ -77,11 +77,18 @@ public class BloodDonorServImpl implements BloodDonorService{
         List<BloodDonorModel> getAllBloodDonor = bloodDonorRepository.findAll();
    
         try {
-            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getAllBloodDonor)).build();
+            return APIResponse.builder().status(true)
+                    .message(MessageState.SUCESSO)
+                    .details(Arrays.asList(getAllBloodDonor)).build();
         } catch (Exception e) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO)
+                    .details(Arrays.asList(e.getMessage())).build();
         }
     }
+
+    
+
 
     @Override
     public APIResponse getBloodDonorById(UUID id) {

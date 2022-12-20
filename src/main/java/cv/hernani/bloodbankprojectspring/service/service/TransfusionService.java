@@ -6,7 +6,7 @@ import cv.hernani.bloodbankprojectspring.dtos.TransfusionDto;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
 public interface TransfusionService {
-    public APIResponse createTransfusion(TransfusionDto transfusionDto,UUID idEmployee,UUID idPerson,UUID idCollection);
+   /*public APIResponse createTransfusion(TransfusionDto transfusionDto,UUID idEmployee,UUID idPerson,UUID idCollection);*/
     public APIResponse getAllTransfusion();
     public APIResponse getTransfusionById(UUID id);
     public APIResponse deleteTransfusion(UUID id);
