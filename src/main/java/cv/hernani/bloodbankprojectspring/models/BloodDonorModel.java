@@ -43,5 +43,8 @@ public class BloodDonorModel extends CommonAtributsModel{
 
     @Column(name="dm_hemolisina", nullable = false)
     private String dmHemolisina;
+
+    @Column(name="identifNumber", nullable = true, length=15 )
+    private String identifNumber;
     
 }

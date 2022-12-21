@@ -34,7 +34,4 @@ public class EmployeeModel extends CommonAtributsModel{
     @Column(name="email", nullable = true)
     private String  email;  
 
-
-
-    
 }

@@ -13,7 +13,7 @@ public class EmployeeDto {
 
     private String dmfunction;
 
-    private String identifNumber;
+    //private String identifNumber;
     
     @JsonProperty("Person")
     private PersonDto personDto;

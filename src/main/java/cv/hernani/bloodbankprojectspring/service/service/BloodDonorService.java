@@ -10,6 +10,7 @@ public interface BloodDonorService {
     public APIResponse updtBloodDonor(UUID id, BloodDonorDto bloodDonorDto);
     public APIResponse getAllBloodDonor();
     public APIResponse getBloodDonorById(UUID id);
+    public APIResponse getBloodDonnerBy(String identifNumber);
     public APIResponse delBloodDonor(UUID id);
     public APIResponse changeStatus(UUID id);
 }

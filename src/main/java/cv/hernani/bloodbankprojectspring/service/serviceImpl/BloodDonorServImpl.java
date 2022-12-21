@@ -16,6 +16,7 @@ import cv.hernani.bloodbankprojectspring.repositories.BloodDonorRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
 import cv.hernani.bloodbankprojectspring.service.service.BloodDonorService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
+import cv.hernani.bloodbankprojectspring.utilities.Helper;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 
 @Service
@@ -44,6 +45,8 @@ public class BloodDonorServImpl implements BloodDonorService{
             bloodDonorModel.setIdPerson(personModelOptional.get());
             bloodDonorModel.setWhoInserted(bloodDonorDto.getWhoInserted());
             bloodDonorModel.setWhoUpdated(bloodDonorDto.getWhoUpdated());
+            String identfNumber = Helper.identfNumberGenerator();
+            bloodDonorModel.setIdentifNumber(identfNumber);
             bloodDonorRepository.save(bloodDonorModel);
             
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
@@ -87,7 +90,28 @@ public class BloodDonorServImpl implements BloodDonorService{
         }
     }
 
-    
+    @Override
+    public APIResponse getBloodDonnerBy(String identifNumber){
+
+        try {
+            Optional<BloodDonorModel> getBloodDonnerOpt = bloodDonorRepository.findByIdentifNumber(identifNumber);  
+
+            if (!getBloodDonnerOpt.isPresent()) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                                  .details(Arrays.asList("ERRO: Este numero de doador não existe!")).build();
+            }else{
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodDonnerOpt))
+            .build();
+            }
+           
+
+        }catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
+        }
+
+    }
+
 
 
     @Override
