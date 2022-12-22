@@ -45,7 +45,7 @@ public class BloodDonorController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value ="/options/{identifNumber}")
+    @GetMapping(value ="/opts/{identifNumber}")
     public ResponseEntity<Object> getBloodCollectBy(@PathVariable("identifNumber") String identifNumber) {
         APIResponse response = bloodDonorServ.getBloodDonnerBy(identifNumber);
         return new ResponseEntity<>(response, HttpStatus.OK);

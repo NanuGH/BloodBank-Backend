@@ -32,8 +32,8 @@ public class BloodDonorModel extends CommonAtributsModel{
     @Column(name="kell", nullable = false)
     private String kell;
 
-    @Column(name="summoned", nullable = false)
-    private boolean summoned;//convocado
+    /*@Column(name="summoned", nullable = false)
+    private boolean summoned;//convocado*/
 
     @Column(name="cel_falcif", nullable = true)
     private boolean celFalcif;

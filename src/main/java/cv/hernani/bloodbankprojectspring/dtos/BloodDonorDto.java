@@ -9,7 +9,7 @@ public class BloodDonorDto {
     private String personalBackground;//antecedentes pessoais
     private String clinicalExam;
     private String physicalExam;
-    private boolean summoned;//convocado
+    /* private boolean summoned;//convocado */
     private String kell;
     private boolean celFalcif;
     private String Phenotype;
