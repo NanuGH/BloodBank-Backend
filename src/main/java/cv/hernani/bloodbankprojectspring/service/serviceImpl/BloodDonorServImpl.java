@@ -77,11 +77,11 @@ public class BloodDonorServImpl implements BloodDonorService {
     }
 
     @Override
-    public APIResponse updtBloodDonor(UUID id, BloodDonorDto bloodDonorDto) {
-        Optional<BloodDonorModel> bloodDonorOptional = bloodDonorRepository.findById(id);
+    public APIResponse updtBloodDonor(UUID idDonner,UUID idEmpl, BloodDonorDto bloodDonorDto) {
+        Optional<BloodDonorModel> bloodDonorOptional = bloodDonorRepository.findById(idDonner);
         if (!bloodDonorOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Colheita nao existe na BD!")).build();
+                    .details(Arrays.asList("ERRO: Doador nao existe na BD!")).build();
         }
         var bloodCollectionModel = new BloodDonorModel();
 

@@ -46,8 +46,8 @@ public class BloodDonorController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value ="/opts/{identifNumber}")
-    public ResponseEntity<Object> getBloodCollectBy(@PathVariable("identifNumber") String identifNumber) {
+    @GetMapping(value ="/opts")
+    public ResponseEntity<Object> getBloodCollectBy(@RequestParam(required=false)String identifNumber) {
         APIResponse response = bloodDonorServ.getBloodDonnerBy(identifNumber);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -59,9 +59,11 @@ public class BloodDonorController {
     }
     
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updatelBloodDonor(@PathVariable(value = "id") UUID id,@RequestBody @Valid BloodDonorDto bloodDonorDto){        
-        APIResponse response = bloodDonorServ.updtBloodDonor(id,bloodDonorDto);
+    @PutMapping("/{idDonner}/{idEmpl}")
+    public ResponseEntity<Object> updatelBloodDonor(@PathVariable(value = "idDonner") UUID idDonner,
+                                                    @PathVariable(value = "idEmpl") UUID idEmpl,
+                                                    @RequestBody @Valid BloodDonorDto bloodDonorDto){        
+        APIResponse response = bloodDonorServ.updtBloodDonor(idDonner,idEmpl,bloodDonorDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class BloodDonorDto {
     
+    private PersonDto personDto;
     private String dmTypeDonor;
     private String personalBackground;//antecedentes pessoais
     private String clinicalExam;

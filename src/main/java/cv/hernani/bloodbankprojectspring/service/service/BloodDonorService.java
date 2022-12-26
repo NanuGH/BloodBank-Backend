@@ -7,7 +7,7 @@ import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
 public interface BloodDonorService {
     public APIResponse createBloodDonor(BloodDonorDto bloodDonorDto,UUID idEmployee, UUID idPerson);
-    public APIResponse updtBloodDonor(UUID id, BloodDonorDto bloodDonorDto);
+    public APIResponse updtBloodDonor(UUID idDonner,UUID idEmpl, BloodDonorDto bloodDonorDto);
     public APIResponse getAllBloodDonor();
     public APIResponse getBloodDonorById(UUID id);
     public APIResponse getBloodDonnerBy(String identifNumber);
