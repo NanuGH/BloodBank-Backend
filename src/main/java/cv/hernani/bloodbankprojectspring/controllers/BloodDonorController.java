@@ -26,10 +26,11 @@ public class BloodDonorController {
         this.bloodDonorServ = bloodDonorServ;
     }
     
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idPessoa}")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idFunc}/{idPessoa}")
     public ResponseEntity<Object> createBloodDonor(@Valid @RequestBody BloodDonorDto bloodDonorDto,
+                                                    @PathVariable("idFunc") UUID idFunc,
                                                      @PathVariable("idPessoa") UUID idPessoa) {
-        APIResponse response = bloodDonorServ.createBloodDonor(bloodDonorDto,idPessoa);
+        APIResponse response = bloodDonorServ.createBloodDonor(bloodDonorDto,idFunc,idPessoa);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
