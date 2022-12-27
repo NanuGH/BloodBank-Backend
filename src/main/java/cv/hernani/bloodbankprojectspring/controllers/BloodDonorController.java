@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import cv.hernani.bloodbankprojectspring.dtos.BloodDonorCreateDto;
 import cv.hernani.bloodbankprojectspring.dtos.BloodDonorDto;
 import cv.hernani.bloodbankprojectspring.service.service.BloodDonorService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
@@ -27,10 +28,10 @@ public class BloodDonorController {
     }
     
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idFunc}/{idPessoa}")
-    public ResponseEntity<Object> createBloodDonor(@Valid @RequestBody BloodDonorDto bloodDonorDto,
+    public ResponseEntity<Object> createBloodDonor(@Valid @RequestBody BloodDonorCreateDto bloodDonorCreateDto,
                                                     @PathVariable("idFunc") UUID idFunc,
                                                      @PathVariable("idPessoa") UUID idPessoa) {
-        APIResponse response = bloodDonorServ.createBloodDonor(bloodDonorDto,idFunc,idPessoa);
+        APIResponse response = bloodDonorServ.createBloodDonor(bloodDonorCreateDto,idFunc,idPessoa);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

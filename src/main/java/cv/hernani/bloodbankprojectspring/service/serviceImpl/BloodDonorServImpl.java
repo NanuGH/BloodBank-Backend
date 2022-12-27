@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import cv.hernani.bloodbankprojectspring.dtos.BloodDonorCreateDto;
 import cv.hernani.bloodbankprojectspring.dtos.BloodDonorDto;
 import cv.hernani.bloodbankprojectspring.models.BloodDonorModel;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
@@ -34,16 +35,22 @@ public class BloodDonorServImpl implements BloodDonorService {
         this.bloodDonorRepository = bloodDonorRepository;
         this.personRepository = personRepository;
         this.employeeRepository = employeeRepository;
-    }
+    }    
 
     @Override
-    public APIResponse createBloodDonor(BloodDonorDto bloodDonorDto,UUID idEmployee, UUID idPerson) {
+    public APIResponse createBloodDonor(BloodDonorCreateDto bloodDonorCreateDto,UUID idEmployee, UUID idPerson) {
         Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
         if (!personModelOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Esta pessoa não existe na BD!"))
                     .build();
+        }
+
+        Optional<BloodDonorModel> bloodDonorOptional = bloodDonorRepository.findByIdPerson(personModelOptional.get());
+        if (bloodDonorOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Este doador já existe na BD!")).build();
         }
 
         Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(idEmployee);
@@ -61,10 +68,10 @@ public class BloodDonorServImpl implements BloodDonorService {
                         
         } else {
         try {
-            BeanUtils.copyProperties(bloodDonorDto,bloodDonorModel);
+            BeanUtils.copyProperties(bloodDonorCreateDto,bloodDonorModel);
             bloodDonorModel.setIdPerson(personModelOptional.get());
-            bloodDonorModel.setWhoInserted(bloodDonorDto.getWhoInserted());
-            bloodDonorModel.setWhoUpdated(bloodDonorDto.getWhoUpdated());
+            bloodDonorModel.setWhoInserted(bloodDonorCreateDto.getWhoInserted());
+            bloodDonorModel.setWhoUpdated(bloodDonorCreateDto.getWhoUpdated());
             String identfNumber = Helper.identfNumberGenerator();
             bloodDonorModel.setIdentifNumber(identfNumber);
             bloodDonorRepository.save(bloodDonorModel);
