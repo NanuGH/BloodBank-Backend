@@ -19,31 +19,31 @@ public class BloodDonorModel extends CommonAtributsModel{
     @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
 
-    @Column(name="dm_type_donor", nullable = false)
+    @Column(name="dm_type_donor", nullable = true)
     private String dmTypeDonor;
 
-    @Column(name="personal_bckgrd", nullable = false)
+    @Column(name="personal_bckgrd", nullable = true)
     private String personalBackground;//antecedentes pessoais
 
-    @Column(name="clinical_exam", nullable = false)
+    @Column(name="clinical_exam", nullable = true)
     private String clinicalExam;
 
-    @Column(name="physical_exam", nullable = false)
+    @Column(name="physical_exam", nullable = true)
     private String physicalExam;
 
-    @Column(name="kell", nullable = false)
+    @Column(name="kell", nullable = true)
     private String kell;
 
-    /*@Column(name="summoned", nullable = false)
+    /*@Column(name="summoned", nullable = true)
     private boolean summoned;//convocado*/
 
     @Column(name="cel_falcif", nullable = true)
     private boolean celFalcif;
 
     @Column(name="dm_phenotype", nullable = true)
-    private String Phenotype;
+    private String phenotype;
 
-    @Column(name="dm_hemolisina", nullable = false)
+    @Column(name="dm_hemolisina", nullable = true)
     private String dmHemolisina;
 
     @Column(name="identifNumber", nullable = true, length=15 )
