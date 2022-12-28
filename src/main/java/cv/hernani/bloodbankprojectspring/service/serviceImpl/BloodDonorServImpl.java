@@ -83,6 +83,7 @@ public class BloodDonorServImpl implements BloodDonorService {
     }
     }
 
+
     @Override
     public APIResponse updtBloodDonor(UUID idDonner,UUID idEmpl, BloodDonorDto bloodDonorDto) {
         Optional<BloodDonorModel> bloodDonorOptional = bloodDonorRepository.findById(idDonner);
@@ -90,14 +91,25 @@ public class BloodDonorServImpl implements BloodDonorService {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Doador nao existe na BD!")).build();
         }
-        var bloodCollectionModel = new BloodDonorModel();
+
+        Optional<PersonModel> personOptional = personRepository.findById(bloodDonorOptional.get().getIdPerson().getId());
+        if (!personOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Esta pessoa nao existe na BD!")).build();
+        }
+        var bloodCollectionModel = bloodDonorOptional.get();
+        var personModel = personOptional.get();
+
 
         try {
             BeanUtils.copyProperties(bloodDonorDto, bloodCollectionModel);
-            bloodCollectionModel.setId(bloodDonorOptional.get().getId());
-            bloodCollectionModel.setIdPerson(bloodDonorOptional.get().getIdPerson());
-            bloodCollectionModel.setWhoUpdated(bloodDonorOptional.get().getWhoUpdated());
+            BeanUtils.copyProperties(bloodDonorDto.getPersonDto(), personModel);
+            /*bloodCollectionModel.setId(bloodDonorOptional.get().getId());
+            bloodCollectionModel.setIdPerson(bloodDonorOptional.get().getIdPerson());*/
+            bloodCollectionModel.setWhoUpdated("Hernani");
+            personRepository.save(personModel);
             bloodDonorRepository.save(bloodCollectionModel);
+            
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR)
