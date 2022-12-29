@@ -67,6 +67,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
                 bloodCollectModel.setIdEmployee(employeeModelOptional.get());
                 bloodCollectModel.setBloodType(personModelOptional.get().getDmBloodCode());
                 bloodCollectModel.setWhoInserted(employeeModelOptional.get().getIdentifNumber());
+                bloodCollectModel.setBloodType(personModelOptional.get().getDmBloodCode());
                 
                 bloodCollectRepository.save(bloodCollectModel);            
                 return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
@@ -91,6 +92,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
             bloodCollectionModel.setIdPerson(bloodCollectOptional.get().getIdPerson());
             bloodCollectionModel.setIdEmployee(bloodCollectOptional.get().getIdEmployee());
             bloodCollectionModel.setWhoUpdated(bloodCollectOptional.get().getWhoUpdated());
+            bloodCollectionModel.setCollectionNumber(bloodCollectOptional.get().getCollectionNumber());
+            bloodCollectionModel.setBloodType(bloodCollectOptional.get().getBloodType());
             bloodCollectRepository.save(bloodCollectionModel);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
         } catch (Exception e) {
@@ -154,9 +157,9 @@ public class BloodCollectServImpl implements BloodCollectionService {
                 System.out.println(getBloodCollect.get(0).getQtdde());
                 System.out.println("date");
             }
-            if(isNull(insertionDate)){
+            /* if(isNull(insertionDate)){
                   System.out.println(insertionDate + " ****************** ");
-            }
+            } */
           
             if (collectionNumber != null && insertionDate == null) {
                 getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
