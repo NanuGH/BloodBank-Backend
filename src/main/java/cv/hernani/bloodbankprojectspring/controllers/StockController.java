@@ -24,9 +24,11 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value="/{collectionNumber}")
-    public ResponseEntity<Object> createStock(@Valid @RequestBody StockDto stockDto, @PathVariable("collectionNumber") String collectionNumber ) {
-        APIResponse response = stockService.createStock(stockDto,collectionNumber);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value="/{idCollection}/{idEmpl}")
+    public ResponseEntity<Object> createStock(@Valid @RequestBody StockDto stockDto,
+                                              @PathVariable("idCollection") UUID idCollection,
+                                              @PathVariable("idEmpl") UUID idEmpl ) {
+        APIResponse response = stockService.createStock(stockDto,idCollection,idEmpl);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -63,9 +65,9 @@ public class StockController {
     }
 
 
-    @GetMapping("/getStockOpts")
+   /*  @GetMapping("/getStockOpts")
     public ResponseEntity<Object> getStockOptional(@RequestParam String collectioNumber) {
         APIResponse response = stockService.findStockByOptionals(collectioNumber);
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    } */
 }

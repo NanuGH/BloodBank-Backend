@@ -29,12 +29,12 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public APIResponse createStock(@RequestBody @Valid StockDto stockDto, String collectionNumber) {
-        Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.existsByCollectionNumber(collectionNumber);
-        if (!bloodCollectOptional.isPresent()) {
+    public APIResponse createStock(@RequestBody @Valid StockDto stockDto, UUID idCollect, UUID idEmpl) {
+         Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.findById(idCollect);
+         if (!bloodCollectOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Colheita não existe!")).build();
-        }
+        } 
 
         boolean stockOptional = stockRepository.existsByCollection(bloodCollectOptional.get());
             if (stockOptional==true) {
@@ -42,13 +42,14 @@ public class StockServiceImpl implements StockService {
                         .message(MessageState.ERRO_DE_INSERCAO)
                         .details(Arrays.asList("ERRO: Colheita já existe no Stock!")).build();
             }           
-        
+
         var stockModel = new StockModel();
         try {
             BeanUtils.copyProperties(stockDto,stockModel);
             stockModel.setCollection(bloodCollectOptional.get());
-            stockModel.setStatus(true);
+            //stockModel.setStatus(true);
             stockRepository.save(stockModel);
+
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
@@ -132,8 +133,8 @@ public class StockServiceImpl implements StockService {
         }
     }
 
-    @Override
-    public APIResponse findStockByOptionals(String collectionNumber) {
+    /*  @Override
+    public APIResponse findStockByOptionals(UUID idcollection) {
         if (!stockRepository.existsByCollection(collectionNumber)) {
             return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta colheita não existe no Stock!!")).build();
         }
@@ -145,7 +146,6 @@ public class StockServiceImpl implements StockService {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
     }
-
-    
+     */
 
 }

@@ -11,5 +11,5 @@ public class StockDto {
     private String whoInserted;
     private String whoUpdated;
     private String dmDisabledCode;
-    private String dmStatus;
+    private boolean dmStatus;
 }

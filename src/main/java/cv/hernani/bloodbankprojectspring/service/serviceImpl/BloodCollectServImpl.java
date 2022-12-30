@@ -78,6 +78,10 @@ public class BloodCollectServImpl implements BloodCollectionService {
         
     }
 
+  
+  
+  
+  
     @Override
     public APIResponse updtBloodCollection(UUID id, UUID idEmployee, @RequestBody @Valid BloodCollectionDto bloodCollectionDto){
         Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.findById(id);
@@ -85,7 +89,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Colheita nao existe na BD!")).build();
         }
 
-        Optional<EmployeeModel> employeeMOptional = employeeRepository.findById(id);
+        Optional<EmployeeModel> employeeMOptional = employeeRepository.findById(idEmployee);
         if (!employeeMOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Colheita nao existe na BD!")).build();
         }

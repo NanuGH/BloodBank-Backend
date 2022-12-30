@@ -57,11 +57,10 @@ public class BloodCollectionController {
     }
     
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateBloodColeect(@PathVariable(value = "id") UUID id,
-                                                     @PathVariable(value = "idFunc") UUID idFunc,
-                                                     @RequestBody @Valid BloodCollectionDto bloodCollectionDto){        
-        APIResponse response = bloodCollectServ.updtBloodCollection(id,idFunc,bloodCollectionDto);
+    @PutMapping("/{id}/{idEmployee}")
+    public ResponseEntity<Object> updateBloodColeect(@Valid @RequestBody  BloodCollectionDto bloodCollectionDto,
+                                                     @PathVariable("id") UUID id, @PathVariable("idEmployee") UUID idEmployee){        
+        APIResponse response = bloodCollectServ.updtBloodCollection(id, idEmployee, bloodCollectionDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
