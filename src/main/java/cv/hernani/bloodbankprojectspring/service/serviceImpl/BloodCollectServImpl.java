@@ -79,11 +79,17 @@ public class BloodCollectServImpl implements BloodCollectionService {
     }
 
     @Override
-    public APIResponse updtBloodCollection(UUID id, @RequestBody @Valid BloodCollectionDto bloodCollectionDto){
+    public APIResponse updtBloodCollection(UUID id, UUID idEmployee, @RequestBody @Valid BloodCollectionDto bloodCollectionDto){
         Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectRepository.findById(id);
         if (!bloodCollectOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Colheita nao existe na BD!")).build();
         }
+
+        Optional<EmployeeModel> employeeMOptional = employeeRepository.findById(id);
+        if (!employeeMOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Colheita nao existe na BD!")).build();
+        }
+
         var bloodCollectionModel = new BloodCollectionModel();
 
         try {
@@ -91,7 +97,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
             bloodCollectionModel.setId(bloodCollectOptional.get().getId());
             bloodCollectionModel.setIdPerson(bloodCollectOptional.get().getIdPerson());
             bloodCollectionModel.setIdEmployee(bloodCollectOptional.get().getIdEmployee());
-            bloodCollectionModel.setWhoUpdated(bloodCollectOptional.get().getWhoUpdated());
+            bloodCollectionModel.setWhoUpdated(employeeMOptional.get().getIdentifNumber());
+            bloodCollectionModel.setWhoInserted(bloodCollectOptional.get().getWhoInserted());
             bloodCollectionModel.setCollectionNumber(bloodCollectOptional.get().getCollectionNumber());
             bloodCollectionModel.setBloodType(bloodCollectOptional.get().getBloodType());
             bloodCollectRepository.save(bloodCollectionModel);
