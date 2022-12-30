@@ -65,9 +65,9 @@ public class StockController {
     }
 
 
-   /*  @GetMapping("/getStockOpts")
-    public ResponseEntity<Object> getStockOptional(@RequestParam String collectioNumber) {
-        APIResponse response = stockService.findStockByOptionals(collectioNumber);
+    @GetMapping("/getStockOpts/{numCollect}")
+    public ResponseEntity<Object> getStockOptional(@PathVariable(value = "numCollect") String numCollect) {
+        APIResponse response = stockService.findStockByOptionals(numCollect);
         return new ResponseEntity<>(response, HttpStatus.OK);
-    } */
+    } 
 }

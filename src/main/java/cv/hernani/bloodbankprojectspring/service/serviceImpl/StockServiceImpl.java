@@ -133,12 +133,19 @@ public class StockServiceImpl implements StockService {
         }
     }
 
-    /*  @Override
-    public APIResponse findStockByOptionals(UUID idcollection) {
-        if (!stockRepository.existsByCollection(collectionNumber)) {
-            return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta colheita não existe no Stock!!")).build();
+    @Override
+    public APIResponse findStockByOptionals(String collectionNumber) {
+        Optional<BloodCollectionModel> bcollectOptional = bloodCollectRepository.existsByCollectionNumber(collectionNumber);
+        if (!bcollectOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)   
+                    .details(Arrays.asList("ERRO: Esta Doação não existe!")).build();
         }
-        Optional<StockModel> stockModel = stockRepository.findByCollection(collectionNumber);
+
+        if (!stockRepository.existsByCollection_CollectionNumber(collectionNumber)) {
+            return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta colheita não existe no Stock!!")).build();
+        } 
+
+        Optional<StockModel> stockModel = stockRepository.findByCollection_CollectionNumber(collectionNumber);
         try {
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(stockModel)).build();
 
@@ -146,6 +153,5 @@ public class StockServiceImpl implements StockService {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
     }
-     */
 
 }

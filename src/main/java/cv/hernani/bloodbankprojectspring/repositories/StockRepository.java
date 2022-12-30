@@ -10,6 +10,10 @@ public interface StockRepository extends JpaRepository<StockModel,UUID>{
     boolean existsByCollection(BloodCollectionModel collection);
     Optional <StockModel> findByCollection(String collection);
     boolean existsByCollection(String collection);
+
+    boolean existsByCollection_CollectionNumber(String collectioNumber);
+
+    Optional <StockModel> findByCollection_CollectionNumber(String collectioNumber);
 }
 
   

@@ -13,6 +13,6 @@ public interface StockService {
     public APIResponse deleteStockById(UUID id);
     public APIResponse updateStock(UUID id,StockDto stockUpdtDto);
     public APIResponse disableStock(UUID id,StockDto stockUpdtDto);
-    //public APIResponse findStockByOptionals(UUID idcollection);
+    public APIResponse findStockByOptionals(String collectionNumber);
     
 }
