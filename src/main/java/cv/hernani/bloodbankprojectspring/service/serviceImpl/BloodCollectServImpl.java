@@ -37,7 +37,6 @@ public class BloodCollectServImpl implements BloodCollectionService {
         this.employeeRepository = employeeRepository;
     }
       
-
     @Override
     public APIResponse createBloodCollection(@RequestBody @Valid BloodCollectionDto bloodCollectionDto, UUID idEmployee, UUID idPerson) {
         Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
@@ -78,9 +77,6 @@ public class BloodCollectServImpl implements BloodCollectionService {
         
     }
 
-  
-  
-  
   
     @Override
     public APIResponse updtBloodCollection(UUID id, UUID idEmployee, @RequestBody @Valid BloodCollectionDto bloodCollectionDto){
@@ -125,7 +121,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
     @Override
     public APIResponse getBloodCollectById(UUID id){
         if (!bloodCollectRepository.existsById(id)) {
-            return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta pessoa não existe na BD!")).build();
+            return APIResponse.builder().status(false).details(Arrays.asList("ERRO: Esta Colheita não existe na BD!")).build();
         }
         Optional<BloodCollectionModel> bloodCollectionModel = bloodCollectRepository.findById(id);
         try {
@@ -135,6 +131,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
     }
+
 
     @Override
     public APIResponse delBloodCollection(UUID id){
@@ -172,10 +169,10 @@ public class BloodCollectServImpl implements BloodCollectionService {
                   System.out.println(insertionDate + " ****************** ");
             } */
           
-            if (collectionNumber != null && insertionDate == null) {
+            /* if (collectionNumber != null && insertionDate == null) {
                 getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
                 System.out.println("number");
-            }
+            } */
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
 
         } catch (Exception e) {
@@ -183,6 +180,26 @@ public class BloodCollectServImpl implements BloodCollectionService {
                     .build();
         }
     }
+
+    @Override
+    public APIResponse getBloodCollByNumber(String collectionNumber) {
+        try {
+            Optional<BloodCollectionModel> getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
+
+            if (!getBloodCollect.isPresent()) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                        .details(Arrays.asList("ERRO: Esta colheita não existe!")).build();
+            } else {
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO)
+                        .details(Arrays.asList(getBloodCollect))
+                        .build();
+            }
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
+        }
+    } 
 
     @Override
     public APIResponse changeStatus(UUID id) {
@@ -200,5 +217,8 @@ public class BloodCollectServImpl implements BloodCollectionService {
             .details(Arrays.asList(e.getMessage())).build();
         }
     }
+
+
+    
   
 }

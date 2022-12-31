@@ -14,9 +14,12 @@ import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 public interface BloodCollectionRepository extends JpaRepository<BloodCollectionModel,UUID>{
     
     List<BloodCollectionModel> findByCollectionNumberAndInsertionDate(String collectionNumber, LocalDateTime insertionDate);
-    List<BloodCollectionModel> findByCollectionNumber(String collectionNumber);
+    //List<BloodCollectionModel> findByCollectionNumber(String collectionNumber);
     List<BloodCollectionModel> findByInsertionDate(LocalDateTime insertionDate);
+
     Optional<BloodCollectionModel> existsByCollectionNumber(String collectionNumber);
+    //Optional <BloodDonorModel> findByIdentifNumber(String identifNumber);
+    Optional <BloodCollectionModel> findByCollectionNumber(String collectionNumber);
 
     @Query(value="Select * FROM tb_blood_collection where to_char(insertion_date::DATE, 'yyyy-MM-dd') LIKE %:date%",nativeQuery=true)
     List<BloodCollectionModel> searchInsertionDateLike(@Param("date")String date);

@@ -50,6 +50,12 @@ public class BloodCollectionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping(value ="/collection/{collectionNumber}")
+    public ResponseEntity<Object> getBloodCollectByNumber(@PathVariable("collectionNumber") String collectionNumber) {
+        APIResponse response = bloodCollectServ.getBloodCollByNumber(collectionNumber);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping(value ="/{id}")
     public ResponseEntity<Object> deleteBloodCollect(@PathVariable("id") UUID id){
         APIResponse response = bloodCollectServ.delBloodCollection(id);
