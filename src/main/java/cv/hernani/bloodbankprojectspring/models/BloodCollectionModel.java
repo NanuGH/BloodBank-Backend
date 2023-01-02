@@ -1,5 +1,7 @@
 package cv.hernani.bloodbankprojectspring.models;
 
+import java.util.Date;
+
 import javax.persistence.*;
 import lombok.Data;
 
@@ -27,5 +29,8 @@ public class BloodCollectionModel extends CommonAtributsModel{
 
     @Column(name="blood_type", nullable = true)
     private String bloodType;
+
+    @Column(name="expiration_date", nullable = false)
+    private Date expirationDate;
    
 }

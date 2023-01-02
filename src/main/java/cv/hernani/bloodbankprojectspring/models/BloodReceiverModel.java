@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name= "tb_blood_receiver")
-public class BloodReceiverModel extends CommonAtributsModel{
+public class BloodReceiverModel extends CommonAtributsModel{ 
 
     @ManyToOne
     @JoinColumn(name="fk_id_person", nullable = false)
@@ -32,5 +32,5 @@ public class BloodReceiverModel extends CommonAtributsModel{
     private String mother_abo_rh;
 
     
-    
+       
 }

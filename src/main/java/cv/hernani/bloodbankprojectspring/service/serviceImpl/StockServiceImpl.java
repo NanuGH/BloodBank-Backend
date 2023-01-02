@@ -47,7 +47,9 @@ public class StockServiceImpl implements StockService {
         try {
             BeanUtils.copyProperties(stockDto,stockModel);
             stockModel.setCollection(bloodCollectOptional.get());
-            //stockModel.setStatus(true);
+            stockModel.setExpirationDate(bloodCollectOptional.get().getExpirationDate());
+            stockModel.setWhoUpdated(null);
+            stockModel.setUpdateDate(null);
             stockRepository.save(stockModel);
 
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();

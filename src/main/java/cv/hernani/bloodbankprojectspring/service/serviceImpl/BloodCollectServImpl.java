@@ -169,10 +169,10 @@ public class BloodCollectServImpl implements BloodCollectionService {
                   System.out.println(insertionDate + " ****************** ");
             } */
           
-            /* if (collectionNumber != null && insertionDate == null) {
+          /*   if (collectionNumber != null && insertionDate == null) {
                 getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
                 System.out.println("number");
-            } */
+            }  */
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
 
         } catch (Exception e) {
