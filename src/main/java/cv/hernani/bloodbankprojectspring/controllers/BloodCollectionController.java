@@ -41,9 +41,9 @@ public class BloodCollectionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/getBloodCollectionpts/{collectionNumber}/{insertionDate}")
-    public ResponseEntity<Object> getPersonOptional(@PathVariable("collectionNumber") String collectionNumber,
-                                                    @PathVariable("insertionDate") String insertionDate) {
+    @GetMapping("/getBloodCollectionpts")
+    public ResponseEntity<Object> getPersonOptional( @RequestParam(required=false) String collectionNumber,
+                                                     @RequestParam(required=false) String insertionDate) {
 
         APIResponse response = bloodCollectServ.findBloodCollectByOptionals(collectionNumber, insertionDate);
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -44,6 +44,12 @@ public class StockController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("stockType/{dmCodeStockType}")
+    public ResponseEntity<Object> getStocktByStockType(@PathVariable(value = "dmCodeStockType") String dmCodeStockType) {
+        APIResponse response = stockService.getStockByDmCodeStockType(dmCodeStockType);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteStock(@PathVariable(value = "id") UUID id){

@@ -154,25 +154,32 @@ public class BloodCollectServImpl implements BloodCollectionService {
             List<BloodCollectionModel> getBloodCollect = new ArrayList<>(); 
             //getBloodCollect = bloodCollectRepository.findByInsertionDate(datetime); 
 
-            if (collectionNumber != null && insertionDate != null) {
+            /* if (collectionNumber != null && insertionDate != null) {
                 LocalDate date = LocalDate.parse(insertionDate);
                 LocalDateTime datetime = date.atStartOfDay();
                 getBloodCollect = bloodCollectRepository.findByCollectionNumberAndInsertionDate(collectionNumber, datetime);
-                System.out.println("all");
-            }
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
+            } */
             if (collectionNumber == null && insertionDate != null) {
-                getBloodCollect = bloodCollectRepository.searchInsertionDateLike(insertionDate);
+                LocalDate date = LocalDate.parse(insertionDate);
+                LocalDateTime datetime = date.atStartOfDay();
+                getBloodCollect = bloodCollectRepository.searchInsertionDateLike(datetime);
                 System.out.println(getBloodCollect.get(0).getQtdde());
-                System.out.println("date");
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
+
+            }
+                      
+            if (collectionNumber != null && insertionDate == null) {
+                getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
+
             }
             /* if(isNull(insertionDate)){
                   System.out.println(insertionDate + " ****************** ");
             } */
-          
-          /*   if (collectionNumber != null && insertionDate == null) {
-                getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
-                System.out.println("number");
-            }  */
+            LocalDate date = LocalDate.parse(insertionDate);
+            LocalDateTime datetime = date.atStartOfDay();
+            getBloodCollect = bloodCollectRepository.findByCollectionNumberAndInsertionDate(collectionNumber, datetime);
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
 
         } catch (Exception e) {

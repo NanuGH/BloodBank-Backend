@@ -19,10 +19,9 @@ public interface BloodCollectionRepository extends JpaRepository<BloodCollection
 
     Optional<BloodCollectionModel> existsByCollectionNumber(String collectionNumber);
     //Optional <BloodDonorModel> findByIdentifNumber(String identifNumber);
-    Optional <BloodCollectionModel> findByCollectionNumber(String collectionNumber);
+    List <BloodCollectionModel> findByCollectionNumber(String collectionNumber);
 
-    @Query(value="Select * FROM tb_blood_collection where to_char(insertion_date::DATE, 'yyyy-MM-dd') LIKE %:date%",nativeQuery=true)
-    List<BloodCollectionModel> searchInsertionDateLike(@Param("date")String date);
+    @Query(value="Select * FROM tb_blood_collection where to_char(insertion_date::DATE, 'yyyy-MM-dd') LIKE %:date%",nativeQuery=true)List<BloodCollectionModel> searchInsertionDateLike(@Param("date")String date);
 }
 
 /* id,who_updated,dm_code_disabled,insertion_date,dm_status,update_date,who_inserted,external_collection,quantidade,fk_id_employee,fk_id_donor,collection_number */

@@ -50,6 +50,7 @@ public class StockServiceImpl implements StockService {
             stockModel.setExpirationDate(bloodCollectOptional.get().getExpirationDate());
             stockModel.setWhoUpdated(null);
             stockModel.setUpdateDate(null);
+            stockModel.setDmCodeStockType("q");;
             stockRepository.save(stockModel);
 
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
@@ -148,6 +149,24 @@ public class StockServiceImpl implements StockService {
         } 
 
         Optional<StockModel> stockModel = stockRepository.findByCollection_CollectionNumber(collectionNumber);
+        try {
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(stockModel)).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
+    @Override
+    public APIResponse getStockByDmCodeStockType(String dmCodeStockType) {
+        Optional<StockModel> bcollectOptional = stockRepository.existsByDmCodeStockType(dmCodeStockType);
+        if (!bcollectOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)   
+                    .details(Arrays.asList("ERRO: Não existe colheitas em Quarentena!")).build();
+        }
+
+
+        List<StockModel> stockModel = stockRepository.findByDmCodeStockType(dmCodeStockType);
         try {
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(stockModel)).build();
 
