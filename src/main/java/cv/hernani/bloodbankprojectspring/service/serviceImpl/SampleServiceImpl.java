@@ -10,11 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import cv.hernani.bloodbankprojectspring.dtos.SampleDto;
-import cv.hernani.bloodbankprojectspring.dtos.StockDto;
 import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.models.SampleModel;
-import cv.hernani.bloodbankprojectspring.models.StockModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 import cv.hernani.bloodbankprojectspring.repositories.SampleRepository;
@@ -50,19 +48,14 @@ public class SampleServiceImpl implements SampleService {
                     .message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Esta amostra já existe!")).build();
         }
-
         Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(idEmployee);
-        if (!employeeModelOptional.isPresent()) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Este funcionário não existe na BD")).build();
-        }
 
         var sampleModel = new SampleModel();
         try {
             BeanUtils.copyProperties(sampleDto, sampleModel);
             sampleModel.setIdEmployee(employeeModelOptional.get());
             sampleModel.setIdCollection(bloodCollectOptional.get());
-            sampleModel.setWhoInserted("Hernani");
+            sampleModel.setWhoInserted(employeeModelOptional.get().getIdentifNumber());
             sampleModel.setWhoUpdated(null);
             sampleModel.setDmCodeDisabled(null);
             sampleModel.setStatus(true);
@@ -76,24 +69,26 @@ public class SampleServiceImpl implements SampleService {
 
     @Override
     public APIResponse updateSample(UUID id, SampleDto sampleDto) {
+
         Optional<SampleModel> sampleOptional = sampleRepository.findById(id);
         if (!sampleOptional.isPresent()) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Coleta não existe no Stock!")).build();
+                    .details(Arrays.asList("ERRO: Amostra não existe!")).build();
         }
-        var stockModel = sampleOptional.get();
+        var sample = sampleOptional.get();
 
         try {
-            BeanUtils.copyProperties(sampleOptional, stockModel);
-            stockModel.setExpirationDate(sampleDto.getExpirationDate());
-            stockModel.setDmCodeDisabled(sampleDto.getDmDisabledCode());
-            stockModel.setWhoUpdated(sampleDto.getWhoUpdated());
-            sampleRepository.save(stockModel);
+            BeanUtils.copyProperties(sampleDto, sample);
+            sample.setExpirationDate(sampleDto.getExpirationDate());
+            sample.setDmCodeDisabled(sampleOptional.get().getDmCodeSample());
+            sample.setWhoInserted(sampleOptional.get().getWhoInserted());
+            sample.setWhoUpdated(sampleDto.getWhoUpdated());
+            sampleRepository.save(sample);
             return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
 
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR)
-                    .details(Arrays.asList(e.getMessage())).build();
+                                        .details(Arrays.asList(e.getMessage())).build();
         }
     }
 

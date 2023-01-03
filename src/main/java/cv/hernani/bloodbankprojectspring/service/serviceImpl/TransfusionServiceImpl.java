@@ -4,11 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import cv.hernani.bloodbankprojectspring.dtos.TransfusionDto;
+import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
+import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
+import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.models.TransfusionModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
@@ -33,39 +34,45 @@ public class TransfusionServiceImpl implements TransfusionService{
         this.personRepository = personRepository;
         this.bloodCollectionRepository = bloodCollectionRepository;
     }
-/* 
+
     @Override
-    public APIResponse createTransfusion(TransfusionDto transfusionDto,UUID idEmployee,UUID idPerson,UUID idCollection ) {
+    public APIResponse createTransfusion(TransfusionDto transfusionDto,UUID idEmployee,UUID idPerson,UUID idCollection ){
         
         if (!personRepository.existsById(idPerson)) { 
             return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Esta pessoa não existe na BD!")).build();
         }
         
         if (!employeeRepository.existsById(idEmployee)) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Este empregado não existe na BD!")).build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                                                              .details(Arrays.asList("ERRO: Este empregado não existe na BD!")).build();
         }
         
-        /* if (!bloodCollectionRepository.existsById(idCollection)) {
+        if (!bloodCollectionRepository.existsById(idCollection)) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
                     .details(Arrays.asList("ERRO: Esta Colheita não existe na BD!")).build();  
-        } */
+        }
         
-       /* var transfusionModel = new TransfusionModel(); 
+        var transfusionModel = new TransfusionModel(); 
         Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
         Optional<EmployeeModel> employeeOptional = employeeRepository.findById(idEmployee);
         Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectionRepository.findById(idCollection);
         try {
             BeanUtils.copyProperties(transfusionDto,transfusionModel);
-            transfusionModel.setId(bloodCollectOptional.get());
-            //transfusionModel.setIdPerson(personModelOptional.get());
-            transfusionModel.setId(employeeOptional.get());
+            transfusionModel.setIdPerson(personModelOptional.get());;
+            transfusionModel.setIdEmployee(employeeOptional.get());
+            transfusionModel.setIdCollection(bloodCollectOptional.get());
+            transfusionModel.setWhoInserted(employeeOptional.get().getIdentifNumber());
+            transfusionModel.setWhoUpdated(null);
             transfusionRepository.save(transfusionModel);
+
+            //change status and the reason Blood Collection Model
+
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
         }
 
-    }*/
+    }
 
     @Override
     public APIResponse getAllTransfusion() {
@@ -92,17 +99,22 @@ public class TransfusionServiceImpl implements TransfusionService{
     }
 
     @Override
-    public APIResponse deleteTransfusion(UUID id) {
+    public APIResponse changeStatus(UUID id) {
+        Optional<TransfusionModel> transfOptional = transfusionRepository.findById(id);
         if (!transfusionRepository.existsById(id)) {
             return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Donation dont exists on Stock!")).build();
         }
+        var transfusionModel = transfOptional.get();
         try {
-            transfusionRepository.deleteById(id);
+            transfusionModel.setStatus(false);
+            transfusionRepository.save(transfusionModel);
             return APIResponse.builder().status(true).message(MessageState.REMOVIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
         }
     }
+
+
 
     @Override
     public APIResponse updateTransfusion(UUID id, TransfusionDto transfusionDto) {

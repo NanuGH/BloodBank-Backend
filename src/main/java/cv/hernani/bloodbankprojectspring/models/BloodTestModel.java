@@ -6,7 +6,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name="tb_blood_test")
 public class BloodTestModel extends CommonAtributsModel {
@@ -22,26 +24,26 @@ public class BloodTestModel extends CommonAtributsModel {
     @Column(name = "dm_code_test", nullable = false, unique = true)
     private String dmCodeTest;
 
-    @Column(name = "blood_presure", nullable = false, length = 20)
-    private String bloodPresure;
+    /* @Column(name = "blood_presure", nullable = false, length = 20)
+    private String bloodPresure; */
 
-    @Column(name = "weight", nullable = false, length = 20)
-    private String weight;
+   /*  @Column(name = "weight", nullable = false, length = 20)
+    private String weight; */
 
     @Column(name = "hb", nullable = false, length = 20)
-    private String hb;
+    private Boolean hb;
 
     @Column(name = "vdrl", nullable = false, length = 20)
-    private String vdrl;
+    private Boolean vdrl;
 
     @Column(name = "dm_sample", nullable = false, length = 20)
-    private String hiv;
+    private Boolean hiv;
 
     @Column(name = "aghbs", nullable = false, length = 20)
-    private String aghbs;
+    private Boolean aghbs;
 
     @Column(name = "hcv", nullable = false, length = 20)
-    private String hcv;
+    private Boolean hcv;
 
     @Column(name = "clinical_conc", nullable = false, length = 20)
     private String clinicalConc;

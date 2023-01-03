@@ -1,4 +1,6 @@
 package cv.hernani.bloodbankprojectspring.models;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -7,13 +9,10 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-//@Data
+@Data
 @Entity
 @Table(name = "tb_transfusion")
 public class TransfusionModel extends CommonAtributsModel {
-
-    /*@Column(name="id_receiver",nullable = false, unique = true, length = 10)
-    private UUID idTransfusion;*/
 
     @ManyToOne
     @JoinColumn(name = "fk_id_collection", nullable = false, unique = false)
@@ -24,17 +23,20 @@ public class TransfusionModel extends CommonAtributsModel {
     private EmployeeModel idEmployee;
 
     @ManyToOne
-    @JoinColumn(name="fk_id_stock",nullable = false, unique = false)
-    private StockModel id;
+    @JoinColumn(name="fk_id_person",nullable = false, unique = false)
+    private PersonModel idPerson;
 
-    @Column(name="suspended", nullable = false)
+    @Column(name="finished", nullable = false)
+    private LocalDateTime finished;   
+
+    /*@Column(name="suspended", nullable = false)
     private boolean suspended;
 
     @Column(name="suspension_date", nullable = false)
     private String suspDate;
 
     @Column(name="suspension_reason", nullable = false)
-    private boolean suspReason;
+    private String suspReason;
 
     @Column(name="transfer_restarted", nullable = false)
     private String transfRest; 
@@ -64,5 +66,5 @@ public class TransfusionModel extends CommonAtributsModel {
     private String dmTranSymptom;
 
     @Column(name="applied_therapy", nullable = false)
-    private String appliedTherapy;
+    private String appliedTherapy;*/
 }
