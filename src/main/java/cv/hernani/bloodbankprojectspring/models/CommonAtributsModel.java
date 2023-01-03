@@ -43,5 +43,5 @@ public class CommonAtributsModel implements Serializable {
 
     @Column(name="dm_code_disabled", nullable = true)
     private String dmCodeDisabled;
-    
+     
 }

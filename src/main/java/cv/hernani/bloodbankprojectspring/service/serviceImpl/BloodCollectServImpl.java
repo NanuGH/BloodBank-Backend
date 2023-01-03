@@ -21,7 +21,6 @@ import cv.hernani.bloodbankprojectspring.service.service.BloodCollectionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 import org.springframework.web.bind.annotation.RequestBody;
-import static java.util.Objects.isNull;
 
 @Service
 public class BloodCollectServImpl implements BloodCollectionService {
@@ -161,18 +160,17 @@ public class BloodCollectServImpl implements BloodCollectionService {
                 return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
             } */
             if (collectionNumber == null && insertionDate != null) {
-                LocalDate date = LocalDate.parse(insertionDate);
+                /* LocalDate date = LocalDate.parse(insertionDate);
                 LocalDateTime datetime = date.atStartOfDay();
                 getBloodCollect = bloodCollectRepository.searchInsertionDateLike(datetime);
                 System.out.println(getBloodCollect.get(0).getQtdde());
-                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build(); */
 
             }
                       
             if (collectionNumber != null && insertionDate == null) {
-                getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
-                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
-
+               /* getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();*/
             }
             /* if(isNull(insertionDate)){
                   System.out.println(insertionDate + " ****************** ");

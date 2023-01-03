@@ -1,7 +1,6 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
-import java.util.Arrays;
-import java.util.List;
+
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import cv.hernani.bloodbankprojectspring.dtos.PersonDto;
-import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.repositories.TestRepository;
 import cv.hernani.bloodbankprojectspring.service.service.PersonService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
-import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 
 /*recebe as solicitacoes CRUD  e aciona o 
 service q aciona o repository*/

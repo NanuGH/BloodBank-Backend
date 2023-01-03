@@ -9,9 +9,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import cv.hernani.bloodbankprojectspring.dtos.TransfusionDto;
-import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
-import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
-import cv.hernani.bloodbankprojectspring.models.PersonModel;
 import cv.hernani.bloodbankprojectspring.models.TransfusionModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;

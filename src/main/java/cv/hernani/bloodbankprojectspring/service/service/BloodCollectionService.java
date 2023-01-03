@@ -1,6 +1,5 @@
 package cv.hernani.bloodbankprojectspring.service.service;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import cv.hernani.bloodbankprojectspring.dtos.BloodCollectionDto;

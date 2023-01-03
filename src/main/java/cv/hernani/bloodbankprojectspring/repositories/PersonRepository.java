@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
 
 
-@Repository
+
 public interface PersonRepository extends JpaRepository<PersonModel, UUID>{
        
     boolean existsByNamePersonAndSurnamePersonAndDmDocIdent(String namePerson, String surnamePerson, String dmDocIdent);
