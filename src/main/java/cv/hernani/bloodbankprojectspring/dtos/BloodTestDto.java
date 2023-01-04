@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class BloodTestDto {
-    private Boolean hb;
     private Boolean vdrl;
     private Boolean hiv;
     private Boolean aghbs;

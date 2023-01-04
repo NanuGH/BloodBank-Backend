@@ -1,19 +1,13 @@
 package cv.hernani.bloodbankprojectspring.controllers;
 
 import java.util.UUID;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
-import cv.hernani.bloodbankprojectspring.dtos.BloodDonorCreateDto;
-import cv.hernani.bloodbankprojectspring.dtos.BloodDonorDto;
 import cv.hernani.bloodbankprojectspring.dtos.BloodTestDto;
-import cv.hernani.bloodbankprojectspring.service.service.BloodDonorService;
 import cv.hernani.bloodbankprojectspring.service.service.BloodTestService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
@@ -29,22 +23,28 @@ public class BloodTestController {
         this.bloodTestServ = bloodTestServ;
     }
     
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idFunc}/{idPessoa}")
-    public ResponseEntity<Object> createBloodDonor(@Valid @RequestBody BloodTestDto bloodTestDto,
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idFunc}/{idSample}")
+    public ResponseEntity<Object> createBloodTest(@Valid @RequestBody BloodTestDto bloodTestDto,
                                                    @PathVariable("idFunc") UUID idFunc,
-                                                   @PathVariable("idPessoa") UUID idSample) {
+                                                   @PathVariable("idSample") UUID idSample) {
         APIResponse response = bloodTestServ.createBloodTest(bloodTestDto, idFunc, idSample);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<Object>getAllBloodDonner(){
+    public ResponseEntity<Object>getAllTest(){
         APIResponse response = bloodTestServ.getAllBloodTest();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping(value ="/test/{testNumber}")
+    public ResponseEntity<Object> getTestByNumber(@PathVariable("testNumber") String testNumber) {
+        APIResponse response = bloodTestServ.getTestByTestNumber(testNumber);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping(value ="/{id}")
-    public ResponseEntity<Object> getBloodCollectById(@PathVariable("id") UUID id) {
+    public ResponseEntity<Object> getTestById(@PathVariable("id") UUID id) {
         APIResponse response = bloodTestServ.getBloodTestById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

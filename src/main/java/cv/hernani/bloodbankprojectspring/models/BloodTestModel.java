@@ -21,17 +21,14 @@ public class BloodTestModel extends CommonAtributsModel {
     @JoinColumn(name = "fk_id_sample", nullable = false, unique = true)
     private SampleModel idSample;
 
-    @Column(name = "dm_code_test", nullable = false, unique = true)
-    private String dmCodeTest;
+    @Column(name = "test_number", nullable = false, unique = true)
+    private String testNumber;
 
-    /* @Column(name = "blood_presure", nullable = false, length = 20)
+    /* @Column(name = "blood_presure", nullable = false, length = 20)  
     private String bloodPresure; */
 
    /*  @Column(name = "weight", nullable = false, length = 20)
     private String weight; */
-
-    @Column(name = "hb", nullable = false, length = 20)
-    private Boolean hb;
 
     @Column(name = "vdrl", nullable = false, length = 20)
     private Boolean vdrl;

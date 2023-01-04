@@ -66,11 +66,15 @@ public class BloodTestServiceImpl implements BloodTestService {
         try {
             BeanUtils.copyProperties(bloodTestDto, testModel);
             testModel.setIdEmployee(employeeModelOptional.get());
+            testModel.setIdSample(sampleOptional.get());
             testModel.setWhoInserted(employeeModelOptional.get().getWhoInserted());
             testModel.setWhoUpdated(null);
-            String dmCodeTest = Helper.identfNumberGenerator();
-            testModel.setDmCodeTest(dmCodeTest);
+            String testnumber = Helper.identfNumberGenerator();
+            testModel.setTestNumber(testnumber);;
             bloodTestRepository.save(testModel);
+
+            // Change Sample Status and the reason
+
 
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
@@ -87,14 +91,35 @@ public class BloodTestServiceImpl implements BloodTestService {
 
     @Override
     public APIResponse getAllBloodTest() {
-        // TODO Auto-generated method stub
-        return null;
+        List<BloodTestModel> findAllTest = bloodTestRepository.findAll();
+      try {
+        return APIResponse.builder().status(true).message(MessageState.SUCESSO)
+                                    .details(Arrays.asList(findAllTest)).build(); 
+      } catch (Exception e) {
+        return APIResponse.builder().status(false).message(MessageState.ERRO)
+                                    .details(Arrays.asList(e.getMessage())).build();
+      }
     }
 
     @Override
     public APIResponse getBloodTestById(UUID id) {
-        // TODO Auto-generated method stub
-        return null;
+        if (!bloodTestRepository.existsById(id)) {
+            return APIResponse.builder().status(false)
+                    .details(Arrays.asList("Conflict: Blood Test dont exists!"))
+                    .build();
+        }
+        Optional<BloodTestModel> testModel = bloodTestRepository.findById(id);
+        try {
+
+            return APIResponse.builder().status(true)
+                    .message(MessageState.SUCESSO)
+                    .details(Arrays.asList(testModel)).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO)
+                    .details(Arrays.asList(e.getMessage())).build();
+        }
     }
 
     @Override
@@ -107,6 +132,26 @@ public class BloodTestServiceImpl implements BloodTestService {
     public APIResponse changeStatus(UUID id) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public APIResponse getTestByTestNumber(String testNumber) {
+        try {
+            Optional<BloodTestModel> getTest = bloodTestRepository.findByTestNumber(testNumber);
+
+            if (!getTest.isPresent()) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                        .details(Arrays.asList("ERRO: Esta colheita não existe!")).build();
+            } else {
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO)
+                        .details(Arrays.asList(getTest))
+                        .build();
+            }
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
+        }
     }
 
 }
