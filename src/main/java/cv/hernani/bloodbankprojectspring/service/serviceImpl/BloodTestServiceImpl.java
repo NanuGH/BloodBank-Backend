@@ -74,8 +74,6 @@ public class BloodTestServiceImpl implements BloodTestService {
             bloodTestRepository.save(testModel);
 
             // Change Sample Status and the reason
-
-
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();

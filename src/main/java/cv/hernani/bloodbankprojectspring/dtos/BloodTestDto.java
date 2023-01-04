@@ -10,4 +10,5 @@ public class BloodTestDto {
     private Boolean hcv;
     private String clinicalConc;
     private String obs;
+    private String dmConclusion;
 }

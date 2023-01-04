@@ -47,5 +47,8 @@ public class BloodTestModel extends CommonAtributsModel {
 
     @Column(name = "obs", nullable = false, length = 20)
     private String obs;
+
+    @Column(name = "dm_conclusion", nullable = false)
+    private String dmConclusion;
     
 }
