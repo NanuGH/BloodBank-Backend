@@ -11,9 +11,9 @@ public interface SampleService {
     public APIResponse updateSample(UUID id,SampleDto sampleDto);
     public APIResponse getAllSample();
     public APIResponse getSampleById(UUID id);
-    
+    public APIResponse getBySampleNumber(String sampleNumber);
    
-    
+
     public APIResponse changeStatus(UUID id);
     
 }

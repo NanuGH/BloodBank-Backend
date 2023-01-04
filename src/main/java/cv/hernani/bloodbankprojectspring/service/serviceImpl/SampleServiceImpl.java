@@ -27,8 +27,9 @@ public class SampleServiceImpl implements SampleService {
     final BloodCollectionRepository bloodCollectRepository;
     final EmployeeRepository employeeRepository;
 
-    public SampleServiceImpl(SampleRepository sampleRepository, BloodCollectionRepository bloodCollectRepository,
-            EmployeeRepository employeeRepository) {
+    public SampleServiceImpl(SampleRepository sampleRepository, 
+                             BloodCollectionRepository bloodCollectRepository,
+                             EmployeeRepository employeeRepository) {
         this.sampleRepository = sampleRepository;
         this.bloodCollectRepository = bloodCollectRepository;
         this.employeeRepository = employeeRepository;
@@ -135,6 +136,26 @@ public class SampleServiceImpl implements SampleService {
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_REMOVER)
             .details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
+    @Override
+    public APIResponse getBySampleNumber(String sampleNumber) {
+        try {
+            Optional<SampleModel> getSampleNumber = sampleRepository.findBySampleNumber(sampleNumber);
+
+            if (!getSampleNumber.isPresent()) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                        .details(Arrays.asList("ERRO: Esta amostra não existe!")).build();
+            } else {
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO)
+                        .details(Arrays.asList(getSampleNumber))
+                        .build();
+            }
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
         }
     }
 }

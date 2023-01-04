@@ -19,7 +19,7 @@ import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(path = "/blooddonor")
+@RequestMapping(path = "/bloodtest")
 public class BloodTestController {
 
     @Autowired

@@ -53,6 +53,12 @@ public class SampleController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/getsample/{sampleNumber}")
+    public ResponseEntity<Object> getStockOptional(@PathVariable(value = "sampleNumber") String sampleNumber) {
+        APIResponse response = sampleService.getBySampleNumber(sampleNumber);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    } 
+
     /*
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteStock(@PathVariable(value = "id") UUID id){
@@ -66,11 +72,7 @@ public class SampleController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/getStockOpts/{numCollect}")
-    public ResponseEntity<Object> getStockOptional(@PathVariable(value = "numCollect") String numCollect) {
-        APIResponse response = stockService.findStockByOptionals(numCollect);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }  
+    
 
     @GetMapping("stockType/{dmCodeStockType}")
     public ResponseEntity<Object> getStocktByStockType(@PathVariable(value = "dmCodeStockType") String dmCodeStockType) {
