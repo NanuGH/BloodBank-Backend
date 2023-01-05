@@ -14,17 +14,21 @@ import lombok.Data;
 @Table(name = "tb_transfusion")
 public class TransfusionModel extends CommonAtributsModel {
 
-    @ManyToOne
+/*     @ManyToOne
     @JoinColumn(name = "fk_id_collection", nullable = false, unique = false)
-    private BloodCollectionModel idCollection;
+    private BloodCollectionModel idCollection; */
+
+    @ManyToOne
+    @JoinColumn(name = "fk_id_stock", nullable = false, unique = false)
+    private StockModel idStock;
     
     @ManyToOne
     @JoinColumn(name="fk_id_employee",nullable = false, unique = false)
     private EmployeeModel idEmployee;
 
-/*     @ManyToOne
+    @ManyToOne
     @JoinColumn(name="fk_id_person",nullable = false, unique = false)
-    private PersonModel idPerson; */
+    private PersonModel idPerson;
 
     @Column(name="finished", nullable = false)
     private LocalDateTime finished;  

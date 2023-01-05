@@ -10,10 +10,12 @@ import cv.hernani.bloodbankprojectspring.dtos.TransfusionDto;
 import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
+import cv.hernani.bloodbankprojectspring.models.StockModel;
 import cv.hernani.bloodbankprojectspring.models.TransfusionModel;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
+import cv.hernani.bloodbankprojectspring.repositories.StockRepository;
 import cv.hernani.bloodbankprojectspring.repositories.TransfusionRepository;
 import cv.hernani.bloodbankprojectspring.service.service.TransfusionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
@@ -26,44 +28,51 @@ public class TransfusionServiceImpl implements TransfusionService{
     final TransfusionRepository transfusionRepository;
     final EmployeeRepository employeeRepository;
     final PersonRepository personRepository;
-    final BloodCollectionRepository bloodCollectionRepository;    
+    final StockRepository stockRepository;    
 
     public TransfusionServiceImpl(TransfusionRepository transfusionRepository, EmployeeRepository employeeRepository,
-                                  PersonRepository personRepository, BloodCollectionRepository bloodCollectionRepository) {
+                                  PersonRepository personRepository, StockRepository stockRepository) {
         this.transfusionRepository = transfusionRepository;
         this.employeeRepository = employeeRepository;
         this.personRepository = personRepository;
-        this.bloodCollectionRepository = bloodCollectionRepository;
+        this.stockRepository = stockRepository;
     }
 
     @Override
-    public APIResponse createTransfusion(TransfusionDto transfusionDto,UUID idEmployee,UUID idCollection ){
-        
-       /*  if (!personRepository.existsById(idPerson)) { 
-            return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Esta pessoa não existe na BD!")).build();
-        } */
+    public APIResponse createTransfusion(UUID idEmployee,UUID idPerson,UUID idStock,TransfusionDto transfusionDto){
+
+        if (!transfusionRepository.existsById(idStock)) {
+            return APIResponse.builder().status(false).
+            message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Esta colheita já foi utilizada")).build();
+        } 
         
         if (!employeeRepository.existsById(idEmployee)) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
-                                                              .details(Arrays.asList("ERRO: Este empregado não existe na BD!")).build();
-        }
+            return APIResponse.builder().status(false).
+            message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Este empregado não existe na BD!")).build();
+        } 
+
+        if (!personRepository.existsById(idPerson)) { 
+            return APIResponse.builder().status(false).
+            details(Arrays.asList("Conflict: Esta pessoa não existe na BD!")).build();
+            
+        } 
         
-        if (!bloodCollectionRepository.existsById(idCollection)) {
+        if (!stockRepository.existsById(idStock)) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Esta Colheita não existe na BD!")).build();  
+                    .details(Arrays.asList("ERRO: Esta colheita não existe no Stock!")).build();  
         }
         
         var transfusionModel = new TransfusionModel(); 
-       // Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
+        Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
         Optional<EmployeeModel> employeeOptional = employeeRepository.findById(idEmployee);
-        Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectionRepository.findById(idCollection);
+        Optional<StockModel> stockOptional = stockRepository.findById(idStock);
         try {
             BeanUtils.copyProperties(transfusionDto,transfusionModel);
-            //transfusionModel.setIdPerson(personModelOptional.get());;
+            transfusionModel.setIdPerson(personModelOptional.get());;
             transfusionModel.setIdEmployee(employeeOptional.get());
+            transfusionModel.setIdStock(stockOptional.get());
             String transfNumber = Helper.identfNumberGenerator();
             transfusionModel.setTransfNumber(transfNumber);
-            transfusionModel.setIdCollection(bloodCollectOptional.get());
             transfusionModel.setWhoInserted(employeeOptional.get().getIdentifNumber());
             transfusionModel.setWhoUpdated(null);
             transfusionRepository.save(transfusionModel);
@@ -74,7 +83,6 @@ public class TransfusionServiceImpl implements TransfusionService{
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
         }
-
     }
 
     @Override
@@ -116,7 +124,6 @@ public class TransfusionServiceImpl implements TransfusionService{
             return APIResponse.builder().status(false).details(Arrays.asList(e.getMessage())).build();
         }
     }
-
 
 
     @Override
