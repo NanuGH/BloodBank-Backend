@@ -70,7 +70,7 @@ public class BloodTestServiceImpl implements BloodTestService {
             testModel.setWhoInserted(employeeModelOptional.get().getWhoInserted());
             testModel.setWhoUpdated(null);
             String testnumber = Helper.identfNumberGenerator();
-            testModel.setTestNumber(testnumber);;
+            testModel.setTestNumber(testnumber);
             bloodTestRepository.save(testModel);
 
             // Change Sample Status and the reason

@@ -1,11 +1,13 @@
 package cv.hernani.bloodbankprojectspring.dtos;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data
 public class TransfusionDto {
     
-    private boolean suspended;
+ /* private boolean suspended;
     private String suspDate;
     private boolean suspReason;
     private String transfRest; 
@@ -17,7 +19,8 @@ public class TransfusionDto {
     private String bed;
     private String dmParamChanged;
     private String dmTranSymptom;
-    private String appliedTherapy;
+    private String appliedTherapy; */
+    private LocalDateTime finished;
     private String whoUpdated;
-    private String whoInserted;
+    private String whoInserted;   
 }

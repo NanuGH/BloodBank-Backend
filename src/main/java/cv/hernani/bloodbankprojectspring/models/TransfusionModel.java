@@ -22,12 +22,17 @@ public class TransfusionModel extends CommonAtributsModel {
     @JoinColumn(name="fk_id_employee",nullable = false, unique = false)
     private EmployeeModel idEmployee;
 
-    @ManyToOne
+/*     @ManyToOne
     @JoinColumn(name="fk_id_person",nullable = false, unique = false)
-    private PersonModel idPerson;
+    private PersonModel idPerson; */
 
     @Column(name="finished", nullable = false)
-    private LocalDateTime finished;   
+    private LocalDateTime finished;  
+
+    @Column(name="transfNumber", nullable = true)
+    private String transfNumber;
+    
+    
 
     /*@Column(name="suspended", nullable = false)
     private boolean suspended;

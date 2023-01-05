@@ -17,6 +17,7 @@ import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
 import cv.hernani.bloodbankprojectspring.repositories.TransfusionRepository;
 import cv.hernani.bloodbankprojectspring.service.service.TransfusionService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
+import cv.hernani.bloodbankprojectspring.utilities.Helper;
 import cv.hernani.bloodbankprojectspring.utilities.MessageState;
 
 @Service
@@ -36,11 +37,11 @@ public class TransfusionServiceImpl implements TransfusionService{
     }
 
     @Override
-    public APIResponse createTransfusion(TransfusionDto transfusionDto,UUID idEmployee,UUID idPerson,UUID idCollection ){
+    public APIResponse createTransfusion(TransfusionDto transfusionDto,UUID idEmployee,UUID idCollection ){
         
-        if (!personRepository.existsById(idPerson)) { 
+       /*  if (!personRepository.existsById(idPerson)) { 
             return APIResponse.builder().status(false).details(Arrays.asList("Conflict: Esta pessoa não existe na BD!")).build();
-        }
+        } */
         
         if (!employeeRepository.existsById(idEmployee)) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
@@ -53,13 +54,15 @@ public class TransfusionServiceImpl implements TransfusionService{
         }
         
         var transfusionModel = new TransfusionModel(); 
-        Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
+       // Optional<PersonModel> personModelOptional = personRepository.findById(idPerson);
         Optional<EmployeeModel> employeeOptional = employeeRepository.findById(idEmployee);
         Optional<BloodCollectionModel> bloodCollectOptional = bloodCollectionRepository.findById(idCollection);
         try {
             BeanUtils.copyProperties(transfusionDto,transfusionModel);
-            transfusionModel.setIdPerson(personModelOptional.get());;
+            //transfusionModel.setIdPerson(personModelOptional.get());;
             transfusionModel.setIdEmployee(employeeOptional.get());
+            String transfNumber = Helper.identfNumberGenerator();
+            transfusionModel.setTransfNumber(transfNumber);
             transfusionModel.setIdCollection(bloodCollectOptional.get());
             transfusionModel.setWhoInserted(employeeOptional.get().getIdentifNumber());
             transfusionModel.setWhoUpdated(null);
@@ -132,6 +135,25 @@ public class TransfusionServiceImpl implements TransfusionService{
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).details(Arrays.asList(e.getMessage())).build();
         }  
+    }
+
+    @Override
+    public APIResponse getTransfNumber(String transfNumber) {
+        try {
+            Optional<TransfusionModel> getTransf = transfusionRepository.findByTransfNumber(transfNumber);
+
+            if (!getTransf.isPresent()) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                        .details(Arrays.asList("ERRO: Esta Transfusão não existe!")).build();
+            } else {
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO)
+                        .details(Arrays.asList(getTransf)).build();
+            }
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
+        }
     }
     
 }

@@ -26,13 +26,13 @@ public class TransfusionController {
         this.transfusionService = transfusionService;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idEmployee}/{idPerson}/{idCollection}")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,value = "/{idEmployee}/{idCollection}")
     public ResponseEntity<Object> createBloodCollect(@Valid @RequestBody TransfusionDto transfusionDto, 
                                                      @PathVariable("idEmployee") UUID idEmployee, 
-                                                     @PathVariable("idPerson") UUID idPerson,
+                                                     /* @PathVariable("idPerson") UUID idPerson, */
                                                      @PathVariable("idCollection") UUID idCollection) {
 
-        APIResponse response = transfusionService.createTransfusion(transfusionDto,idEmployee,idPerson,idCollection);
+        APIResponse response = transfusionService.createTransfusion(transfusionDto,idEmployee,idCollection);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -45,6 +45,12 @@ public class TransfusionController {
     @GetMapping(value ="/{id}")
     public ResponseEntity<Object> getTransfusionById(@PathVariable("id") UUID id) {
         APIResponse response = transfusionService.getTransfusionById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value ="/transfusion/{transfNumber}")
+    public ResponseEntity<Object> getTransfusionByNumber(@PathVariable("transfNumber") String transfNumber) {
+        APIResponse response = transfusionService.getTransfNumber(transfNumber);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
