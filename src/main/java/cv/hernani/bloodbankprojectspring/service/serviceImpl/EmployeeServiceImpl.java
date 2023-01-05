@@ -15,8 +15,10 @@ import cv.hernani.bloodbankprojectspring.dtos.EmployeeDto;
 import cv.hernani.bloodbankprojectspring.dtos.EmployeeUpdtDto;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
+import cv.hernani.bloodbankprojectspring.models.RolesModel;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
+import cv.hernani.bloodbankprojectspring.repositories.RolesRepository;
 import cv.hernani.bloodbankprojectspring.service.service.EmployeeService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.Helper;
@@ -29,10 +31,12 @@ public class EmployeeServiceImpl implements EmployeeService{
     
     final EmployeeRepository employeeRepository;
     private final PersonRepository personRepository;
+    private final RolesRepository rolesRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PersonRepository personRepository){
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PersonRepository personRepository, RolesRepository rolesRepository){
         this.employeeRepository = employeeRepository;
         this.personRepository = personRepository;
+        this.rolesRepository = rolesRepository;
     }
 
     /*@Transactional
@@ -62,12 +66,20 @@ public class EmployeeServiceImpl implements EmployeeService{
     }*/
 
     @Override
-    public APIResponse createEmployee(EmployeeDto employeeDto){
+    public APIResponse createEmployee(EmployeeDto employeeDto, UUID idRoles){
         if(personRepository.existsByNamePersonAndSurnamePersonAndDmDocIdent(employeeDto.getPersonDto().getNamePerson(),
                                                                             employeeDto.getPersonDto().getSurnamePerson(),
                                                                             employeeDto.getPersonDto().getDmDocIdent())){                                                                                        
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Pessoa ja existe na BD!")).build();
-        }              
+        }   
+        
+        Optional<RolesModel> rolesOptional = rolesRepository.findById(idRoles);
+        if (!rolesOptional.isPresent()) {
+            return APIResponse.builder().status(false)
+                    .message(MessageState.ERRO_DE_INSERCAO)
+                    .details(Arrays.asList("ERRO: Este role não existe na BD!"))
+                    .build();
+        }
         try {
             var personModel = new PersonModel();
             BeanUtils.copyProperties(employeeDto.getPersonDto(), personModel);
@@ -83,7 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService{
              employeeModel.setIdPerson(personModel);
              employeeModel.setInsertionDate(personModel.getInsertionDate());
              employeeModel.setUpdateDate(personModel.getUpdateDate());
-             //employeeModel.setIdRole(employeeDto.getIdRoles());
+             employeeModel.setRole(rolesOptional.get());
              employeeModel.setEmail(employeeDto.getEmail());
 
              employeeRepository.save(employeeModel);

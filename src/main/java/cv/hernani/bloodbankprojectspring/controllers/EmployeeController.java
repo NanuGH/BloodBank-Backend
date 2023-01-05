@@ -33,10 +33,11 @@ public class EmployeeController {
         employeeModel.setUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.createEmployee(employeeModel));
     }*/
-
-    @PostMapping
-    public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeDto employeeDto){
-        APIResponse response = employeeService.createEmployee(employeeDto);
+     
+    @PostMapping("/{idroles}")
+    public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeDto employeeDto,
+                                                              @PathVariable(value = "idroles") UUID idroles){
+        APIResponse response = employeeService.createEmployee(employeeDto,idroles);
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 

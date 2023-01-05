@@ -25,13 +25,15 @@ public class RolesServiceImpl implements RolesService {
 
     @Override
     public APIResponse createRoles(RolesDto rolesDto) {
+        
         if (rolesRepository.existsByName(rolesDto.getName())){
             return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Este Role já existe na BD!")).build();
         }          
         var rolesModel = new RolesModel();
-        BeanUtils.copyProperties(rolesDto, rolesModel);
-        rolesModel.setStatus(true);
+        
         try {
+            BeanUtils.copyProperties(rolesDto, rolesModel);
+            rolesModel.setStatus(true);
             rolesRepository.saveAndFlush(rolesModel);
             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
         } catch (Exception e) {

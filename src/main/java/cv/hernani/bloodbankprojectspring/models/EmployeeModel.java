@@ -19,6 +19,10 @@ public class EmployeeModel extends CommonAtributsModel{
     @JoinColumn(name="fk_id_person", nullable = false, unique = false)
     private PersonModel idPerson;
 
+    @ManyToOne
+    @JoinColumn(name="fk_role_code", nullable = true)
+    private RolesModel role;
+
     @Column(name="identifNumber", nullable = true, length=15 )
     private String identifNumber;
 
@@ -27,9 +31,6 @@ public class EmployeeModel extends CommonAtributsModel{
 
     @Column(name="dm_function", nullable = true, length=15)
     private String dmfunction;
-
-    @Column(name="role_code", nullable = true)
-    private UUID  idRole;
 
     @Column(name="email", nullable = true)
     private String  email;  

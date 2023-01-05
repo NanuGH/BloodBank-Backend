@@ -7,7 +7,7 @@ import cv.hernani.bloodbankprojectspring.dtos.EmployeeUpdtDto;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 
 public interface EmployeeService {
-    public APIResponse createEmployee(EmployeeDto employeeDto);
+    public APIResponse createEmployee(EmployeeDto employeeDto, UUID idRoles);
     public APIResponse updtEmployee(UUID id, EmployeeUpdtDto employeeUpdtDto);
     public APIResponse findAllEmployee();
     public APIResponse findEmployeeById(UUID id);

@@ -18,10 +18,6 @@ public class EmployeeDto {
     @JsonProperty("Person")
     private PersonDto personDto;
 
-    private String idRoles;
-
     @Email
     private String email;
-
-
 }
