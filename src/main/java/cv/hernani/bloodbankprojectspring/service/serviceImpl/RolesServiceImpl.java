@@ -42,7 +42,7 @@ public class RolesServiceImpl implements RolesService {
     
     }
 
-    @Override
+    /* @Override
     public APIResponse getAllRoles() {
         List<RolesModel> getAllRoles = rolesRepository.findAll();
         try {
@@ -50,7 +50,7 @@ public class RolesServiceImpl implements RolesService {
         } catch (Exception e) {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
-    }
+    } */
 
     @Override
     public APIResponse getRolesById(UUID id) {
@@ -101,4 +101,49 @@ public class RolesServiceImpl implements RolesService {
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).details(Arrays.asList(e.getMessage())).build();
         }    
     }
+
+    @Override
+    public APIResponse getRoleByName(String dmFunction) {
+        try {
+            Optional<RolesModel> getRolesByName = rolesRepository.findByName(dmFunction);
+
+            if (!getRolesByName.isPresent()) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                        .details(Arrays.asList("ERRO: Esta role não existe!")).build();
+            } else {
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO)
+                        .details(Arrays.asList(getRolesByName))
+                        .build();
+            }
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
+        }
+    }
+
+    @Override
+    public APIResponse getAllRoles() {
+        try {
+            List<RolesModel> getAllRoles = rolesRepository.findAll();
+
+            if (getAllRoles.isEmpty()) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
+                        .details(Arrays.asList("ERRO: Lista vazia!")).build();
+            } else {
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO)
+                        .details(Arrays.asList(getAllRoles))
+                        .build();
+            }
+
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
+                    .build();
+        }
+    }
+
+
+
+    
+
 }

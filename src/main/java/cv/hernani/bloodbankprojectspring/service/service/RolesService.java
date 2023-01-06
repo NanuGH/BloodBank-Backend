@@ -11,4 +11,5 @@ public interface RolesService {
     public APIResponse getRolesById(UUID id);
     public APIResponse deleteRoles(UUID id);
     public APIResponse updateRoles(UUID id, RolesDto rolesDto);
+    public APIResponse getRoleByName(String dmFunction);
 }

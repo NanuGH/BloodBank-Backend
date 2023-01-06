@@ -55,4 +55,11 @@ public class RolesController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @GetMapping(value ="/roles/{dmFunction}")
+    public ResponseEntity<Object> getBloodCollectByNumber(@PathVariable("dmFunction") String dmFunction) {
+        APIResponse response = rolesService.getRoleByName(dmFunction);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
 }
