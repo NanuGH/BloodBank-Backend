@@ -12,7 +12,7 @@
 	<artifactId>defaultprojectspring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<!-- <packaging>war</packaging> -->
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>defaultprojectspring</name>
 	<description>Default project for Spring Boot with Lombok, swagger, basic authentication, PostgreSQL</description>
 	<properties>
@@ -103,6 +103,8 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		 <finalName>banco-sangue</finalName>
 	</build>
+	
 
 </project>

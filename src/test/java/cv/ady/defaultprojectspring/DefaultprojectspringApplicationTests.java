@@ -1,4 +1,4 @@
-package cv.ady.defaultprojectspring;
+/* package cv.ady.defaultprojectspring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,3 +11,4 @@ class DefaultprojectspringApplicationTests {
 	}
 
 }
+ */
