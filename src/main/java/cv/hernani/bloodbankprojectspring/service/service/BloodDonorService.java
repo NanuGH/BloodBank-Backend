@@ -14,4 +14,5 @@ public interface BloodDonorService {
     public APIResponse getBloodDonnerBy(String identifNumber);
     public APIResponse delBloodDonor(UUID id);
     public APIResponse changeStatus(UUID id);
+    public APIResponse getDonnerByOne(String value);
 }

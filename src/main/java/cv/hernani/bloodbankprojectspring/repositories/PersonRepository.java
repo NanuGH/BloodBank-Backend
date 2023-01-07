@@ -22,7 +22,7 @@ public interface PersonRepository extends JpaRepository<PersonModel, UUID>{
     List<PersonModel> findByNamePersonAndBirthday(String namePerson, LocalDate birthday );
     List<PersonModel> findBySurnamePersonAndBirthday(String surnamePerson, LocalDate birthday );
 
-    List<PersonModel> findByNamePersonOrDmDocIdent(String value, String dmDocIdent);
+    List<PersonModel> findByNamePersonOrDmDocIdent(String namePerson, String dmDocIdent);
     List<PersonModel> findByStatus(String status);
 
     

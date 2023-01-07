@@ -1,5 +1,6 @@
 package cv.hernani.bloodbankprojectspring.repositories;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ public interface BloodDonorRepository extends JpaRepository<BloodDonorModel, UUI
     Optional <BloodDonorModel> findByIdentifNumber(String identifNumber);
 
     Optional <BloodDonorModel> findByIdPerson(PersonModel idPerson);
+    List<BloodDonorModel> findByIdPersonNamePersonOrIdentifNumber(String value, String identifNumber);
 }

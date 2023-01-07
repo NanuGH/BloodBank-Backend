@@ -73,5 +73,11 @@ public class BloodDonorController {
         APIResponse response = bloodDonorServ.changeStatus(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/getDonnerByOne")
+    public ResponseEntity<Object> getDonnerByOne(@RequestParam(required = false) String value) {
+        APIResponse response = bloodDonorServ.getDonnerByOne(value);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     
 }
