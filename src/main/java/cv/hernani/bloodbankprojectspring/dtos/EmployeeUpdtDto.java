@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class EmployeeUpdtDto {
 
-    private String pw;
+    private String password;
 
     private String dmfunction;
 

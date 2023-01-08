@@ -1,6 +1,7 @@
 package cv.hernani.bloodbankprojectspring.service.serviceImpl;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -19,6 +20,7 @@ import cv.hernani.bloodbankprojectspring.models.RolesModel;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
 import cv.hernani.bloodbankprojectspring.repositories.RolesRepository;
+import cv.hernani.bloodbankprojectspring.repositories.LoginRepository;
 import cv.hernani.bloodbankprojectspring.service.service.EmployeeService;
 import cv.hernani.bloodbankprojectspring.utilities.APIResponse;
 import cv.hernani.bloodbankprojectspring.utilities.Helper;
@@ -32,11 +34,19 @@ public class EmployeeServiceImpl implements EmployeeService{
     final EmployeeRepository employeeRepository;
     private final PersonRepository personRepository;
     private final RolesRepository rolesRepository;
+    private final LoginRepository loginRepository;
+    private final PasswordEncoder pwEncoder;
+    
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PersonRepository personRepository, RolesRepository rolesRepository){
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PersonRepository personRepository, 
+                               LoginRepository loginRepository,
+                               RolesRepository rolesRepository, PasswordEncoder pwEncoder){
         this.employeeRepository = employeeRepository;
         this.personRepository = personRepository;
         this.rolesRepository = rolesRepository;
+        this.loginRepository = loginRepository;
+        this.pwEncoder = pwEncoder;
     }
 
     /*@Transactional
@@ -90,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService{
              employeeModel.setWhoUpdated(employeeDto.getPersonDto().getWhoUpdated());
              String identfNumber = Helper.identfNumberGenerator();
              employeeModel.setIdentifNumber(identfNumber);
-             employeeModel.setPw(employeeDto.getPw()); 
+             employeeModel.setPassword(pwEncoder.encode(employeeDto.getPassword())); 
              employeeModel.setDmfunction(employeeDto.getDmfunction());  
              employeeModel.setIdPerson(personModel);
              employeeModel.setInsertionDate(personModel.getInsertionDate());
@@ -157,7 +167,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
         try {            
             //BeanUtils.copyProperties(employeeUpdtDto, employeeModel);  
-            employeeModel.setPw(Helper.passEncoder().encode(employeeUpdtDto.getPw())); 
+            employeeModel.setPassword(Helper.passEncoder().encode(employeeUpdtDto.getPassword())); 
             employeeModel.setDmfunction(employeeUpdtDto.getDmfunction());
             employeeModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());
             employeeModel.setIdentifNumber(employeeUpdtDto.getIdentifNumber());
@@ -269,6 +279,25 @@ public class EmployeeServiceImpl implements EmployeeService{
             return APIResponse.builder().status(false).message(MessageState.ERRO_AO_REMOVER)
             .details(Arrays.asList(e.getMessage())).build();
         }
+    }
+
+    @Override
+    public APIResponse resetPassword(String email, String password) {
+        Optional<EmployeeModel> employeeModelOptional = loginRepository.findByEmail(email);
+        if (!employeeModelOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Esta email não existe na BD!")).build();
+        }
+
+        var employeeModel = employeeModelOptional.get();
+        try {
+            employeeModel.setPassword(pwEncoder.encode(password));
+            employeeRepository.save(employeeModel);
+            return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_REMOVER)
+            .details(Arrays.asList(e.getMessage())).build();
+        }
+
     }
  
 

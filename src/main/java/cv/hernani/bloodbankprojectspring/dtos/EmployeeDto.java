@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class EmployeeDto {
 
-    private String pw;
+    private String password;
 
     private String dmfunction;
 

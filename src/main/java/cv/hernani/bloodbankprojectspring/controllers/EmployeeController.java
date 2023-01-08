@@ -80,8 +80,15 @@ public class EmployeeController {
     public ResponseEntity<Object> changeStatus(@PathVariable("id") UUID id){
         APIResponse response = employeeService.changeStatus(id);
         return new ResponseEntity<>(response,HttpStatus.OK);
-    }
+    }   
 
+
+    @PutMapping("reset/{email}/{password}")
+    public ResponseEntity<Object> resetPassword(@PathVariable(value = "email") String email,
+                                               @PathVariable(value = "password") String password){
+        APIResponse response = employeeService.resetPassword(email, password);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
    
     
 
