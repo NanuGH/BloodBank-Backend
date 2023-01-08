@@ -15,7 +15,7 @@ public interface BloodCollectionRepository extends JpaRepository<BloodCollection
     
     List<BloodCollectionModel> findByCollectionNumberAndInsertionDate(String collectionNumber, LocalDateTime insertionDate);
     //List<BloodCollectionModel> findByCollectionNumber(String collectionNumber);
-    List<BloodCollectionModel> findByInsertionDate(LocalDateTime insertionDate);
+    List<BloodCollectionModel> findByInsertionDate(String insertionDate);
 
     Optional<BloodCollectionModel> existsByCollectionNumber(String collectionNumber);
     //Optional <BloodDonorModel> findByIdentifNumber(String identifNumber);
