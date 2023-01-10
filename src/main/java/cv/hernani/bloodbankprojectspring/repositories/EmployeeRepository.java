@@ -27,7 +27,13 @@ public interface EmployeeRepository extends JpaRepository<EmployeeModel, UUID> {
     List<EmployeeModel> findByEmailAndIdPerson_NamePersonContainingAllIgnoreCase(String email, String namePerson);
     List<EmployeeModel> findByEmailAndIdentifNumberContainingAllIgnoreCase(String email, String identifNumber);
 
-    List<EmployeeModel> findByEmailAndIdentifNumberContainingAllIgnoreCase(String namePerson, String identifNumber);
+    List<EmployeeModel> findByIdPerson_NamePersonAndIdentifNumberContainingAllIgnoreCase(String namePerson, String identifNumber);
+    List<EmployeeModel> findByIdPerson_NamePersonAndEmailContainingAllIgnoreCase(String namePerson, String email);
 
-    
+    List<EmployeeModel> findByIdPerson_NamePersonContainingAllIgnoreCase(String namePerson);
+    List<EmployeeModel> findByIdentifNumberContainingAllIgnoreCase(String identifNumber);
+    List<EmployeeModel> findByEmailContainingAllIgnoreCase(String email);
+
+    List<EmployeeModel> findByidentifNumberAndIdPerson_NamePersonAndEmailContainingAllIgnoreCase(String identifNumber,String namePerson,String email);
+
 }

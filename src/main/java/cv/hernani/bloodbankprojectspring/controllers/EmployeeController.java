@@ -58,7 +58,7 @@ public class EmployeeController {
     @GetMapping("/getEmplOpts")
     public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String identifNumber,
                                                     @RequestParam(required=false) String email) {
-        APIResponse response = employeeService.findEmploByOptionals(identifNumber, email);
+        APIResponse response = employeeService.findEmploByOptionals(email, identifNumber, email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -88,6 +88,16 @@ public class EmployeeController {
                                                @PathVariable(value = "password") String password){
         APIResponse response = employeeService.resetPassword(email, password);
         return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchAutuante(
+            @RequestParam(required = false) String namePerson,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String identifNumber) {
+
+        APIResponse response = employeeService.findEmploByOptionals(namePerson, identifNumber, email);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
        
     

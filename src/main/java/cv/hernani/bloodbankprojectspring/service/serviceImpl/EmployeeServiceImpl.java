@@ -246,13 +246,10 @@ public class EmployeeServiceImpl implements EmployeeService{
    
     @Override
     public APIResponse findEmploByOptionals(String namePerson, String identifNumber, String email) {
-    //public APIResponse findEmploByOptionals(String codigo, String nomeTitular, String dataapreensao) {
-
-
             try {
 
                 if (namePerson==null && identifNumber!=null && email!=null) {
-                    List<EmployeeModel> getEmployee = employeeRepository.findByIdentifNumberAndIdPerson_EmailContainingAllIgnoreCase(identifNumber, email);
+                    List<EmployeeModel> getEmployee = employeeRepository.findByIdentifNumberAndIdPerson_EmailContainingAllIgnoreCase( identifNumber,email);
                     return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
                 }
 
@@ -262,29 +259,29 @@ public class EmployeeServiceImpl implements EmployeeService{
                 }
 
                 if (email==null && identifNumber!=null && namePerson!=null) {
-                    List<EmployeeModel> getEmployee = employeeRepository.findByidentifNumberAndnamePersonAllIgnoreCase(identifNumber, date);
+                    List<EmployeeModel> getEmployee = employeeRepository.findByIdentifNumberAndIdPerson_NamePersonContainingAllIgnoreCase(identifNumber, namePerson);
                     return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
                 }
 
                 if (namePerson!=null && identifNumber==null && email==null) {
-                    LocalDate date = LocalDate.parse(namePerson);
-                    List<EmployeeModel> getEmployee = employeeRepository.findBynamePersonAllIgnoreCase(date);
+                    List<EmployeeModel> getEmployee = employeeRepository.findByIdPerson_NamePersonContainingAllIgnoreCase(namePerson);
                     return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
                 }
 
                 if (identifNumber!=null && email==null && namePerson==null ) {
-                    List<EmployeeModel> getEmployee = employeeRepository.findByidentifNumberAllIgnoreCase(identifNumber);
+                    List<EmployeeModel> getEmployee = employeeRepository.findByIdentifNumberContainingAllIgnoreCase(identifNumber);;
                     return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
                 }
 
                 if (email!=null && identifNumber==null && namePerson==null ) {
-                    List<EmployeeModel> getEmployee = employeeRepository.findByPessoas_NomeContainingAllIgnoreCase(email);
+                    List<EmployeeModel> getEmployee = employeeRepository.findByEmailContainingAllIgnoreCase(email);
+                    ;
                     return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
                 }
 
-                    LocalDate date = LocalDate.parse(namePerson);
-                    List<EmployeeModel> getEmployee = employeeRepository.findByidentifNumberAndPessoas_NomeAndnamePersonContainingAllIgnoreCase(identifNumber, email, date);
-                    return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
+        
+                List<EmployeeModel> getEmployee = employeeRepository.findByidentifNumberAndIdPerson_NamePersonAndEmailContainingAllIgnoreCase(identifNumber,namePerson, email);
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
 
 
 
