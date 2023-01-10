@@ -1,5 +1,4 @@
 package cv.hernani.bloodbankprojectspring.models;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

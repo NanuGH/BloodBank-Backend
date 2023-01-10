@@ -23,11 +23,9 @@ public class PersonController {
 
     @Autowired
     private final PersonService personService;
-    private final TestRepository testRepository;
 
-    public PersonController(PersonService personService, TestRepository testRepository) {
+    public PersonController(PersonService personService) {
         this.personService = personService;
-        this.testRepository = testRepository;
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,8 +57,8 @@ public class PersonController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     } */
 
-    @GetMapping("/getPersonByOne")
-    public ResponseEntity<Object> getPersonByOne(@RequestParam(required = false) String value) {
+    @GetMapping("/getPersonByOne/{value}")
+    public ResponseEntity<Object> getPersonByOne(@PathVariable("value") String value) {
         APIResponse response = personService.getPersonByOne(value);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

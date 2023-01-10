@@ -175,4 +175,28 @@ public class StockServiceImpl implements StockService {
         }
     }
 
+    @Override
+    public APIResponse changeStockType(UUID id) {
+
+        Optional<StockModel> StockModelOptional = stockRepository.findById(id);
+        if (!StockModelOptional.isPresent()) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).details(Arrays.asList("ERRO: Stock não existe!")).build();
+        }
+        var stockModel = StockModelOptional.get();
+        try {
+            if (StockModelOptional.get().getDmCodeStockType().equals("q")) {
+                stockModel.setDmCodeStockType("p");
+                stockRepository.save(stockModel);
+                return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();
+            } else {
+                stockModel.setDmCodeStockType("q");
+                stockRepository.save(stockModel);        
+                return APIResponse.builder().status(true).message(MessageState.ATUALIZADO_COM_SUCESSO).build();        
+            }
+        } catch (Exception e) {
+            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).details(Arrays.asList(e.getMessage())).build();
+        }   
+
+    }
+
 }

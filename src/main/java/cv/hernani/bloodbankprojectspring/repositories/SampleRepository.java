@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import cv.hernani.bloodbankprojectspring.models.SampleModel;
-import cv.hernani.bloodbankprojectspring.models.StockModel;
 
 public interface SampleRepository extends JpaRepository<SampleModel,UUID>{
     boolean existsBySampleNumber(String sampleNumber);

@@ -15,5 +15,6 @@ public interface StockService {
     public APIResponse updateStock(UUID id,StockDto stockUpdtDto);
     public APIResponse disableStock(UUID id,StockDto stockUpdtDto);
     public APIResponse findStockByOptionals(String collectionNumber);
+    public APIResponse changeStockType(UUID id);
     
 }

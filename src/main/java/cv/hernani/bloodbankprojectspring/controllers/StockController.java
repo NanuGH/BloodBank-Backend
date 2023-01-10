@@ -76,4 +76,11 @@ public class StockController {
         APIResponse response = stockService.findStockByOptionals(numCollect);
         return new ResponseEntity<>(response, HttpStatus.OK);
     } 
+
+
+    @PutMapping("changeType/{id}")
+    public ResponseEntity<Object> changeStockType(@PathVariable(value = "id") UUID id) {
+        APIResponse response = stockService.changeStockType(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

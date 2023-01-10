@@ -36,12 +36,10 @@ public class EmployeeServiceImpl implements EmployeeService{
     private final RolesRepository rolesRepository;
     private final LoginRepository loginRepository;
     private final PasswordEncoder pwEncoder;
-    
-
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, PersonRepository personRepository, 
-                               LoginRepository loginRepository,
-                               RolesRepository rolesRepository, PasswordEncoder pwEncoder){
+                               LoginRepository loginRepository,RolesRepository rolesRepository, PasswordEncoder pwEncoder){
+                               
         this.employeeRepository = employeeRepository;
         this.personRepository = personRepository;
         this.rolesRepository = rolesRepository;
@@ -49,31 +47,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         this.pwEncoder = pwEncoder;
     }
 
-    /*@Transactional
-    public APIResponse createEmployee(EmployeeDto employeeDto){     
-        try {
-            var pModel = new PersonModel();
-            BeanUtils.copyProperties(employeeDto.getPersonDto(), pModel);
-            personRepository.save(pModel);
-
-            try {//caso erro salvar na tab Employee
-             employeeModel.setWhoInserted(employeeDto.getPersonDto().getWhoInserted());
-             String identfNumber = Helper.identfNumberGenerator();
-             employeeModel.setIdentifNumber(identfNumber);
-             employeeModel.setPw(Helper.passEncoder().encode(employeeDto.getPw())); 
-             employeeModel.setDmfunction(employeeDto.getDmfunction());  
-             employeeModel.setIdPerson(pModel);                
-             
-             employeeRepository.save(employeeModel);
-
-             return APIResponse.builder().status(true).message(MessageState.INSERIDO_COM_SUCESSO).build();
-            } catch (Exception e) {
-                return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO).build();
-            }
-        } catch (Exception e) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO_AO_ATUALIZAR).build();
-        }     
-    }*/
 
     @Override
     public APIResponse createEmployee(EmployeeDto employeeDto, UUID idRoles){
@@ -119,33 +92,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         }     
     }
 
-   /*@Override
-    public APIResponse updtEmployee(UUID id, EmployeeUpdtDto employeeUpdtDto) {
-        Optional<EmployeeModel> employeeModelOptional = employeeRepository.findById(id);
-        if (!employeeModelOptional.isPresent()) {
-            return APIResponse.builder().status(false)
-                    .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("Conflict: Domain don't exists on DB!"))
-                    .build();
-        }
-        var employeeModel = employeeModelOptional.get(); 
-        try {
-            //BeanUtils.copyProperties(employeeModelOptional, employeeModel);
-            //employeeModel.setId(employeeModelOptional.get().getId());
-            employeeModel.setPw(employeeUpdtDto.getPw());
-            employeeModel.setDmfunction(employeeUpdtDto.getDmfunction());
-            employeeModel.setWhoUpdated(employeeUpdtDto.getWhoUpdated());
-
-            employeeRepository.save(employeeModel);
-            return APIResponse.builder().status(true)
-                    .message(MessageState.ATUALIZADO_COM_SUCESSO).build();
-
-        } catch (Exception e) {
-            return APIResponse.builder()
-                    .status(false).message(MessageState.ERRO_AO_ATUALIZAR)
-                    .details(Arrays.asList(e.getMessage())).build();
-        }
-    }*/
     
     @Override
     public APIResponse updtEmployee(UUID id, @RequestBody @Valid EmployeeUpdtDto employeeUpdtDto) {
@@ -238,7 +184,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
     }
 
-    @Override
+    /* @Override
     public APIResponse findEmploByOptionals(String identifNumber, String email) {
 
         try {
@@ -250,19 +196,16 @@ public class EmployeeServiceImpl implements EmployeeService{
             }
             if (identifNumber==null && email=="") {
                 getEmployee = employeeRepository.findByEmail(email);
-
             }
             if (identifNumber!="" && email==null) {
                 getEmployee = employeeRepository.findByIdentifNumber(identifNumber);
             }
-            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee))
-                    .build();
+            return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
 
         } catch (Exception e) {
-            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
-                    .build();
+            return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
         }
-    }
+    } */
 
     @Override
     public APIResponse changeStatus(UUID id) {
@@ -300,6 +243,55 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     }
  
-
    
+    @Override
+    public APIResponse findEmploByOptionals(String namePerson, String identifNumber, String email) {
+    //public APIResponse findEmploByOptionals(String codigo, String nomeTitular, String dataapreensao) {
+
+
+            try {
+
+                if (namePerson==null && identifNumber!=null && email!=null) {
+                    List<EmployeeModel> getEmployee = employeeRepository.findByIdentifNumberAndIdPerson_EmailContainingAllIgnoreCase(identifNumber, email);
+                    return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
+                }
+
+                if (identifNumber==null && email!=null && namePerson!=null) {
+                    List<EmployeeModel> getEmployee = employeeRepository.findByEmailAndIdPerson_NamePersonContainingAllIgnoreCase(email, namePerson);
+                    return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
+                }
+
+                if (email==null && identifNumber!=null && namePerson!=null) {
+                    List<EmployeeModel> getEmployee = employeeRepository.findByidentifNumberAndnamePersonAllIgnoreCase(identifNumber, date);
+                    return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
+                }
+
+                if (namePerson!=null && identifNumber==null && email==null) {
+                    LocalDate date = LocalDate.parse(namePerson);
+                    List<EmployeeModel> getEmployee = employeeRepository.findBynamePersonAllIgnoreCase(date);
+                    return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
+                }
+
+                if (identifNumber!=null && email==null && namePerson==null ) {
+                    List<EmployeeModel> getEmployee = employeeRepository.findByidentifNumberAllIgnoreCase(identifNumber);
+                    return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
+                }
+
+                if (email!=null && identifNumber==null && namePerson==null ) {
+                    List<EmployeeModel> getEmployee = employeeRepository.findByPessoas_NomeContainingAllIgnoreCase(email);
+                    return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
+                }
+
+                    LocalDate date = LocalDate.parse(namePerson);
+                    List<EmployeeModel> getEmployee = employeeRepository.findByidentifNumberAndPessoas_NomeAndnamePersonContainingAllIgnoreCase(identifNumber, email, date);
+                    return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getEmployee)).build();
+
+
+
+
+            } catch (Exception e) {
+                return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
+            }
+        }
 }
+

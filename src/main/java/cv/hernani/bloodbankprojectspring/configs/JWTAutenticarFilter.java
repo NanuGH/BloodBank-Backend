@@ -2,7 +2,6 @@ package cv.hernani.bloodbankprojectspring.configs;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Optional;
 
 public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 

@@ -68,14 +68,14 @@ public class BloodDonorController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/changestatus/{id}")
+    @PutMapping("/changestatus/{id}")
     public ResponseEntity<Object> changeStatus(@PathVariable("id") UUID id) {
         APIResponse response = bloodDonorServ.changeStatus(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/getDonnerByOne")
-    public ResponseEntity<Object> getDonnerByOne(@RequestParam(required = false) String value) {
+    @GetMapping("/getDonnerByOne/{value}")
+    public ResponseEntity<Object> getDonnerByOne(@PathVariable("value") String value) {
         APIResponse response = bloodDonorServ.getDonnerByOne(value);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
