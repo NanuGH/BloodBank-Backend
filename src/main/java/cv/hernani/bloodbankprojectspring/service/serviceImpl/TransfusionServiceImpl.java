@@ -145,7 +145,7 @@ public class TransfusionServiceImpl implements TransfusionService{
     @Override
     public APIResponse getTransfNumber(String transfNumber) {
         try {
-            Optional<TransfusionModel> getTransf = transfusionRepository.findByTransfNumber(transfNumber);
+            Optional<TransfusionModel> getTransf = transfusionRepository.findByTransfNumberContainingAllIgnoreCase(transfNumber);
 
             if (!getTransf.isPresent()) {
                 return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)

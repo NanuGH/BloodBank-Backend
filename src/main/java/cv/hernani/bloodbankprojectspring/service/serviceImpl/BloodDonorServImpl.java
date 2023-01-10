@@ -203,7 +203,7 @@ public class BloodDonorServImpl implements BloodDonorService {
 
     @Override
     public APIResponse getDonnerByOne(String value) {
-        List<BloodDonorModel> personModelOptional = bloodDonorRepository.findByIdPersonNamePersonOrIdentifNumber(value, value);
+        List<BloodDonorModel> personModelOptional = bloodDonorRepository.findByIdPersonNamePersonOrIdentifNumberContainingAllIgnoreCase(value, value);
         try {
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personModelOptional.toArray())).build();
         } catch (Exception e) {

@@ -9,6 +9,6 @@ import cv.hernani.bloodbankprojectspring.models.TransfusionModel;
 public interface TransfusionRepository extends JpaRepository<TransfusionModel,UUID> {
 
     boolean existsByTransfNumber(TransfusionModel transfNumber);
-    Optional <TransfusionModel> findByTransfNumber(String transfNumber);
+    Optional <TransfusionModel> findByTransfNumberContainingAllIgnoreCase(String transfNumber);
     
 }

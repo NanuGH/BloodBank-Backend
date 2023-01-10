@@ -22,4 +22,5 @@ public interface BloodCollectionService {
     public APIResponse delBloodCollection(UUID id);
 
     public APIResponse changeStatus(UUID id);
+
 }

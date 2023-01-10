@@ -117,7 +117,7 @@ public class PersonServiceImpl implements PersonService {
                 System.out.println("apelido");
             }
             if(namePerson != null && surnamePerson == null && birthday == null) {
-                getPersons = personRepository.findByNamePerson(namePerson);
+                getPersons = personRepository.findByNamePersonContainingAllIgnoreCase(namePerson);
                 System.out.println("nome");
             }
             if (namePerson == null && surnamePerson == null && birthday != null) {   
@@ -148,7 +148,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public APIResponse getPersonByOne(String value) {
 
-        List<PersonModel> personModelOptional = personRepository.findByNamePersonOrDmDocIdent(value, value);
+        List<PersonModel> personModelOptional = personRepository.findByNamePersonOrDmDocIdentContainingAllIgnoreCase(value, value);
         try {
             return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(personModelOptional.toArray())).build();
         } catch (Exception e) {

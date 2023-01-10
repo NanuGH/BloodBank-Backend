@@ -11,5 +11,6 @@ public interface BloodDonorRepository extends JpaRepository<BloodDonorModel, UUI
     Optional <BloodDonorModel> findByIdentifNumber(String identifNumber);
 
     Optional <BloodDonorModel> findByIdPerson(PersonModel idPerson);
-    List<BloodDonorModel> findByIdPersonNamePersonOrIdentifNumber(String value, String identifNumber);
+    List<BloodDonorModel> findByIdPersonNamePersonOrIdentifNumberContainingAllIgnoreCase(String value, String identifNumber);
 }
+    

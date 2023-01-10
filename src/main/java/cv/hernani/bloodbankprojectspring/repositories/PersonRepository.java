@@ -14,7 +14,7 @@ public interface PersonRepository extends JpaRepository<PersonModel, UUID>{
     boolean existsByDmDocIdent(String DocIdent);
 
     List<PersonModel> findByNamePersonAndSurnamePersonAndBirthdayAndStatusIsTrue(String namePerson, String surnamePerson, LocalDate birthday);
-    List<PersonModel> findByNamePerson(String namePerson);
+    List<PersonModel> findByNamePersonContainingAllIgnoreCase(String namePerson);
     List<PersonModel> findBySurnamePerson(String surnamePerson);
     List<PersonModel> findByBirthday(LocalDate birthday);
 
@@ -22,7 +22,7 @@ public interface PersonRepository extends JpaRepository<PersonModel, UUID>{
     List<PersonModel> findByNamePersonAndBirthday(String namePerson, LocalDate birthday );
     List<PersonModel> findBySurnamePersonAndBirthday(String surnamePerson, LocalDate birthday );
 
-    List<PersonModel> findByNamePersonOrDmDocIdent(String namePerson, String dmDocIdent);
+    List<PersonModel> findByNamePersonOrDmDocIdentContainingAllIgnoreCase(String namePerson, String dmDocIdent);
     List<PersonModel> findByStatus(String status);
 
     

@@ -74,5 +74,15 @@ public class BloodCollectionController {
         APIResponse response = bloodCollectServ.changeStatus(id);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchAutuante(
+            @RequestParam(required = false) String collectionNumber,
+            @RequestParam(required = false) String insertionDate) {
+
+        APIResponse response = bloodCollectServ.findBloodCollectByOptionals(collectionNumber, insertionDate);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
                                               
 }

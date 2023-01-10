@@ -142,7 +142,7 @@ public class SampleServiceImpl implements SampleService {
     @Override
     public APIResponse getBySampleNumber(String sampleNumber) {
         try {
-            Optional<SampleModel> getSampleNumber = sampleRepository.findBySampleNumber(sampleNumber);
+            Optional<SampleModel> getSampleNumber = sampleRepository.findBySampleNumberContainingAllIgnoreCase(sampleNumber);
 
             if (!getSampleNumber.isPresent()) {
                 return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)

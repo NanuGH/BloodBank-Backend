@@ -151,30 +151,23 @@ public class BloodCollectServImpl implements BloodCollectionService {
         try {
             
             List<BloodCollectionModel> getBloodCollect = new ArrayList<>(); 
-            //getBloodCollect = bloodCollectRepository.findByInsertionDate(datetime); 
+            //getBloodCollect = bloodCollectRepository.findByInsertionDate(datetime);    
 
-            /* if (collectionNumber != null && insertionDate != null) {
+            if (collectionNumber == null && insertionDate != null) {   
                 LocalDate date = LocalDate.parse(insertionDate);
                 LocalDateTime datetime = date.atStartOfDay();
-                getBloodCollect = bloodCollectRepository.findByCollectionNumberAndInsertionDate(collectionNumber, datetime);
-                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
-            } */
-            if (collectionNumber == null && insertionDate != null) {
-                /* LocalDate date = LocalDate.parse(insertionDate);
-                LocalDateTime datetime = date.atStartOfDay();
+                /* getBloodCollect = bloodCollectRepository.searchInsertionDateLike(datetime); */
                 getBloodCollect = bloodCollectRepository.searchInsertionDateLike(datetime);
                 System.out.println(getBloodCollect.get(0).getQtdde());
-                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build(); */
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build(); 
 
             }
                       
             if (collectionNumber != null && insertionDate == null) {
-               /* getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
-                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();*/
+                getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
             }
-            /* if(isNull(insertionDate)){
-                  System.out.println(insertionDate + " ****************** ");
-            } */
+            
             LocalDate date = LocalDate.parse(insertionDate);
             LocalDateTime datetime = date.atStartOfDay();
             getBloodCollect = bloodCollectRepository.findByCollectionNumberAndInsertionDate(collectionNumber, datetime);
@@ -189,7 +182,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
     @Override
     public APIResponse getBloodCollByNumber(String collectionNumber) {
         try {
-            Optional<BloodCollectionModel> getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
+            Optional<BloodCollectionModel> getBloodCollect = bloodCollectRepository.existsByCollectionNumber(collectionNumber);
 
             if (!getBloodCollect.isPresent()) {
                 return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
