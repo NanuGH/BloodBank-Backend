@@ -14,6 +14,7 @@ import cv.hernani.bloodbankprojectspring.dtos.BloodCollectionDto;
 import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 import cv.hernani.bloodbankprojectspring.models.EmployeeModel;
 import cv.hernani.bloodbankprojectspring.models.PersonModel;
+import cv.hernani.bloodbankprojectspring.repositories.BloodCollectRepository;
 import cv.hernani.bloodbankprojectspring.repositories.BloodCollectionRepository;
 import cv.hernani.bloodbankprojectspring.repositories.EmployeeRepository;
 import cv.hernani.bloodbankprojectspring.repositories.PersonRepository;
@@ -26,14 +27,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class BloodCollectServImpl implements BloodCollectionService {
 
     final BloodCollectionRepository bloodCollectRepository;
+    final BloodCollectRepository bloodCollRepository;
     final PersonRepository personRepository;
     final EmployeeRepository employeeRepository;  
 
     public BloodCollectServImpl(BloodCollectionRepository bloodCollectRepository, PersonRepository personRepository, 
-                                                                            EmployeeRepository employeeRepository) {
+                                BloodCollectRepository bloodCollRepository,EmployeeRepository employeeRepository) {
         this.bloodCollectRepository = bloodCollectRepository;
+        this.bloodCollRepository = bloodCollRepository;
         this.personRepository = personRepository;
         this.employeeRepository = employeeRepository;
+        
     }
       
     @Override
@@ -146,7 +150,7 @@ public class BloodCollectServImpl implements BloodCollectionService {
     }
 
 
-    @Override
+     @Override
     public APIResponse findBloodCollectByOptionals( String collectionNumber, String insertionDate) {
         try {
             
@@ -156,15 +160,15 @@ public class BloodCollectServImpl implements BloodCollectionService {
             if (collectionNumber == null && insertionDate != null) {   
                 LocalDate date = LocalDate.parse(insertionDate);
                 LocalDateTime datetime = date.atStartOfDay();
-                /* getBloodCollect = bloodCollectRepository.searchInsertionDateLike(datetime); */
+                /* getBloodCollect = bloodCollectRepository.searchInsertionDateLike(datetime); 
                 getBloodCollect = bloodCollectRepository.searchInsertionDateLike(datetime);
                 System.out.println(getBloodCollect.get(0).getQtdde());
-                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build(); 
+                return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build(); */
 
             }
                       
             if (collectionNumber != null && insertionDate == null) {
-                getBloodCollect = bloodCollectRepository.findByCollectionNumber(collectionNumber);
+                getBloodCollect = bloodCollRepository.findByCollectionNumberContainingAllIgnoreCase(collectionNumber);
                 return APIResponse.builder().status(true).message(MessageState.SUCESSO).details(Arrays.asList(getBloodCollect)).build();
             }
             
@@ -177,19 +181,19 @@ public class BloodCollectServImpl implements BloodCollectionService {
             return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage()))
                     .build();
         }
-    }
+    } 
 
     @Override
     public APIResponse getBloodCollByNumber(String collectionNumber) {
         try {
-            Optional<BloodCollectionModel> getBloodCollect = bloodCollectRepository.existsByCollectionNumber(collectionNumber);
-
+            Optional<BloodCollectionModel> getBloodCollect = bloodCollectRepository.findByCollectionNumberContainingAllIgnoreCase(collectionNumber);
+            var bloodCollectModel = getBloodCollect.get();
             if (!getBloodCollect.isPresent()) {
                 return APIResponse.builder().status(false).message(MessageState.ERRO_DE_INSERCAO)
                         .details(Arrays.asList("ERRO: Esta colheita não existe!")).build();
             } else {
                 return APIResponse.builder().status(true).message(MessageState.SUCESSO)
-                        .details(Arrays.asList(getBloodCollect))
+                        .details(Arrays.asList(bloodCollectModel))
                         .build();
             }
 

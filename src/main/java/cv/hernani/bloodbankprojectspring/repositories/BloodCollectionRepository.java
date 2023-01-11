@@ -14,7 +14,7 @@ import cv.hernani.bloodbankprojectspring.models.BloodCollectionModel;
 public interface BloodCollectionRepository extends JpaRepository<BloodCollectionModel,UUID>{
     
     List<BloodCollectionModel> findByCollectionNumberAndInsertionDate(String collectionNumber, LocalDateTime insertionDate);
-    List<BloodCollectionModel> findByCollectionNumber(String collectionNumber);
+    Optional<BloodCollectionModel> findByCollectionNumberContainingAllIgnoreCase(String collectionNumber);
     List<BloodCollectionModel> findByInsertionDate(LocalDateTime insertionDate);
 
     Optional<BloodCollectionModel> existsByCollectionNumber(String collectionNumber);

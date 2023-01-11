@@ -41,14 +41,14 @@ public class BloodCollectionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/getBloodCollectionpts")
+   @GetMapping("/getBloodCollectionpts")
     public ResponseEntity<Object> getPersonOptional( @RequestParam(required=false) String collectionNumber,
                                                      @RequestParam(required=false) String insertionDate) {
 
         APIResponse response = bloodCollectServ.findBloodCollectByOptionals(collectionNumber, insertionDate);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+ 
     @GetMapping(value ="/collection/{collectionNumber}")
     public ResponseEntity<Object> getBloodCollectByNumber(@PathVariable("collectionNumber") String collectionNumber) {
         APIResponse response = bloodCollectServ.getBloodCollByNumber(collectionNumber);

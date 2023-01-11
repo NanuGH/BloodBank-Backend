@@ -44,7 +44,7 @@ public class BloodTestServiceImpl implements BloodTestService {
         if (!sampleOptional.isPresent()) {
             return APIResponse.builder().status(false)
                     .message(MessageState.ERRO_DE_INSERCAO)
-                    .details(Arrays.asList("ERRO: Esta pessoa não existe na BD!"))
+                    .details(Arrays.asList("ERRO: Esta amostra não existe na BD!"))
                     .build();
         }
 

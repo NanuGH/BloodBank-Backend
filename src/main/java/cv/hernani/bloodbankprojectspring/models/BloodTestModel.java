@@ -14,7 +14,7 @@ import lombok.Data;
 public class BloodTestModel extends CommonAtributsModel {
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_employee", nullable = false, unique = true)
+    @JoinColumn(name = "fk_id_employee", nullable = false)
     private EmployeeModel idEmployee;
 
     @ManyToOne
@@ -26,7 +26,7 @@ public class BloodTestModel extends CommonAtributsModel {
 
     /* @Column(name = "blood_presure", nullable = false, length = 20)  
     private String bloodPresure; */
-
+    
    /*  @Column(name = "weight", nullable = false, length = 20)
     private String weight; */
 
