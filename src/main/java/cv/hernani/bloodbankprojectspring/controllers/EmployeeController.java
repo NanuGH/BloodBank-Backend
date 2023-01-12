@@ -55,6 +55,12 @@ public class EmployeeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     } 
 
+    @GetMapping("email/{email}")
+    public ResponseEntity<Object> getEmployeeByEmail(@PathVariable(value = "email") String email) {  
+        APIResponse response = employeeService.findEmployeeByEmail(email);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    } 
+
     @GetMapping("/getEmplOpts")
     public ResponseEntity<Object> getPersonOptional(@RequestParam(required=false)String identifNumber,
                                                     @RequestParam(required=false) String email) {

@@ -165,6 +165,27 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
     }
 
+    @Override
+    public APIResponse findEmployeeByEmail(String email) {
+        if (!employeeRepository.existsByEmail(email)) {
+            return APIResponse.builder().status(false)
+                    .details(Arrays.asList("Conflict: Employee dont exists on DB!"))
+                    .build();
+        }
+        List<EmployeeModel> employeeModel = employeeRepository.findByEmail(email);
+        try {
+
+            return APIResponse.builder().status(true)
+                    .message(MessageState.SUCESSO)
+                    .details(Arrays.asList(employeeModel)).build();
+
+        } catch (Exception e) {
+            return APIResponse.builder()
+                    .status(false).message(MessageState.ERRO)
+                    .details(Arrays.asList(e.getMessage())).build();
+        }
+    }
+
     @Transactional
     @Override
     public APIResponse deleteEmployee(UUID id){
@@ -290,5 +311,8 @@ public class EmployeeServiceImpl implements EmployeeService{
                 return APIResponse.builder().status(false).message(MessageState.ERRO).details(Arrays.asList(e.getMessage())).build();
             }
         }
+
+
+   
 }
 

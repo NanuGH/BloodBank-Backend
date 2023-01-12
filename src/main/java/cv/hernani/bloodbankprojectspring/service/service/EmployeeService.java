@@ -18,5 +18,6 @@ public interface EmployeeService {
 
 
     public APIResponse findEmploByOptionals(String namePerson, String identifNumber, String email);
+    public APIResponse findEmployeeByEmail(String email);
 
 }
